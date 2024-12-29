@@ -1,0 +1,24 @@
+# Overview
+	- Characters can show text above their head with content of what they are talking about
+	- Player can choose to have one or max 4 options to choose from to respond to each (each what?)
+- # Player
+	- Can approach characters to talk
+		- Have timeout ?
+			- Yes
+	- Can respond to other character talking
+		- Is respond technically a talk, so they can be implemented the same, just different on the way it present to player ?
+- # Characters
+	- Can talk (show a dialogue box over their head)
+	- Have a dialogue tree with multiple options
+	-
+- ### Example
+	- Bà chủ trọ : "...................................."
+	- Player: 2 respond, suspicous or happy
+	- Bà chủ trọ respond with each then branch more
+	-
+- context = talk(bà chủ, "...........................")
+- show_respond(context, "...............................", "................................", {timeout, timein,.....})
+	- Will wait for player input
+	- -> output a respond_rs or something
+- if respond_rs == "...." ...
+-
