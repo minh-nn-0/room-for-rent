@@ -56,6 +56,7 @@ rfr::game::game(): _beaver("RFR", 1280, 720)
 	beaver::scripting::bind_camera(_camera, rfr);
 
 	bind_dialogue(_entities, _beaver, rfr, _lua);
+	bind_interaction(_entities, rfr);
 
 	rfr.set_function("gamepath", [&]{return game_path();});
 
@@ -145,14 +146,32 @@ rfr::game::game(): _beaver("RFR", 1280, 720)
 				for (const auto& eid: _entities.with<particle_emitter>())
 					_entities.get_component<particle_emitter>(eid)->draw(_beaver._graphics);
 			});
+	rfr.set_function("draw_interactions_info", [&]
+			{
+				for (const auto& eid: _entities.with<rfr::interaction, position>())
+				{
+					auto& interaction = _entities.get_component<rfr::interaction>(eid).value();
+					if (!interaction._condition()) return;
+					
+					auto& pos = _entities.get_component<position>(eid).value();
+					draw_interaction(interaction._name, pos._value, 
+							_lua["config"]["text_scale"],
+							_lua["config"]["interaction_box_padding"],
+							_beaver);
+				};
+			});
 	rfr.set_function("draw_dialogue", [&]()
 			{
-				for (std::size_t eid: _entities.with<rfr::dialogue, beaver::component::position>())
+				for (auto& eid: _entities.with<rfr::dialogue, beaver::component::position>())
 				{
 					auto& dialogue = _entities.get_component<rfr::dialogue>(eid).value();
 					auto pos = _entities.get_component<beaver::component::position>(eid).value();
 
-					rfr::draw_dialogue(pos._value , dialogue, _beaver);
+					rfr::draw_dialogue(pos._value , dialogue, 
+							_lua["config"]["text_scale"],
+							_lua["config"]["dialogue_box_padding"],
+							_lua["config"]["dialogue_wraplength"],
+							_beaver);
 				};
 			});
 	rfr.set_function("draw_map", [&](const std::string& map_name, float posx, float posy)
@@ -165,6 +184,11 @@ rfr::game::game(): _beaver("RFR", 1280, 720)
 	auto load_result = load();
 	if (!load_result.valid()) 
 		throw std::runtime_error(std::format("runtime error: {}", sol::error{load_result}.what()));
+
+	auto* f = _beaver._assets.get<sdl::font>("fvf_fernando");
+	TTF_SetFontStyle(*f, TTF_STYLE_BOLD);
+
+
 };
 
 

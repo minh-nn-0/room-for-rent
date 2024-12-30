@@ -5,6 +5,7 @@ project(rfr)
 add_executable(rfr 
 	${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/game.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/interaction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/dialogue.cpp
 )
 

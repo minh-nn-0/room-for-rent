@@ -25,8 +25,11 @@ namespace rfr
 		// determine where the bottom center of dialogue box will be in relative to actor position
 		mmath::fvec2 _position;
 		float _time;
-		int _wraplength {0}, _padding {3};
 	};
 
-	void draw_dialogue(const mmath::fvec2& actor_position, const dialogue& dialogue, beaver::sdlgame& game);
+	void draw_dialogue(const mmath::fvec2& actor_position,
+			const dialogue& dialogue,
+			float scale,
+			int padding, int wraplength,
+			beaver::sdlgame& game);
 };

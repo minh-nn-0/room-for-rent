@@ -7,7 +7,7 @@ function LOAD()
 	beaver.new_image(rfr.gamepath() .. "assets/images/UI.png", "UI")
 
 
-	beaver.new_font(rfr.gamepath() .. "assets/fonts/FVF Fernando 08.ttf", 8, "fvf_fernando")
+	beaver.new_font(rfr.gamepath() .. "assets/fonts/FVF Fernando 08.ttf", 16, "fvf_fernando")
 
 	beaver.create_texture_for_drawing("shadow")
 
@@ -19,8 +19,17 @@ function LOAD()
 
 	rfr.set_dialogue(PEID, "hihi")
 	rfr.set_dialogue_position(PEID, 16, -3)
-	local w,h = beaver.get_render_logical_size()
-	print(w,h)
+
+
+	ACT1 = rfr.add_entity()
+	rfr.set_position(ACT1, 30, 110)
+	rfr.set_interaction(ACT1, "Nút siêu dài",
+		function()
+			return rfr.get_position(PEID).x <= 50
+		end,
+		function()
+			print("hahahahah")
+		end)
 end
 
 local cam_zoom = 5
@@ -31,10 +40,8 @@ function UPDATE(dt)
 
 	if beaver.get_input("K") == 1 then rfr.set_layer_visible("room", "Before", false) end
 
-	if beaver.get_input("A") == 1 then beaver.set_texture_blend_mode("tl", "additive") end
-	if beaver.get_input("S") == 1 then beaver.set_texture_blend_mode("tl", "modulate") end
-	if beaver.get_input("D") == 1 then beaver.set_texture_blend_mode("tl", "multiply") end
-	if beaver.get_input("F") == 1 then beaver.set_texture_blend_mode("tl", "blend") end
+	if beaver.get_input("A") == 1 then config.interaction_box_padding = config.interaction_box_padding + 1 end
+	if beaver.get_input("S") == 1 then config.interaction_box_padding = config.interaction_box_padding - 1 end
 
 
 
@@ -82,6 +89,10 @@ function DRAW()
 	rfr.draw_entities()
 	beaver.set_draw_color(0,0,0,255)
 	rfr.draw_dialogue()
+	beaver.set_draw_color(255,255,255,255)
+	rfr.draw_interactions_info()
+
+	beaver.draw_texture("UI", {dst = {x= 100, y = 100, w = 32, h = 8}, src = {x = 24, y = 0, w = 32, h = 8}})
 	local shadowdst = {x = 0, y = 0, w = 1280, h = 720}
 	--beaver.draw_texture("shadow", {dst = shadowdst})
 end

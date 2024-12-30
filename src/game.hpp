@@ -8,6 +8,7 @@
 #include <beaver/scripting/scripting_tile.hpp>
 #include <beaver/scripting/scripting_camera.hpp>
 #include "dialogue.hpp"
+#include "interaction.hpp"
 #include "tooltip.hpp"
 namespace rfr
 {
@@ -22,7 +23,7 @@ namespace rfr
 		beaver::sdlgame _beaver;
 		sol::state _lua;
 		std::unordered_map<std::string, beaver::tile::tilemap> _maps;
-		beaver::ecs_core<dialogue, tooltip> _entities;
+		beaver::ecs_core<dialogue, interaction> _entities;
 		beaver::camera2D _camera;
 
 		void run();
