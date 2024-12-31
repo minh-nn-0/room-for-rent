@@ -24,8 +24,7 @@ function player.load()
 			})
 		end)
 
-
-
+	rfr.set_location(PEID, "Map.Mainroom")
 	rfr.set_state(PEID, "idle")
 end
 
@@ -46,12 +45,12 @@ function player.update(dt)
 		rfr.set_state(PEID, "idle")
 	end
 
-	if beaver.get_input("S") == 1 then
-		rfr.set_image(PEID, "female_1")
-	end
-	if beaver.get_input("D") == 1 then
-		rfr.set_image(PEID, "male_shirt")
-	end
+	--if beaver.get_input("S") == 1 then
+	--	rfr.set_image(PEID, "female_1")
+	--end
+	--if beaver.get_input("D") == 1 then
+	--	rfr.set_image(PEID, "male_shirt")
+	--end
 	rfr.set_position(PEID, ppos.x, ppos.y)
 end
 return player

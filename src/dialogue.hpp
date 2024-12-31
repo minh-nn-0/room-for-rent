@@ -27,6 +27,7 @@ namespace rfr
 		float _time;
 	};
 
+
 	void draw_dialogue(const mmath::fvec2& actor_position,
 			const dialogue& dialogue,
 			float scale,

@@ -19,33 +19,23 @@ constexpr std::string game_path()
 };
 #endif
 
-template<typename... Ts>
-void bind_dialogue(beaver::ecs<Ts...>& ecs, beaver::sdlgame& beaver, sol::table& tbl, sol::state& lua)
-{
-	tbl.set_function("set_dialogue", [&](std::size_t eid, const std::string& content)
-			{
-				auto& dl = ecs.template get_or_set_component<rfr::dialogue>(eid);
-				dl->_content = content;
-				dl->_time = content.length() / lua["config"]["wpm"].get<float>();
-			});
-	tbl.set_function("set_dialogue_position", [&](std::size_t eid, float x, float y)
-			{
-				ecs.template get_or_set_component<rfr::dialogue>(eid)->_position = {x, y};
-			});
-	tbl.set_function("update_dialogue", [&](float dt)
-			{
-				for (std::size_t eid: ecs.template with<rfr::dialogue>())
-				{
-					ecs.template get_component<rfr::dialogue>(eid)->_time -= dt;
-				};
-			});
-};
 
 
 rfr::game::game(): _beaver("RFR", 1280, 720)
 {
 	_beaver._graphics._cam = &_camera;
 
+	setup_binding();
+	sol::protected_function load = _lua["LOAD"];
+	auto load_result = load();
+	if (!load_result.valid()) 
+		throw std::runtime_error(std::format("runtime error: {}", sol::error{load_result}.what()));
+};
+void rfr::game::load_interactions()
+{
+};
+void rfr::game::setup_binding()
+{
 	beaver::scripting::init_lua(_lua);
 	beaver::scripting::bind_core(_beaver, _lua);
 
@@ -57,9 +47,9 @@ rfr::game::game(): _beaver("RFR", 1280, 720)
 
 	bind_dialogue(_entities, _beaver, rfr, _lua);
 	bind_interaction(_entities, rfr);
+	bind_location(_entities, rfr);
 
 	rfr.set_function("gamepath", [&]{return game_path();});
-
 	try 
 	{
 		_lua.safe_script_file(game_path() + "config.lua");
@@ -135,39 +125,33 @@ rfr::game::game(): _beaver("RFR", 1280, 720)
 			});
 	rfr.set_function("cleanup_entities", [&]() {_entities.clear_inactive();});
 
-
-	rfr.set_function("draw_entities", [&]
+	rfr.set_function("draw_entities", [&](std::size_t eid)
 			{
-				for (std::size_t eid: _entities.with<position, image_render>()) 
 				beaver::system::render::render_entity(eid, _entities, _beaver);
 			});
-	rfr.set_function("draw_particles", [&]
+	rfr.set_function("draw_particles", [&](std::size_t eid)
 			{
-				for (const auto& eid: _entities.with<particle_emitter>())
-					_entities.get_component<particle_emitter>(eid)->draw(_beaver._graphics);
+				_entities.get_component<particle_emitter>(eid)->draw(_beaver._graphics);
 			});
-	rfr.set_function("draw_interactions_info", [&]
+	rfr.set_function("draw_interactions_info", [&](std::size_t eid)
 			{
-				for (const auto& eid: _entities.with<rfr::interaction, position>())
+				auto& interaction = _entities.get_component<rfr::interaction>(eid);
+				if (interaction.has_value() && interaction->_condition())
 				{
-					auto& interaction = _entities.get_component<rfr::interaction>(eid).value();
-					if (!interaction._condition()) return;
-					
 					auto& pos = _entities.get_component<position>(eid).value();
-					draw_interaction(interaction._name, pos._value, 
+					draw_interaction(interaction->_name, pos._value, 
 							_lua["config"]["text_scale"],
 							_lua["config"]["interaction_box_padding"],
 							_beaver);
-				};
+				}
 			});
-	rfr.set_function("draw_dialogue", [&]()
+	rfr.set_function("draw_dialogue", [&](std::size_t eid)
 			{
-				for (auto& eid: _entities.with<rfr::dialogue, beaver::component::position>())
+				auto& dialogue = _entities.get_component<rfr::dialogue>(eid);
+				if (dialogue.has_value() && dialogue->_time > 0)
 				{
-					auto& dialogue = _entities.get_component<rfr::dialogue>(eid).value();
 					auto pos = _entities.get_component<beaver::component::position>(eid).value();
-
-					rfr::draw_dialogue(pos._value , dialogue, 
+					rfr::draw_dialogue(pos._value , *dialogue, 
 							_lua["config"]["text_scale"],
 							_lua["config"]["dialogue_box_padding"],
 							_lua["config"]["dialogue_wraplength"],
@@ -179,22 +163,12 @@ rfr::game::game(): _beaver("RFR", 1280, 720)
 				_beaver._graphics.tilemap(_maps.at(map_name), {posx, posy}, _beaver._assets.get_cvec<sdl::texture>());
 			});
 
-
-	sol::protected_function load = _lua["LOAD"];
-	auto load_result = load();
-	if (!load_result.valid()) 
-		throw std::runtime_error(std::format("runtime error: {}", sol::error{load_result}.what()));
-
-	auto* f = _beaver._assets.get<sdl::font>("fvf_fernando");
-	TTF_SetFontStyle(*f, TTF_STYLE_BOLD);
-
-
 };
 
 
 bool rfr::game::update(float dt)
 {
-	_camera._view._size = _beaver.window_size();
+	_camera._view._size = _beaver.render_size();
 	sol::protected_function lua_update = _lua["UPDATE"];
 	auto update_result = lua_update(dt);
 	if (!update_result.valid())

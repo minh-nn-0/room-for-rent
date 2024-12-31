@@ -7,9 +7,7 @@
 #include <beaver/scripting/scripting_core_components.hpp>
 #include <beaver/scripting/scripting_tile.hpp>
 #include <beaver/scripting/scripting_camera.hpp>
-#include "dialogue.hpp"
-#include "interaction.hpp"
-#include "tooltip.hpp"
+#include "binding.hpp"
 namespace rfr
 {
 	// Things need to be done
@@ -23,9 +21,10 @@ namespace rfr
 		beaver::sdlgame _beaver;
 		sol::state _lua;
 		std::unordered_map<std::string, beaver::tile::tilemap> _maps;
-		beaver::ecs_core<dialogue, interaction> _entities;
+		beaver::ecs_core<dialogue, interaction, location> _entities;
 		beaver::camera2D _camera;
-
+		void load_interactions();
+		void setup_binding();
 		void run();
 		bool update(float dt);
 		void draw();
