@@ -1,11 +1,8 @@
 local transition = require "transition"
 local map = require "map"
+local util = require "utilities"
 local door = {}
 
-local function player_center()
-	local ppos = rfr.get_position(PEID)
-	return ppos.x + 16, ppos.y + 16
-end
 local room_to_bathroom
 local bathroom_to_room
 local room_to_hall
@@ -13,7 +10,7 @@ local hall_to_room
 local hall_stair_second
 local hall_stair_first
 
-local locked_hall_door
+local locked_doors
 
 function door.load()
 	room_to_bathroom = rfr.add_entity()
@@ -21,7 +18,7 @@ function door.load()
 	rfr.set_location(room_to_bathroom, "Map.Mainroom")
 	rfr.set_interaction(room_to_bathroom, "Nhà tắm",
 		function()
-			local px,_ = player_center()
+			local px,_ = util.player_center()
 			return px >= 248 and px <= 264
 		end,
 		function()
@@ -37,7 +34,7 @@ function door.load()
 	rfr.set_location(bathroom_to_room, "Map.Bathroom")
 	rfr.set_interaction(bathroom_to_room, "Phòng ngủ",
 		function()
-			local px,_ = player_center()
+			local px,_ = util.player_center()
 			return px >= 248 and px <= 264
 		end,
 		function()
@@ -54,7 +51,7 @@ function door.load()
 	rfr.set_location(room_to_hall, "Map.Mainroom")
 	rfr.set_interaction(room_to_hall, "Hành lang",
 		function()
-			local px,_ = player_center()
+			local px,_ = util.player_center()
 			return px >= 300 and px <= 320
 		end,
 		function()
@@ -69,7 +66,7 @@ function door.load()
 	rfr.set_location(hall_to_room, "Map.Hall")
 	rfr.set_interaction(hall_to_room, "Hành lang",
 		function()
-			local px,_ = player_center()
+			local px,_ = util.player_center()
 			return px >= 40 and px <= 60
 		end,
 		function()

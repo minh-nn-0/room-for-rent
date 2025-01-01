@@ -32,12 +32,12 @@ function player.update(dt)
 	local ppos = rfr.get_position(PEID)
 
 	if beaver.get_input("LEFT") > 0 then
-		ppos.x = ppos.x - 1.5
+		ppos.x = ppos.x - 0.7
 		rfr.set_state(PEID, "move")
 		rfr.set_flipflag(PEID, beaver.FLIP_H)
 		rfr.set_dialogue_position(PEID, 10, -3)
 	elseif beaver.get_input("RIGHT") > 0 then
-		ppos.x = ppos.x + 1.5
+		ppos.x = ppos.x + 0.7
 		rfr.set_state(PEID, "move")
 		rfr.set_flipflag(PEID, beaver.FLIP_NONE)
 	rfr.set_dialogue_position(PEID, 22, -3)
@@ -46,12 +46,12 @@ function player.update(dt)
 	end
 
 	--print(ppos.x + 16, ppos.y + 16)
-	--if beaver.get_input("S") == 1 then
-	--	rfr.set_image(PEID, "female_1")
-	--end
-	--if beaver.get_input("D") == 1 then
-	--	rfr.set_image(PEID, "male_shirt")
-	--end
+	if beaver.get_input("S") == 1 then
+		rfr.set_image(PEID, "female_1")
+	end
+	if beaver.get_input("D") == 1 then
+		rfr.set_image(PEID, "male_shirt")
+	end
 	rfr.set_position(PEID, ppos.x, ppos.y)
 end
 return player
