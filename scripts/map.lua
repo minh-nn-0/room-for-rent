@@ -1,4 +1,6 @@
-local map = {}
+local map = {
+	current = "room",
+}
 
 function map.set_only_player_location_visible(map_name)
 	local player_location = rfr.get_location(PEID)
@@ -8,5 +10,6 @@ function map.set_only_player_location_visible(map_name)
 
 	rfr.set_layer_visible(map_name, player_location, true)
 end
+
 
 return map

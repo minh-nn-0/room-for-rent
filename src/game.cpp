@@ -168,7 +168,7 @@ void rfr::game::setup_binding()
 
 bool rfr::game::update(float dt)
 {
-	_camera._view._size = _beaver.render_size();
+	_camera._view._size = _beaver.render_logical_size();
 	sol::protected_function lua_update = _lua["UPDATE"];
 	auto update_result = lua_update(dt);
 	if (!update_result.valid())

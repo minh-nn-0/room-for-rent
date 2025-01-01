@@ -3,8 +3,8 @@
 void rfr::draw_interaction(const std::string& name, const mmath::fvec2& position, float scale, int padding, beaver::sdlgame& game)
 {
 	sdl::texture* UI_tex = game._assets.get<sdl::texture>("UI");		
-	sdl::font* font = game._assets.get<sdl::font>("fvf_fernando");
-	sdl::texture text = beaver::make_text_solid(game._graphics._rdr, *font, name, game._graphics._draw_color);
+	sdl::font* font = game._assets.get<sdl::font>("inconsolata");
+	sdl::texture text = beaver::make_text_blended(game._graphics._rdr, *font, name, game._graphics._draw_color);
 
 	mmath::frect text_dst = {position.x - text._width / 2.f * scale,
 							position.y - text._height * scale,

@@ -53,7 +53,6 @@ namespace rfr
 					}
 					else throw std::runtime_error(std::format("eid {} doesn't have interaction component", eid));
 				});
-
 		tbl.set_function("find_interaction_with_name", [&](const std::string& name) -> long
 				{
 					auto interactions = ecs.template with<rfr::interaction>();
@@ -64,6 +63,17 @@ namespace rfr
 						return *findrs;
 					}
 					else return -1;
+				});
+		tbl.set_function("has_interaction", [&](std::size_t eid)
+				{
+					return ecs.template has_component<interaction>(eid);
+				});
+
+		tbl.set_function("get_interaction", [&](std::size_t eid) -> std::string
+				{
+					if (auto& interaction = ecs.template get_component<rfr::interaction>(eid); interaction.has_value())
+						return interaction->_name;
+					else return "";
 				});
 	};
 

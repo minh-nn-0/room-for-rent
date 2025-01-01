@@ -17,7 +17,7 @@ function player.load()
 	rfr.set_state_entry(PEID, "move",
 		function()
 			rfr.set_tileanimation(PEID, {
-				frames = {{4,150},{5,150},{6,150},{7,150},{8,150},{9,150},{10,150},{11,150}},
+				frames = {{4,200},{5,200},{6,200},{7,200},{8,200},{9,200},{10,200},{11,200}},
 				framewidth = 32,
 				frameheight = 32,
 				["repeat"] = true
@@ -45,6 +45,7 @@ function player.update(dt)
 		rfr.set_state(PEID, "idle")
 	end
 
+	--print(ppos.x + 16, ppos.y + 16)
 	--if beaver.get_input("S") == 1 then
 	--	rfr.set_image(PEID, "female_1")
 	--end

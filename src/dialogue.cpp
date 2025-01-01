@@ -4,8 +4,8 @@ void rfr::draw_dialogue(const mmath::fvec2& actor_position, const dialogue& dial
 		beaver::sdlgame& game)
 {
 	sdl::texture* UI_tex = game._assets.get<sdl::texture>("UI");		
-	sdl::font* font = game._assets.get<sdl::font>("fvf_fernando");
-	sdl::texture text = beaver::make_text_solid(game._graphics._rdr, *font, dialogue._content, game._graphics._draw_color, wraplength);
+	sdl::font* font = game._assets.get<sdl::font>("inconsolata");
+	sdl::texture text = beaver::make_text_blended(game._graphics._rdr, *font, dialogue._content, game._graphics._draw_color, wraplength);
 	
 	mmath::frect text_dst = {actor_position.x + dialogue._position.x - text._width / 2.f * scale,
 							actor_position.y + dialogue._position.y - text._height * scale,
