@@ -14,7 +14,7 @@ namespace rfr
 				{
 					auto& dl = ecs.template get_or_set_component<rfr::dialogue>(eid);
 					dl->_content = content;
-					dl->_time = content.length() / lua["config"]["wpm"].get<float>();
+					dl->_time = content.length() * lua["config"]["wpm"].get<float>();
 				});
 		tbl.set_function("set_dialogue_position", [&](std::size_t eid, float x, float y)
 				{
@@ -27,6 +27,21 @@ namespace rfr
 						auto& dl = ecs.template get_component<rfr::dialogue>(eid);
 						if (dl->_time > 0) dl->_time -= dt;
 					};
+				});
+		tbl.set_function("has_active_dialogue", [&](std::size_t eid)
+				{
+					auto& dl = ecs.template get_component<rfr::dialogue>(eid);
+					if (dl.has_value()) return dl->_time > 0;
+					else return false;
+				});
+		tbl.set_function("get_dialogue_time", [&](std::size_t eid) -> sol::object
+				{
+					auto& dl = ecs.template get_component<rfr::dialogue>(eid);
+					if (dl.has_value()) 
+					{
+						return sol::make_object(lua, dl->_time);
+					}
+					else return sol::nil;
 				});
 	};
 	template<typename... Ts>

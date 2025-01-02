@@ -1,0 +1,66 @@
+local character = {}
+
+OWNER = rfr.add_entity()
+NEIGHBOR = rfr.add_entity()
+rfr.add_tag(OWNER, "npc")
+rfr.add_tag(NEIGHBOR, "npc")
+rfr.set_properties(OWNER, "walkspeed", 0.3)
+rfr.set_properties(NEIGHBOR, "walkspeed", 0.5)
+rfr.set_properties(OWNER, "facing_direction", "left")
+rfr.set_properties(NEIGHBOR, "facing_direction", "left")
+rfr.set_image(OWNER, "woman")
+rfr.set_image(NEIGHBOR, "neighbor")
+rfr.set_state_entry(OWNER, "idle",
+	function()
+		rfr.set_tileanimation(OWNER, {
+			frames = {{0,400},{1,200},{2,200},{3,200}},
+			framewidth = 32,
+			frameheight = 32,
+			["repeat"] = true
+		})
+	end)
+rfr.set_state_entry(OWNER, "move",
+	function()
+		local speed = config.base_character_move_animation_speed / rfr.get_properties(OWNER, "walkspeed")
+		rfr.set_tileanimation(OWNER, {
+			frames = {{4,speed},{5,speed},{6,speed},{7,speed},{8,speed},{9,speed},{10,speed},{11,speed}},
+			framewidth = 32,
+			frameheight = 32,
+			["repeat"] = true
+		})
+	end)
+rfr.set_state(OWNER, "idle")
+
+rfr.set_state_entry(NEIGHBOR, "idle",
+	function()
+		rfr.set_tileanimation(NEIGHBOR, {
+			frames = {{0,400},{1,200},{2,200},{3,200}},
+			framewidth = 32,
+			frameheight = 32,
+			["repeat"] = true
+		})
+	end)
+rfr.set_state(NEIGHBOR, "idle")
+
+function character.update(dt)
+	for _,char in ipairs(rfr.get_entities_with_tags({"npc"})) do
+		if rfr.get_state(char) == "move" then
+			local pos = rfr.get_position(char)
+			local dir = rfr.get_properties(char, "facing_direction")
+			local speed = rfr.get_properties(char, "walkspeed")
+			if dir == "left" then
+				pos.x = pos.x - speed
+				rfr.set_flipflag(char, beaver.FLIP_H)
+				rfr.set_dialogue_position(char, 10, -3)
+			else
+				pos.x = pos.x + speed
+				rfr.set_flipflag(char, beaver.FLIP_NONE)
+				rfr.set_dialogue_position(char, 22, -3)
+			end
+
+			rfr.set_position(char, pos.x, pos.y)
+		end
+	end
+end
+
+return character

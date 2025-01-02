@@ -2,22 +2,27 @@ local lighting = {}
 
 local bg_color = {255,255,255,255}
 local lights = {}
-function lighting.load()
-	beaver.new_image(rfr.gamepath() .. "assets/images/lights.png", "lights")
-	beaver.set_texture_blend_mode("lights", "modulate")
-	beaver.create_texture_for_drawing("shadow", 1280, 720)
-	beaver.set_texture_blend_mode("shadow", "modulate")
+beaver.new_image(rfr.gamepath() .. "assets/images/lights.png", "lights")
+beaver.create_texture_for_drawing("shadow", 1280, 720)
+beaver.set_texture_blend_mode("shadow", "modulate")
 
-	lights["room_desk_lamp"] = {draw_properties = {dst = {x = 64, y = 119, w = 21, h = 11},
-											src = {x = 0, y = 6, w = 21, h = 11}},
-								on = false}
-end
+lights["room_desk_lamp"] = {draw_properties = {dst = {x = 64, y = 119, w = 21, h = 11},
+										src = {x = 0, y = 6, w = 21, h = 11}},
+							on = false}
+
+
 function lighting.set_background_color(r,g,b,a)
 	bg_color = {r,g,b,a}
 end
+
+function lighting.get_background_color()
+	return bg_color
+end
+
 function lighting.toggle_light(name)
 	lights[name].on = not lights[name].on
 end
+
 function lighting.draw()
 	beaver.set_using_cam(false)
 	beaver.set_render_target("shadow")

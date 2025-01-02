@@ -1,16 +1,13 @@
 local transition = {}
 
-local rect
 local opacity = 0
 local target_opacity = 255
 local fade_in = true
 local time = 0
 local elapsed = 0
 local active = false
-function transition.load()
-	rect = beaver.create_texture_for_drawing("fade", 1280, 720)
-	beaver.set_texture_blend_mode("fade", "blend")
-end
+beaver.create_texture_for_drawing("fade", 1280, 720)
+beaver.set_texture_blend_mode("fade", "blend")
 
 function transition.fade_in(duration)
 	opacity = 255
