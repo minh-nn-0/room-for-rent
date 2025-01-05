@@ -1,11 +1,6 @@
 local player = require "player"
-local character = require "character"
-local map = require "map"
-local interaction = require "interaction"
-local transition = require "transition"
 local lighting = require "lighting"
-local camera = require "camera"
-local cutscene = require "cutscene"
+require "door"
 local gamestate = {
 	current_state = "ingame"
 }
@@ -23,25 +18,29 @@ state["menu"] = {
 
 state["ingame"] = {
 	load = function()
+		rfr.set_cam_target(PLAYER, 16,0)
 	end,
 	update = function(dt)
-		cutscene.update(dt)
-		character.update()
 		player.update(dt)
-		interaction.update()
-		transition.update(dt)
-		camera.update(dt)
-		map.set_only_player_location_visible(map.current)
+		rfr.set_only_player_location_visible()
+		rfr.update_transition(dt)
 		rfr.update_camera(dt)
+		rfr.update_character(dt)
+		rfr.update_cutscene(dt)
+		rfr.update_interaction()
 		rfr.update_animation(dt)
 		rfr.update_dialogue(dt)
+		rfr.update_events()
+		rfr.update_event_listener()
+		rfr.update_timer(dt)
+		rfr.update_countdown(dt)
 		rfr.cleanup_entities()
 		return true
 	end,
 	draw = function()
 		beaver.set_draw_color(10,10,10,255)
 		beaver.clear()
-		rfr.draw_map(map.current, 0, 0)
+		rfr.draw_map(rfr.get_current_map(), 0, 0)
 		for _, eid in ipairs(rfr.get_active_entities()) do
 			local bgcolor = lighting.get_background_color()
 			rfr.set_tint(eid, bgcolor[1], bgcolor[2], bgcolor[3], bgcolor[4])
@@ -58,11 +57,22 @@ state["ingame"] = {
 				rfr.draw_interactions_info(eid)
 			end
 		end
-		transition.draw()
+
+		local ppos = rfr.get_position(PLAYER)
+		local oldtscale = config.text_scale
+
+		config.text_scale = 1/15
+		local cx,_,cw,_ = rfr.get_cam_view()
+		local player_near_right_edge = ppos.x >= cx + (cw / config.cam_zoom) - 70
+		rfr.draw_dialogue_options(player_near_right_edge and ppos.x or ppos.x + 30, ppos.y + 5, not player_near_right_edge)
+		config.text_scale = oldtscale
+
+		rfr.draw_transition()
 	end
 }
 
 function gamestate.load()
+	state[gamestate.current_state].load()
 end
 
 function gamestate.update(dt)

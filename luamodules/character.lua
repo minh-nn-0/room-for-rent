@@ -1,5 +1,3 @@
-local character = {}
-
 OWNER = rfr.add_entity()
 NEIGHBOR = rfr.add_entity()
 rfr.add_tag(OWNER, "npc")
@@ -42,25 +40,25 @@ rfr.set_state_entry(NEIGHBOR, "idle",
 	end)
 rfr.set_state(NEIGHBOR, "idle")
 
-function character.update(dt)
+function rfr.update_character(dt)
 	for _,char in ipairs(rfr.get_entities_with_tags({"npc"})) do
+		local dir = rfr.get_properties(char, "facing_direction")
+		if dir == "left" then
+			rfr.set_flipflag(char, beaver.FLIP_H)
+			rfr.set_dialogue_position(char, 10, -3)
+		else
+			rfr.set_flipflag(char, beaver.FLIP_NONE)
+			rfr.set_dialogue_position(char, 22, -3)
+		end
 		if rfr.get_state(char) == "move" then
 			local pos = rfr.get_position(char)
-			local dir = rfr.get_properties(char, "facing_direction")
 			local speed = rfr.get_properties(char, "walkspeed")
 			if dir == "left" then
 				pos.x = pos.x - speed
-				rfr.set_flipflag(char, beaver.FLIP_H)
-				rfr.set_dialogue_position(char, 10, -3)
 			else
 				pos.x = pos.x + speed
-				rfr.set_flipflag(char, beaver.FLIP_NONE)
-				rfr.set_dialogue_position(char, 22, -3)
 			end
-
 			rfr.set_position(char, pos.x, pos.y)
 		end
 	end
 end
-
-return character

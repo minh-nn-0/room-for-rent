@@ -1,10 +1,18 @@
 package.path = package.path .. ";" .. rfr.gamepath() .. "/?.lua"
+package.path = package.path .. ";" .. rfr.gamepath() .. "/luamodules/?.lua"
 package.path = package.path .. ";" .. rfr.gamepath() .. "/scripts/?.lua"
 
 beaver = require "beaver"
 rfr = rfr or {}
 
-require "properties"
+require "luamodules.properties"
+require "luamodules.gameflags"
+require "luamodules.dialogue"
+require "luamodules.character"
+require "luamodules.camera"
+require "luamodules.interaction"
+require "luamodules.transition"
+require "luamodules.map"
 config = {
 	cam_zoom = 8,
 	wpm = 0.05,
@@ -17,6 +25,6 @@ config = {
 		move_left = "LEFT",
 		move_right = "RIGHT"
 	},
-
-	base_character_move_animation_speed = 70
+	base_character_move_animation_speed = 70,
+	language = "en",
 }

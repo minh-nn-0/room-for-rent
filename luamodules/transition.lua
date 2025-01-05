@@ -1,5 +1,3 @@
-local transition = {}
-
 local opacity = 0
 local target_opacity = 255
 local fade_in = true
@@ -9,7 +7,7 @@ local active = false
 beaver.create_texture_for_drawing("fade", 1280, 720)
 beaver.set_texture_blend_mode("fade", "blend")
 
-function transition.fade_in(duration)
+function rfr.fade_in(duration)
 	opacity = 255
 	target_opacity = 0
 	fade_in = true
@@ -18,7 +16,7 @@ function transition.fade_in(duration)
 	elapsed = 0
 end
 
-function transition.fade_out(duration)
+function rfr.fade_out(duration)
 	opacity = 0
 	target_opacity = 255
 	fade_in = false
@@ -27,7 +25,7 @@ function transition.fade_out(duration)
 	elapsed = 0
 end
 
-function transition.update(dt)
+function rfr.update_transition(dt)
 	if not active then return end
 	if fade_in then
 		opacity = math.floor(math.max(0, 255 - (255 * elapsed/time)))
@@ -42,7 +40,8 @@ function transition.update(dt)
 	end
 end
 
-function transition.draw()
+function rfr.draw_transition()
+	if not active then return end
 	beaver.set_using_cam(false)
 	beaver.set_render_target("fade")
 	beaver.set_draw_color(0,0,0,opacity)
@@ -52,4 +51,3 @@ function transition.draw()
 
 	beaver.draw_texture("fade", {dst = {x = 0, y = 0, w = 1280, h = 720}})
 end
-return transition

@@ -26,8 +26,11 @@ namespace rfr
 		mmath::fvec2 _position;
 		float _time;
 	};
-
-
+	struct dialogue_options
+	{
+		std::vector<std::string> _options;
+		unsigned char _selection;
+	};
 	void draw_dialogue(const mmath::fvec2& actor_position,
 			const dialogue& dialogue,
 			float scale,

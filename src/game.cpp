@@ -3,7 +3,7 @@
 #include <beaver/ecs/systems/collision.hpp>
 #include <beaver/ecs/systems/animation.hpp>
 #include <beaver/ecs/systems/render_entity.hpp>
-
+#include "textbox_drawing.hpp"
 #ifdef __EMSCRIPTEN__
 #include "/home/minhmacg/.cache/emscripten/sysroot/include/emscripten.h"
 #endif
@@ -31,9 +31,9 @@ rfr::game::game(): _beaver("RFR", 1280, 720)
 	if (!load_result.valid()) 
 		throw std::runtime_error(std::format("runtime error: {}", sol::error{load_result}.what()));
 };
-void rfr::game::load_interactions()
-{
-};
+
+rfr::dialogue_options DIALOGUE_OPTIONS;
+
 void rfr::game::setup_binding()
 {
 	beaver::scripting::init_lua(_lua);
@@ -45,20 +45,13 @@ void rfr::game::setup_binding()
 	beaver::scripting::bind_tile(_beaver, _maps, rfr);
 	beaver::scripting::bind_camera(_camera, rfr);
 
-	bind_dialogue(_entities, _beaver, rfr, _lua);
+	bind_dialogue(_entities, DIALOGUE_OPTIONS, rfr, _lua);
 	bind_interaction(_entities, rfr);
 	bind_location(_entities, rfr);
+	bind_event(_entities, _events, rfr);
 
+	bind_cutscene(_cutscenes, rfr);
 	rfr.set_function("gamepath", [&]{return game_path();});
-	try 
-	{
-		_lua.safe_script_file(game_path() + "config.lua");
-		_lua.safe_script_file(game_path() + "scripts/main.lua");
-	} catch (const sol::error& e)
-	{
-		std::println("error loading script: {}", e.what()); 
-	};
-
 	using namespace beaver::component;
 	rfr.set_function("update_movement", [&](float dt)
 			{
@@ -106,6 +99,7 @@ void rfr::game::setup_binding()
 					_entities.get_component<beaver::component::fsmstr>(eid)->update();
 				};
 			});
+	// COLLISIONS
 	rfr.set_function("find_collisions", [&](std::size_t eid) -> std::vector<std::size_t>
 			{
 				return beaver::system::collision::find_collisions(eid, _entities);
@@ -115,9 +109,9 @@ void rfr::game::setup_binding()
 				auto collisions = beaver::system::collision::find_collisions(eid, _entities);
 				return std::ranges::find(collisions, other_eid) != collisions.end();
 			});
-	rfr.set_function("update_camera", [&](float dt)
+	rfr.set_function("camera_target", [&](float tx, float ty, float dt)
 			{
-				_camera.update(dt);
+				_camera.target({tx, ty},dt);
 			});
 	rfr.set_function("clamp_camera", [&](float minx, float maxx)
 			{
@@ -158,10 +152,46 @@ void rfr::game::setup_binding()
 							_beaver);
 				};
 			});
+	rfr.set_function("draw_dialogue_options", [&](float x, float y, bool align_left)
+			{
+				float scale = _lua["config"]["text_scale"];
+				float padding = _lua["config"]["interaction_box_padding"];
+				for (int i = 0; i != DIALOGUE_OPTIONS._options.size(); i++)
+				{
+					const std::string& opts = DIALOGUE_OPTIONS._options[i];
+					sdl::texture* UI_tex = _beaver._assets.get<sdl::texture>("UI");		
+					sdl::font* font = _beaver._assets.get<sdl::font>("inconsolata");
+					sdl::texture text = beaver::make_text_blended(_beaver._graphics._rdr, *font, opts, _beaver._graphics._draw_color);
+
+					mmath::frect text_dst = {align_left ? x : x - text._width * scale,
+											y + 10 * i,
+											text._width * scale,
+											text._height * scale};
+					mmath::frect text_box {text_dst._pos.x - padding, 
+											text_dst._pos.y - 0.6f,
+											text_dst._size.x + 2 * padding,
+											8};
+					
+					draw_textbox_3parts(text_box,
+										DIALOGUE_OPTIONS._selection == i ? mmath::ivec2{24,12} : mmath::ivec2{36, 12},
+										4, 8,
+										*UI_tex, _beaver._graphics);
+					_beaver._graphics.texture(text, text_dst);
+				};
+			});
 	rfr.set_function("draw_map", [&](const std::string& map_name, float posx, float posy)
 			{
 				_beaver._graphics.tilemap(_maps.at(map_name), {posx, posy}, _beaver._assets.get_cvec<sdl::texture>());
 			});
+
+	try 
+	{
+		_lua.safe_script_file(game_path() + "config.lua");
+		_lua.safe_script_file(game_path() + "scripts/main.lua");
+	} catch (const sol::error& e)
+	{
+		std::println("error loading script: {}", e.what()); 
+	};
 
 };
 
