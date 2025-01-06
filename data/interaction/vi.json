@@ -1,0 +1,10 @@
+{
+	"door_room_to_bathroom" : "Phòng tắm",
+	"door_bathroom_to_room" : "Phòng chính",
+	"door_room_to_balcony" : "Ban công",
+	"door_room_to_hall" : "Hành lang",
+	"door_hall_to_room" : "Phòng 201",
+	"door_hall_stair_first" : "Tầng hai",
+	"owner" : "Chủ nhà trọ",
+	"neighbour" : "Hàng xóm"
+}

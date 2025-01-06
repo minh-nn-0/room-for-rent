@@ -1,0 +1,12 @@
+{
+	"door_room_to_bathroom" : "Bathroom",
+	"door_bathroom_to_room" : "Mainroom",
+	"door_room_to_balcony" : "Balcony",
+	"door_room_to_hall" : "Hall",
+	"door_hall_to_room" : "Room 201",
+	"door_hall_stair_first" : "Second floor",
+	"owner" : "Owner",
+	"neighbour" : "Neighbour"
+}
+	
+
