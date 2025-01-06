@@ -1,3 +1,4 @@
+local json = require "luamodules.json"
 local util = {}
 
 function util.player_center()
@@ -5,10 +6,16 @@ function util.player_center()
 	return ppos.x + 16, ppos.y + 16
 end
 
+function util.load_json(file)
+	local f = assert(io.open(file, "r"))
+	local content = f:read("a")
+	f:close()
+	return json.decode(content)
+end
+
 function util.split_string(str, delim)
 	local rs = {}
 	local start = 1
-
 	while true do
 		local delim_start, delim_end = string.find(str, delim, start)
 

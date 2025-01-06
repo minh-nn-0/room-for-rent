@@ -26,5 +26,5 @@ config = {
 		move_right = "RIGHT"
 	},
 	base_character_move_animation_speed = 70,
-	language = "en",
+	language = "vi",
 }

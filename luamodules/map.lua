@@ -1,5 +1,6 @@
 local current_map = "room"
 function rfr.set_current_map(map)
+	if map == "room" and rfr.get_flag("prologue") then map = "room_before" end
 	current_map = map
 end
 function rfr.get_current_map()

@@ -1,6 +1,6 @@
 local player = require "player"
 local lighting = require "lighting"
-require "door"
+local door = require "door"
 local gamestate = {
 	current_state = "ingame"
 }
@@ -19,6 +19,7 @@ state["menu"] = {
 state["ingame"] = {
 	load = function()
 		rfr.set_cam_target(PLAYER, 16,0)
+		door.load()
 	end,
 	update = function(dt)
 		player.update(dt)
@@ -53,14 +54,17 @@ state["ingame"] = {
 			if rfr.get_location(eid) == rfr.get_location(PLAYER) then
 				beaver.set_draw_color(0,0,0,255)
 				rfr.draw_dialogue(eid)
-				beaver.set_draw_color(255,255,255,255)
-				rfr.draw_interactions_info(eid)
+				if rfr.get_properties(PLAYER, "can_interact") then
+					beaver.set_draw_color(255,255,255,255)
+					rfr.draw_interactions_info(eid)
+				end
 			end
 		end
 
 		local ppos = rfr.get_position(PLAYER)
 		local oldtscale = config.text_scale
 
+		beaver.set_draw_color(255,255,255,255)
 		config.text_scale = 1/15
 		local cx,_,cw,_ = rfr.get_cam_view()
 		local player_near_right_edge = ppos.x >= cx + (cw / config.cam_zoom) - 70

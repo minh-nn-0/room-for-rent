@@ -22,12 +22,14 @@ local function get_first_within_player_location()
 end
 
 function rfr.update_interaction()
-	local available_interaction = get_first_within_player_location()
-	if available_interaction > 0 then
-		--local ppos = rfr.get_position(PLAYER)
-		--rfr.set_position(available_interaction, ppos.x + 16, ppos.y)
-		if beaver.get_input(config.button.interaction) == 1 then
-			rfr.trigger_interaction(available_interaction)
+	if rfr.get_properties(PLAYER, "can_interact") then
+		local available_interaction = get_first_within_player_location()
+		if available_interaction > 0 then
+			--local ppos = rfr.get_position(PLAYER)
+			--rfr.set_position(available_interaction, ppos.x + 16, ppos.y)
+			if beaver.get_input(config.button.interaction) == 1 then
+				rfr.trigger_interaction(available_interaction)
+			end
 		end
 	end
 end

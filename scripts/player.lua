@@ -4,6 +4,7 @@ local player = {}
 PLAYER = rfr.add_entity()
 rfr.set_properties(PLAYER, "walkspeed", 1)
 rfr.set_properties(PLAYER, "can_move", true)
+rfr.set_properties(PLAYER, "can_interact", true)
 rfr.set_position(PLAYER, 144, 112)
 rfr.set_location(PLAYER, "Map.Mainroom")
 rfr.set_dialogue_position(PLAYER, 16, -3)
@@ -59,14 +60,15 @@ function player.update(dt)
 
 	rfr.set_position(PLAYER, ppos.x, ppos.y)
 	if beaver.get_input("E") == 1 then
-		rfr.play_cutscene("prologue_hall")
+		rfr.play_cutscene("cs_prologue_room")
 	end
 
 	if rfr.having_dialogue_options() then
+		rfr.set_properties(PLAYER, "can_interact", false)
 		if beaver.get_input("UP") == 1 then rfr.decrement_dialogue_options_selection() end
 		if beaver.get_input("DOWN") == 1 then rfr.increment_dialogue_options_selection() end
-
 		if beaver.get_input(config.button.interaction) == 1 then rfr.select_dialogue_options_selection() end
+	else rfr.set_properties(PLAYER, "can_interact", true)
 	end
 end
 

@@ -15,6 +15,7 @@ function LOAD()
 	beaver.new_font(rfr.gamepath() .. "assets/fonts/inconsolata.ttf", 64, "inconsolata")
 
 	rfr.new_map("room", rfr.gamepath() .. "data/maps/rfr_room.tmj")
+	rfr.new_map("room_before", rfr.gamepath() .. "data/maps/rfr_room_before.tmj")
 	rfr.new_map("hall", rfr.gamepath() .. "data/maps/hall.tmj")
 
 	gamestate.load()
