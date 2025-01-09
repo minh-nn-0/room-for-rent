@@ -7,7 +7,7 @@ rfr.set_properties(NEIGHBOR, "walkspeed", 0.5)
 rfr.set_properties(OWNER, "facing_direction", "left")
 rfr.set_properties(NEIGHBOR, "facing_direction", "left")
 rfr.set_image(OWNER, "woman")
-rfr.set_image(NEIGHBOR, "neighbor")
+rfr.set_image(NEIGHBOR, "neighbour")
 rfr.set_state_entry(OWNER, "idle",
 	function()
 		rfr.set_tileanimation(OWNER, {
