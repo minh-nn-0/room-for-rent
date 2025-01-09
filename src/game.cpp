@@ -134,6 +134,7 @@ void rfr::game::setup_binding()
 				{
 					auto& pos = _entities.get_component<position>(eid).value();
 					draw_interaction(interaction->_name, pos._value, 
+							_lua["config"]["dialogue_font"],
 							_lua["config"]["text_scale"],
 							_lua["config"]["interaction_box_padding"],
 							_beaver);
@@ -146,6 +147,7 @@ void rfr::game::setup_binding()
 				{
 					auto pos = _entities.get_component<beaver::component::position>(eid).value();
 					rfr::draw_dialogue(pos._value , *dialogue, 
+							_lua["config"]["dialogue_font"],
 							_lua["config"]["text_scale"],
 							_lua["config"]["dialogue_box_padding"],
 							_lua["config"]["dialogue_wraplength"],
@@ -160,7 +162,7 @@ void rfr::game::setup_binding()
 				{
 					const std::string& opts = DIALOGUE_OPTIONS._options[i];
 					sdl::texture* UI_tex = _beaver._assets.get<sdl::texture>("UI");		
-					sdl::font* font = _beaver._assets.get<sdl::font>("inconsolata");
+					sdl::font* font = _beaver._assets.get<sdl::font>(_lua["config"]["dialogue_font"]);
 					sdl::texture text = beaver::make_text_blended(_beaver._graphics._rdr, *font, opts, _beaver._graphics._draw_color);
 
 					mmath::frect text_dst = {align_left ? x : x - text._width * scale,

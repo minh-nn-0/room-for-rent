@@ -13,5 +13,7 @@ namespace rfr
 		std::function<void()> _action;
 	};
 	
-	void draw_interaction(const std::string& name, const mmath::fvec2& position, float scale, int padding, beaver::sdlgame& game);
+	void draw_interaction(const std::string& name, const mmath::fvec2& position,
+			const std::string& fontname,
+			float scale, int padding, beaver::sdlgame& game);
 };

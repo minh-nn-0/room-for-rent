@@ -1,6 +1,7 @@
 local player = require "player"
 local lighting = require "lighting"
 local door = require "door"
+require "phone.main"
 local gamestate = {
 	current_state = "ingame"
 }
@@ -31,11 +32,13 @@ state["ingame"] = {
 		rfr.update_interaction()
 		rfr.update_animation(dt)
 		rfr.update_dialogue(dt)
+		rfr.update_phone(dt)
 		rfr.update_events()
 		rfr.update_event_listener()
 		rfr.update_timer(dt)
 		rfr.update_countdown(dt)
 		rfr.cleanup_entities()
+
 		return true
 	end,
 	draw = function()
@@ -53,7 +56,6 @@ state["ingame"] = {
 		for _, eid in ipairs(rfr.get_active_entities()) do
 			if rfr.get_location(eid) == rfr.get_location(PLAYER) then
 				beaver.set_draw_color(0,0,0,255)
-				rfr.draw_dialogue(eid)
 				if rfr.get_properties(PLAYER, "can_interact") then
 					beaver.set_draw_color(255,255,255,255)
 					rfr.draw_interactions_info(eid)
@@ -61,16 +63,22 @@ state["ingame"] = {
 			end
 		end
 
+		for _, eid in ipairs(rfr.get_active_entities()) do
+			if rfr.get_location(eid) == rfr.get_location(PLAYER) then
+				beaver.set_draw_color(10,10,10,255)
+				rfr.draw_dialogue(eid)
+			end
+		end
+
 		local ppos = rfr.get_position(PLAYER)
-		local oldtscale = config.text_scale
 
 		beaver.set_draw_color(255,255,255,255)
-		config.text_scale = 1/15
 		local cx,_,cw,_ = rfr.get_cam_view()
 		local player_near_right_edge = ppos.x >= cx + (cw / config.cam_zoom) - 70
 		rfr.draw_dialogue_options(player_near_right_edge and ppos.x or ppos.x + 30, ppos.y + 5, not player_near_right_edge)
-		config.text_scale = oldtscale
 
+		beaver.set_draw_color(10,10,10,255)
+		rfr.draw_phone()
 		rfr.draw_transition()
 	end
 }

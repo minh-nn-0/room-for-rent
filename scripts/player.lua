@@ -55,7 +55,12 @@ function player.update(dt)
 		rfr.set_image(PLAYER, "girl")
 	end
 	if beaver.get_input("D") == 1 then
-		rfr.set_dialogue_options("Đồng ý xem phòng", "Nghi ngờ")
+		rfr.set_current_map("outside")
+		ppos.x = 400
+		ppos.y = 144
+		rfr.set_cam_zoom(4)
+		rfr.set_cam_target(PLAYER, 16, -30)
+		rfr.set_location(PLAYER, "Map.Outside")
 	end
 
 	rfr.set_position(PLAYER, ppos.x, ppos.y)
@@ -63,11 +68,17 @@ function player.update(dt)
 		rfr.play_cutscene("cs_prologue_room")
 	end
 
+	if beaver.get_input("H") == 1 then
+		rfr.toggle_phone()
+	end
+
 	if rfr.having_dialogue_options() then
 		rfr.set_properties(PLAYER, "can_interact", false)
-		if beaver.get_input("UP") == 1 then rfr.decrement_dialogue_options_selection() end
-		if beaver.get_input("DOWN") == 1 then rfr.increment_dialogue_options_selection() end
-		if beaver.get_input(config.button.interaction) == 1 then rfr.select_dialogue_options_selection() end
+		if not rfr.get_flag("phone_opening") then
+			if beaver.get_input("UP") == 1 then rfr.decrement_dialogue_options_selection() end
+			if beaver.get_input("DOWN") == 1 then rfr.increment_dialogue_options_selection() end
+			if beaver.get_input(config.button.interaction) == 1 then rfr.select_dialogue_options_selection() end
+		end
 	else rfr.set_properties(PLAYER, "can_interact", true)
 	end
 end

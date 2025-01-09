@@ -19,6 +19,8 @@ function rfr.update_camera(dt)
 		local pos = rfr.get_position(target)
 		rfr.camera_target(pos.x + offx, pos.y + offy, dt)
 	end
-	local map_boundary = map_boundaries[rfr.get_location(PLAYER)] and map_boundaries[rfr.get_location(PLAYER)] or {0, 320}
-	rfr.clamp_camera(map_boundary[1], map_boundary[2] - 1280 / config.cam_zoom)
+	local map_boundary = map_boundaries[rfr.get_location(PLAYER)]
+	if map_boundary then
+		rfr.clamp_camera(map_boundary[1], map_boundary[2] - config.render_size[1] / config.cam_zoom)
+	end
 end

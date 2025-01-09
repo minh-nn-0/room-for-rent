@@ -31,4 +31,15 @@ function util.split_string(str, delim)
 
 	return rs
 end
+function util.ease_in_out(t)
+    return t < 0.5 and 2 * t * t or -1 + (4 - 2 * t) * t
+end
+function util.ease_in_out_back(t)
+	local c1 = 1.70158;
+	local c2 = c1 * 1.525;
+
+	return t < 0.5 and ((2 * t) ^ 2 * ((c2 + 1) * 2 * t - c2)) / 2
+  		or ((2 * t - 2) ^ 2 * ((c2 + 1) * (t * 2 - 2) + c2) + 2) / 2;
+end
+
 return util

@@ -1,11 +1,12 @@
 #include "dialogue.hpp"
 #include "textbox_drawing.hpp"
 void rfr::draw_dialogue(const mmath::fvec2& actor_position, const dialogue& dialogue,
+		const std::string& fontname,
 		float scale, int padding, int wraplength,
 		beaver::sdlgame& game)
 {
 	sdl::texture* UI_tex = game._assets.get<sdl::texture>("UI");		
-	sdl::font* font = game._assets.get<sdl::font>("inconsolata");
+	sdl::font* font = game._assets.get<sdl::font>(fontname);
 	sdl::texture text = beaver::make_text_blended(game._graphics._rdr, *font, dialogue._content, game._graphics._draw_color, wraplength);
 	
 	mmath::frect text_dst = {actor_position.x + dialogue._position.x - text._width / 2.f * scale,

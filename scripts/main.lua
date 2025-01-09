@@ -1,6 +1,7 @@
 local gamestate = require "gamestate"
 function LOAD()
-	beaver.set_render_logical_size(1280, 720)
+	beaver.set_render_logical_size(config.render_size[1], config.render_size[2])
+	beaver.set_integer_scale(true)
 	rfr.set_cam_smooth_speed(6)
 	rfr.set_cam_zoom(config.cam_zoom)
 
@@ -11,12 +12,15 @@ function LOAD()
 	beaver.new_image(rfr.gamepath() .. "assets/images/neighbor.png", "neighbor")
 	beaver.new_image(rfr.gamepath() .. "assets/images/ghost.png", "ghost")
 	beaver.new_image(rfr.gamepath() .. "assets/images/UI.png", "UI")
+	beaver.new_image(rfr.gamepath() .. "assets/images/phone.png", "phone")
 
-	beaver.new_font(rfr.gamepath() .. "assets/fonts/inconsolata.ttf", 64, "inconsolata")
+	beaver.new_font(rfr.gamepath() .. "assets/fonts/UnifontExMono.ttf", 64, "unifontexmono")
+	beaver.new_font(rfr.gamepath() .. "assets/fonts/unifont.otf", 64, "unifont")
 
 	rfr.new_map("room", rfr.gamepath() .. "data/maps/rfr_room.tmj")
 	rfr.new_map("room_before", rfr.gamepath() .. "data/maps/rfr_room_before.tmj")
 	rfr.new_map("hall", rfr.gamepath() .. "data/maps/hall.tmj")
+	rfr.new_map("outside", rfr.gamepath() .. "data/maps/outside.tmj")
 
 	gamestate.load()
 end

@@ -33,6 +33,7 @@ namespace rfr
 	};
 	void draw_dialogue(const mmath::fvec2& actor_position,
 			const dialogue& dialogue,
+			const std::string& fontname,
 			float scale,
 			int padding, int wraplength,
 			beaver::sdlgame& game);

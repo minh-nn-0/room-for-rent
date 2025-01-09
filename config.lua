@@ -14,9 +14,12 @@ require "luamodules.interaction"
 require "luamodules.transition"
 require "luamodules.map"
 config = {
-	cam_zoom = 8,
+	render_size = {640, 360},
+	cam_zoom = 4,
 	wpm = 0.05,
-	text_scale = 1/12,
+	text_scale = 1/16,
+	dialogue_font = "unifont",
+	ui_font = "unifont",
 	dialogue_box_padding = 3,
 	dialogue_wraplength = 800,
 	interaction_box_padding = 4,
