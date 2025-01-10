@@ -1,5 +1,10 @@
-require "cutscenes.prologue"
+require "cutscenes.prologue.prologue"
 local player = {}
+
+local test_dialogue_phone = rfr.add_entity()
+rfr.add_tag(test_dialogue_phone, "ui")
+rfr.set_position(test_dialogue_phone, 200, 20)
+
 
 PLAYER = rfr.add_entity()
 rfr.set_properties(PLAYER, "walkspeed", 1)
@@ -29,7 +34,6 @@ rfr.set_state_entry(PLAYER, "move",
 		})
 	end)
 rfr.set_state(PLAYER, "idle")
-
 function player.update(dt)
 	local ppos = rfr.get_position(PLAYER)
 	local walkspeed = rfr.get_properties(PLAYER, "walkspeed")
@@ -58,7 +62,7 @@ function player.update(dt)
 		rfr.set_current_map("outside")
 		ppos.x = 400
 		ppos.y = 144
-		rfr.set_cam_zoom(4)
+		rfr.set_cam_zoom(2)
 		rfr.set_cam_target(PLAYER, 16, -30)
 		rfr.set_location(PLAYER, "Map.Outside")
 	end
@@ -68,8 +72,16 @@ function player.update(dt)
 		rfr.play_cutscene("cs_prologue_room")
 	end
 
-	if beaver.get_input("H") == 1 then
+	if beaver.get_input("ESCAPE") == 1 then
 		rfr.toggle_phone()
+	end
+
+	if beaver.get_input("C") == 1 then
+		rfr.set_dialogue(PLAYER, "Có phải cô A không ạ")
+	end
+
+	if beaver.get_input("B") == 1 then
+		rfr.set_dialogue(test_dialogue_phone, "ĐÚNG CHÍNH XÁC")
 	end
 
 	if rfr.having_dialogue_options() then

@@ -15,8 +15,8 @@ void rfr::cutscene_player::update(float dt)
 	if (_current_scriptid != _current_scene._scripts.size()
 		&& _current_scene._scripts.at(_current_scriptid)(dt))
 			_current_scriptid++;
-
-	if (_current_scene._updatef(dt))
+	_current_scene._updatef(dt);
+	if (_current_scriptid >= _current_scene._scripts.size())
 	{
 		_active = false;
 		_current_scene._exitf();

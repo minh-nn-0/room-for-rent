@@ -14,7 +14,7 @@ void rfr::draw_interaction(const std::string& name, const mmath::fvec2& position
 							text._width * scale,
 							text._height * scale};
 	mmath::frect text_box {text_dst._pos.x - padding, 
-							text_dst._pos.y - 0.6f,
+							text_dst._pos.y - 1.f,
 							text_dst._size.x + 2 * padding,
 							8};
 

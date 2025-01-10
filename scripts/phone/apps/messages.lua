@@ -1,0 +1,3 @@
+local messages = {}
+
+return messages

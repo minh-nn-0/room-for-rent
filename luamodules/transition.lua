@@ -7,6 +7,7 @@ local active = false
 beaver.create_texture_for_drawing("fade", 1280, 720)
 beaver.set_texture_blend_mode("fade", "blend")
 
+function rfr.is_transition_active() return active end
 function rfr.fade_in(duration)
 	opacity = 255
 	target_opacity = 0

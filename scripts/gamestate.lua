@@ -23,6 +23,7 @@ state["ingame"] = {
 		door.load()
 	end,
 	update = function(dt)
+		config.text_scale = 1/rfr.get_cam_zoom()
 		player.update(dt)
 		rfr.set_only_player_location_visible()
 		rfr.update_transition(dt)
@@ -44,7 +45,8 @@ state["ingame"] = {
 	draw = function()
 		beaver.set_draw_color(10,10,10,255)
 		beaver.clear()
-		rfr.draw_map(rfr.get_current_map(), 0, 0)
+		local ppos = rfr.get_position(PLAYER)
+		rfr.draw_map_by_layer(rfr.get_current_map(), rfr.get_location(PLAYER) .. ".Bg", 0, 0)
 		for _, eid in ipairs(rfr.get_active_entities()) do
 			local bgcolor = lighting.get_background_color()
 			rfr.set_tint(eid, bgcolor[1], bgcolor[2], bgcolor[3], bgcolor[4])
@@ -69,17 +71,22 @@ state["ingame"] = {
 				rfr.draw_dialogue(eid)
 			end
 		end
-
-		local ppos = rfr.get_position(PLAYER)
-
 		beaver.set_draw_color(255,255,255,255)
 		local cx,_,cw,_ = rfr.get_cam_view()
 		local player_near_right_edge = ppos.x >= cx + (cw / config.cam_zoom) - 70
 		rfr.draw_dialogue_options(player_near_right_edge and ppos.x or ppos.x + 30, ppos.y + 5, not player_near_right_edge)
 
+		rfr.draw_map_by_layer(rfr.get_current_map(), rfr.get_location(PLAYER) .. ".Fg", 0, 0)
 		beaver.set_draw_color(10,10,10,255)
+		beaver.set_using_cam(false)
+		config.text_scale = 1
+		for _, eid in ipairs(rfr.get_entities_with_tags({"ui"})) do
+			rfr.draw_entities(eid)
+			rfr.draw_dialogue(eid)
+		end
 		rfr.draw_phone()
 		rfr.draw_transition()
+		beaver.set_using_cam(true)
 	end
 }
 

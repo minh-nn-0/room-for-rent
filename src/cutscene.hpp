@@ -7,7 +7,7 @@ namespace rfr
 	struct cutscene
 	{
 		std::vector<std::function<bool(float)>> _scripts;
-		std::function<bool(float)> _updatef;
+		std::function<void(float)> _updatef;
 		std::function<void()> _initf;
 		std::function<void()> _exitf;
 	};

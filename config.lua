@@ -17,14 +17,15 @@ config = {
 	render_size = {640, 360},
 	cam_zoom = 4,
 	wpm = 0.05,
-	text_scale = 1/16,
+	text_scale = 1/4,
 	dialogue_font = "unifont",
 	ui_font = "unifont",
 	dialogue_box_padding = 3,
 	dialogue_wraplength = 800,
-	interaction_box_padding = 4,
+	interaction_box_padding = 3,
 	button = {
 		interaction = "X",
+		back = "Z",
 		move_left = "LEFT",
 		move_right = "RIGHT"
 	},

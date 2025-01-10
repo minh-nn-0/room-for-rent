@@ -30,6 +30,8 @@ rfr::game::game(): _beaver("RFR", 1280, 720)
 	auto load_result = load();
 	if (!load_result.valid()) 
 		throw std::runtime_error(std::format("runtime error: {}", sol::error{load_result}.what()));
+
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
 };
 
 rfr::dialogue_options DIALOGUE_OPTIONS;
@@ -184,6 +186,10 @@ void rfr::game::setup_binding()
 	rfr.set_function("draw_map", [&](const std::string& map_name, float posx, float posy)
 			{
 				_beaver._graphics.tilemap(_maps.at(map_name), {posx, posy}, _beaver._assets.get_cvec<sdl::texture>());
+			});
+	rfr.set_function("draw_map_by_layer", [&](const std::string& map_name, const std::string& layer_name, float posx, float posy)
+			{
+				_beaver._graphics.tilemap_by_layer(_maps.at(map_name), layer_name, {posx, posy}, _beaver._assets.get_cvec<sdl::texture>());
 			});
 
 	try 

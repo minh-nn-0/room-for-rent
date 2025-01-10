@@ -1,10 +1,24 @@
-local function draw_home()
-end
+local home = require "phone.apps.home"
+local call = require "phone.apps.call"
+local messenger = require "phone.apps.messenger"
+local selection = require "phone.selection"
 
-local function draw_call()
-end
+local phone_states =  {
+	["home"] = home,
+	["call"] = call,
+	["message"] = messenger,
+	["note"] = {
+		update = function(dt)
+		end,
+		draw = function()
+		end,
+	},
+	["setting"] = {
+		update = function(dt)
+		end,
+		draw = function()
+		end,
+	},
+}
 
-local function draw_messages()
-end
-local function draw_settings()
-end
+return phone_states
