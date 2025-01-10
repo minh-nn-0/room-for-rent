@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <set>
 #include <beaver/sdlgame.hpp>
 namespace rfr
 {
@@ -24,7 +23,8 @@ namespace rfr
 		std::string _content;
 		// determine where the bottom center of dialogue box will be in relative to actor position
 		mmath::fvec2 _position;
-		float _time;
+		std::size_t _text_index{0};
+		float _time{0};
 	};
 	struct dialogue_options
 	{

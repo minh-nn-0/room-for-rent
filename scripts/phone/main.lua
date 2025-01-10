@@ -65,7 +65,9 @@ function rfr.update_phone(dt)
 		rfr.set_position(PHONE, phone_position.x, phone_position.y)
 		return
 	end
-	if rfr.get_flag("phone_opening") then phone_states[rfr.get_state(PHONE)].update(dt) end
+	if rfr.get_flag("phone_opening") then phone_states[rfr.get_state(PHONE)].update(dt)
+	else rfr.set_state(PHONE, "home")
+	end
 	--if not screen_at_correct_brightness() then
 	--	if opening then
 	--		phone_screen_color[1] = phone_screen_color[1] + 10 * dt

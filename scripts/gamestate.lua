@@ -24,6 +24,7 @@ state["ingame"] = {
 	end,
 	update = function(dt)
 		config.text_scale = 1/rfr.get_cam_zoom()
+		rfr.set_location(PHONE, rfr.get_location(PLAYER))
 		player.update(dt)
 		rfr.set_only_player_location_visible()
 		rfr.update_transition(dt)
@@ -50,7 +51,7 @@ state["ingame"] = {
 		for _, eid in ipairs(rfr.get_active_entities()) do
 			local bgcolor = lighting.get_background_color()
 			rfr.set_tint(eid, bgcolor[1], bgcolor[2], bgcolor[3], bgcolor[4])
-			if rfr.get_location(eid) == rfr.get_location(PLAYER) then
+			if rfr.get_location(eid) == rfr.get_location(PLAYER) and not rfr.has_tag(eid, "ui") then
 				rfr.draw_entities(eid)
 			end
 		end
@@ -67,8 +68,10 @@ state["ingame"] = {
 
 		for _, eid in ipairs(rfr.get_active_entities()) do
 			if rfr.get_location(eid) == rfr.get_location(PLAYER) then
-				beaver.set_draw_color(10,10,10,255)
-				rfr.draw_dialogue(eid)
+				if rfr.has_active_dialogue(eid) then
+					beaver.set_draw_color(10,10,10,255)
+					rfr.draw_dialogue(eid)
+				end
 			end
 		end
 		beaver.set_draw_color(255,255,255,255)
@@ -82,7 +85,6 @@ state["ingame"] = {
 		config.text_scale = 1
 		for _, eid in ipairs(rfr.get_entities_with_tags({"ui"})) do
 			rfr.draw_entities(eid)
-			rfr.draw_dialogue(eid)
 		end
 		rfr.draw_phone()
 		rfr.draw_transition()

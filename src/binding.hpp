@@ -16,7 +16,8 @@ namespace rfr
 				{
 					auto& dl = ecs.template get_or_set_component<rfr::dialogue>(eid);
 					dl->_content = content;
-					dl->_time = content.length() * lua["config"]["wpm"].get<float>();
+					dl->_text_index = 0;
+					dl->_time = 0;
 				});
 		tbl.set_function("set_dialogue_position", [&](std::size_t eid, float x, float y)
 				{
@@ -27,24 +28,37 @@ namespace rfr
 					for (std::size_t eid: ecs.template with<rfr::dialogue>())
 					{
 						auto& dl = ecs.template get_component<rfr::dialogue>(eid);
-						if (dl->_time > 0) dl->_time -= dt;
+						if (dl->_text_index < dl->_content.size())
+						{
+							dl->_time += lua["config"]["cpf"].get<float>() * dt;
+							if (dl->_time > 1)
+							{
+								dl->_text_index += static_cast<int>(dl->_time);
+								dl->_time = 0;
+							};
+							if (dl->_text_index > dl->_content.size())
+								dl->_text_index = dl->_content.size();
+						}
+						else if (dl->_time < lua["config"]["dialogue_wait_time"].get<float>())
+							dl->_time += dt;
 					};
 				});
 		tbl.set_function("has_active_dialogue", [&](std::size_t eid)
 				{
 					auto& dl = ecs.template get_component<rfr::dialogue>(eid);
-					if (dl.has_value()) return dl->_time > 0;
+					if (dl.has_value())
+						return dl->_text_index < dl->_content.size() || dl->_time < lua["config"]["dialogue_wait_time"].get<float>();
 					else return false;
 				});
-		tbl.set_function("get_dialogue_time", [&](std::size_t eid) -> sol::object
-				{
-					auto& dl = ecs.template get_component<rfr::dialogue>(eid);
-					if (dl.has_value()) 
-					{
-						return sol::make_object(lua, dl->_time);
-					}
-					else return sol::nil;
-				});
+		//tbl.set_function("get_dialogue_time", [&](std::size_t eid) -> sol::object
+		//		{
+		//			auto& dl = ecs.template get_component<rfr::dialogue>(eid);
+		//			if (dl.has_value()) 
+		//			{
+		//				return sol::make_object(lua, dl->_time);
+		//			}
+		//			else return sol::nil;
+		//		});
 		tbl.set_function("set_dialogue_options", [&](sol::variadic_args opts)
 				{
 					dialogue_options._options.clear();

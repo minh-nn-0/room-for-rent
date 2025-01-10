@@ -1,10 +1,6 @@
 require "cutscenes.prologue.prologue"
 local player = {}
 
-local test_dialogue_phone = rfr.add_entity()
-rfr.add_tag(test_dialogue_phone, "ui")
-rfr.set_position(test_dialogue_phone, 200, 20)
-
 
 PLAYER = rfr.add_entity()
 rfr.set_properties(PLAYER, "walkspeed", 1)
@@ -81,7 +77,7 @@ function player.update(dt)
 	end
 
 	if beaver.get_input("B") == 1 then
-		rfr.set_dialogue(test_dialogue_phone, "ĐÚNG CHÍNH XÁC")
+		rfr.set_phone_dialogue(" owner_greeting Giờ gần Tết rồi nên giá phòng cũng rẻ.")
 	end
 
 	if rfr.having_dialogue_options() then

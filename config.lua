@@ -16,12 +16,13 @@ require "luamodules.map"
 config = {
 	render_size = {640, 360},
 	cam_zoom = 4,
-	wpm = 0.05,
+	cpf = 40,
 	text_scale = 1/4,
 	dialogue_font = "unifont",
 	ui_font = "unifont",
+	dialogue_wait_time = 1,
 	dialogue_box_padding = 3,
-	dialogue_wraplength = 800,
+	dialogue_wraplength = 200,
 	interaction_box_padding = 3,
 	button = {
 		interaction = "X",
