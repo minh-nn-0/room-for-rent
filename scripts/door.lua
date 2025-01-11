@@ -49,20 +49,20 @@ function door.load()
 			return px >= 300 and px <= 320 and not rfr.get_flag("prologue_room")
 		end,
 		function()
-			rfr.set_cam_center(48, 64)
+			rfr.set_cam_center(432, 96)
 			rfr.set_current_map("hall")
 			rfr.set_location(PLAYER, "Map.Hall")
-			rfr.set_position(PLAYER, 32,64)
+			rfr.set_position(PLAYER, 416,80)
 			rfr.fade_in(1)
 		end)
 
 	hall_to_room = rfr.add_entity()
-	rfr.set_position(hall_to_room, 48, 48)
+	rfr.set_position(hall_to_room, 432, 70)
 	rfr.set_location(hall_to_room, "Map.Hall")
 	rfr.set_interaction(hall_to_room, interaction_name["door_hall_to_room"],
 		function()
 			local px,_ = util.player_center()
-			return px >= 40 and px <= 60 and not rfr.get_flag("prologue_hall")
+			return px >= 420 and px <= 440 and not rfr.get_flag("prologue_hall")
 		end,
 		function()
 			rfr.set_cam_center(316, 112)
@@ -73,15 +73,15 @@ function door.load()
 		end)
 
 	hall_stair_first = rfr.add_entity()
-	rfr.set_position(hall_stair_first, 297, 224)
+	rfr.set_position(hall_stair_first, 780, 124)
 	rfr.set_location(hall_stair_first, "Map.Hall")
 	rfr.set_interaction(hall_stair_first, interaction_name["door_hall_stair_first"],
 		function()
 			local px,_ = util.player_center()
-			return px >= 290 and px <= 300
+			return px >= 760 and px <= 780
 		end,
 		function()
-			rfr.set_position(PLAYER, 288, 64)
+			rfr.set_position(PLAYER, 770, 80)
 		end)
 end
 return door

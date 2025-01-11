@@ -55,6 +55,7 @@ state["ingame"] = {
 				rfr.draw_entities(eid)
 			end
 		end
+		rfr.draw_map_by_layer(rfr.get_current_map(), rfr.get_location(PLAYER) .. ".Fg", 0, 0)
 		lighting.draw()
 		for _, eid in ipairs(rfr.get_active_entities()) do
 			if rfr.get_location(eid) == rfr.get_location(PLAYER) then
@@ -79,7 +80,6 @@ state["ingame"] = {
 		local player_near_right_edge = ppos.x >= cx + (cw / config.cam_zoom) - 70
 		rfr.draw_dialogue_options(player_near_right_edge and ppos.x or ppos.x + 30, ppos.y + 5, not player_near_right_edge)
 
-		rfr.draw_map_by_layer(rfr.get_current_map(), rfr.get_location(PLAYER) .. ".Fg", 0, 0)
 		beaver.set_draw_color(10,10,10,255)
 		beaver.set_using_cam(false)
 		config.text_scale = 1

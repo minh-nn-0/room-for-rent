@@ -44,3 +44,15 @@ rfr.add_cutscene({
 	},
 	update = function(dt) end
 })
+rfr.add_event("ev_prologue_room_refuse", function()
+	return rfr.get_current_cutscene_name() == "cs_prologue_player_refuse_room" and not rfr.is_cutscene_playing()
+end)
+local reconsidered_room_event = rfr.add_entity()
+rfr.set_event_listener(reconsidered_room_event, "ev_prologue_room_refuse",
+	function()
+		if rfr.get_flag("reconsidered") then
+			rfr.play_cutscene("cs_prologue_player_accept_room")
+		else
+			rfr.play_cutscene("cs_prologue_player_leave")
+		end
+	end)

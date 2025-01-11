@@ -9,11 +9,6 @@ rfr.add_cutscene({
 	scripts = {
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end
-			rfr.set_dialogue(PLAYER, rfr.get_dialogue_from_json(dialogues, "player_accept_room"))
-			return true
-		end,
-		function(dt)
-			if rfr.has_active_dialogue(PLAYER) then return false end
 			rfr.set_dialogue(PLAYER, rfr.get_dialogue_from_json(dialogues, "player_sign"))
 			return true
 		end,

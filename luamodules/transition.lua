@@ -33,7 +33,6 @@ function rfr.update_transition(dt)
 	else
 		opacity = math.floor(math.min(255, 255 * elapsed/time))
 	end
-	print(opacity)
 	elapsed = elapsed + dt
 	if elapsed >= time then
 		opacity = target_opacity

@@ -3,14 +3,14 @@ local dialogues
 local function on_second_floor()
 	local ppos = rfr.get_position(PLAYER)
 	local opos = rfr.get_position(OWNER)
-	return ppos.y == 64 and opos.y == 64
+	return ppos.y == 80 and opos.y == 80
 end
 
 local function player_behind()
 	local ppos = rfr.get_position(PLAYER)
 	local opos = rfr.get_position(OWNER)
 
-	if opos.y == 240 then
+	if opos.y == 144 then
 		return opos.x > ppos.x and opos.x - ppos.x >= 60
 	else
 		return opos.x < ppos.x and ppos.x - opos.x >= 60
@@ -28,8 +28,8 @@ rfr.add_cutscene({
 		rfr.set_current_map("hall")
 		rfr.set_location(PLAYER, "Map.Hall")
 		rfr.set_location(OWNER, "Map.Hall")
-		rfr.set_position(PLAYER, 16,240)
-		rfr.set_position(OWNER, 32,240)
+		rfr.set_position(PLAYER, 560,144)
+		rfr.set_position(OWNER, 580,144)
 
 		rfr.set_properties(PLAYER, "walkspeed", 0.7)
 		rfr.set_properties(OWNER, "walkspeed", 0.5)
@@ -149,7 +149,7 @@ rfr.add_cutscene({
 				rfr.set_flag("prologue_owner_go_in_room")
 				rfr.set_properties(OWNER, "facing_direction", "left")
 				rfr.set_state(OWNER, "move")
-				if rfr.get_position(OWNER).x <= 30 then
+				if rfr.get_position(OWNER).x <= 420 then
 					rfr.set_location(OWNER, "Map.Mainroom")
 					rfr.set_state(OWNER, "idle")
 					return true
@@ -165,17 +165,17 @@ rfr.add_cutscene({
 			rfr.set_state(OWNER, "idle")
 			rfr.set_properties(OWNER, "facing_direction", owner_pos.x > ppos.x and "left" or "right")
 		else
-			if owner_pos.y == 240 then
+			if owner_pos.y == 144 then
 				rfr.set_properties(OWNER, "facing_direction", "right")
 			end
-			if owner_pos.y == 64 then
+			if owner_pos.y == 80 then
 				rfr.set_properties(OWNER, "facing_direction", "left")
 			end
-			if owner_pos.x >= 294 and owner_pos.y == 240 then
-				rfr.set_position(OWNER, 288, 64)
+			if owner_pos.x >= 770 and owner_pos.y == 144 then
+				rfr.set_position(OWNER, 770, 80)
 			end
 			if not rfr.get_flag("prologue_owner_go_in_room") then
-				if owner_pos.x <= 64 and owner_pos.y == 64 then
+				if owner_pos.x <= 448 and owner_pos.y == 80 then
 					rfr.set_state(OWNER, "idle")
 					rfr.set_properties(OWNER, "facing_direction", "right")
 				else

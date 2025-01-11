@@ -13,6 +13,12 @@ function util.load_json(file)
 	return json.decode(content)
 end
 
+function util.load_text(file)
+	local f = assert(io.open(file, "r"))
+	local content = f:read("a")
+	f:close()
+	return content
+end
 function util.split_string(str, delim)
 	local rs = {}
 	local start = 1

@@ -79,16 +79,6 @@
                                  "width":50,
                                  "x":0,
                                  "y":0
-                                }, 
-                                {
-                                 "id":16,
-                                 "image":"..\/..\/assets\/images\/outside_pole.png",
-                                 "name":"Image Layer 1",
-                                 "opacity":1,
-                                 "type":"imagelayer",
-                                 "visible":true,
-                                 "x":0,
-                                 "y":0
                                 }],
                          "name":"Bg",
                          "opacity":1,
@@ -143,6 +133,16 @@
                                  "type":"tilelayer",
                                  "visible":true,
                                  "width":50,
+                                 "x":0,
+                                 "y":0
+                                }, 
+                                {
+                                 "id":16,
+                                 "image":"..\/..\/assets\/images\/outside_pole.png",
+                                 "name":"Image Layer 1",
+                                 "opacity":1,
+                                 "type":"imagelayer",
+                                 "visible":true,
                                  "x":0,
                                  "y":0
                                 }],

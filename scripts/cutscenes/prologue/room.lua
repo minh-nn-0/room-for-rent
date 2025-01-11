@@ -2,23 +2,24 @@ local util = require "luamodules.utilities"
 local dialogues
 local cam_target1 = rfr.add_entity()
 rfr.set_position(cam_target1, 80, 112)
-local cam_delay = rfr.add_entity()
-
 local start_talking_timer = rfr.add_entity()
+local confirm_owner = rfr.add_entity()
 rfr.add_cutscene({
 	name = "cs_prologue_room",
 	init = function()
 		dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
 		local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/" .. config.language .. ".json")
 		rfr.set_flag("prologue_room")
-		rfr.fade_in(2)
-		rfr.set_timer(cam_delay, 1)
-		rfr.set_location(OWNER, "Map.Mainroom")
+		rfr.fade_in(1.5)
+		rfr.set_current_map("room_before")
+		rfr.set_position(PLAYER, 290, 112)
+		rfr.set_flipflag(PLAYER, beaver.FLIP_H)
+		rfr.set_properties(PLAYER, "can_move", false)
 		rfr.set_position(OWNER, 278, 112)
+		rfr.set_location(OWNER, "Map.Mainroom")
 		rfr.set_state(OWNER, "idle")
 		rfr.set_properties(OWNER,"facing_direction", "left")
 
-		local confirm_owner = rfr.add_entity()
 		rfr.set_position(confirm_owner, 294, 100)
 		rfr.set_location(confirm_owner, "Map.Mainroom")
 		rfr.set_interaction(confirm_owner, interaction_name["owner"],
@@ -36,7 +37,10 @@ rfr.add_cutscene({
 		rfr.set_dialogue(OWNER, "")
 		rfr.set_cam_target(cam_target1)
 	end,
-	exit = function() print("HAHAHAHHA") end,
+	exit = function()
+		rfr.set_active(confirm_owner, false)
+		print("exit prologue room")
+	end,
 	scripts = {
 		function(dt)
 			if rfr.get_position(cam_target1).x <= 250 then return false end
@@ -47,12 +51,13 @@ rfr.add_cutscene({
 			if not rfr.get_flag("player_choice_take_room") then return false end
 			if rfr.having_dialogue_options() then return false end
 			local sl = rfr.get_dialogue_options_selection()
-			if sl == 2 then
+			if sl == 0 then
+				rfr.set_dialogue(PLAYER, rfr.get_dialogue_from_json(dialogues, "player_accept_room"))
+			elseif sl == 1 then
+				rfr.set_flag("refuse_room")
+			elseif sl == 2 then
 				rfr.unset_flag("player_choice_take_room")
 				return false
-			end
-			if sl == 1 then
-				rfr.set_flag("refuse_room")
 			end
 			return true
 		end,
@@ -65,6 +70,7 @@ rfr.add_cutscene({
 			rfr.set_position(cam_target1, cam_target_pos.x, cam_target_pos.y)
 		else
 			rfr.set_cam_target(PLAYER, 16, 0)
+			rfr.set_properties(PLAYER, "can_move", true)
 		end
 	end
 })
@@ -80,15 +86,3 @@ rfr.set_event_listener(refuse_room_event, "ev_prologue_room_choice",
 		end
 	end)
 
-rfr.add_event("ev_prologue_room_refuse", function()
-	return rfr.get_current_cutscene_name() == "cs_prologue_player_refuse_room" and not rfr.is_cutscene_playing()
-end)
-local reconsidered_room_event = rfr.add_entity()
-rfr.set_event_listener(reconsidered_room_event, "ev_prologue_room_refuse",
-	function()
-		if rfr.get_flag("reconsidered") then
-			rfr.play_cutscene("cs_prologue_player_reconsidered")
-		else
-			rfr.play_cutscene("cs_prologue_player_leave")
-		end
-	end)
