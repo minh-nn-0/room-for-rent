@@ -12,7 +12,6 @@ local states = {
 		update = function(dt)
 			selection.set_max(#notes)
 			selection.update()
-			entry_names = util.load_json(rfr.gamepath() .. "data/note/entry_" .. config.language .. ".json")
 			if beaver.get_input(config.button.back) == 1 then rfr.set_state(PHONE, "home") end
 			if beaver.get_input(config.button.interaction) == 1 then
 				current_note = notes[selection.get()]
@@ -39,7 +38,6 @@ local states = {
 	},
 	["reading"] = {
 		update = function(dt)
-			text = util.load_text(rfr.gamepath() .. "data/note/" .. current_note .. "_" .. config.language .. ".txt")
 			if beaver.get_input("DOWN") > 0 then scroll = math.min(scroll + 0.6, string.len(text) / (wraplength / 16) - 20) end
 			if beaver.get_input("UP") > 0 then scroll = math.max(scroll - 0.6,0) end
 			if beaver.get_input(config.button.back) == 1 then app_state = "home" end
@@ -60,6 +58,11 @@ local states = {
 		end
 	},
 }
+
+local function load()
+	text = util.load_text(rfr.gamepath() .. "data/note/" .. current_note .. "_" .. config.language .. ".txt")
+	entry_names = util.load_json(rfr.gamepath() .. "data/note/entry_" .. config.language .. ".json")
+end
 local function update(dt)
 	states[app_state].update(dt)
 end
@@ -68,4 +71,4 @@ local function draw()
 	states[app_state].draw()
 end
 
-return {update = update, draw = draw}
+return {load = load, update = update, draw = draw}

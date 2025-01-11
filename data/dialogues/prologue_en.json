@@ -1,4 +1,12 @@
 {
+  "player_arrive1": "Không biết chỗ này đúng chưa nữa", 
+  "player_correct_address": "This is the correct place.", 
+  "player_should_call" : "I should call the landlady to open the door",
+  "player_call_greeting": "is this Ms. A?",
+  "owner_call_greeting": "exactly",
+  "player_call_introduce": "I'm the one who has an appointment to see the room today",
+  "player_call_arrived": "I'm at the gate now",
+  "owner_call_confirm": "okay me",
   "owner_greeting": "Now it's close to Tet, so the room prices are also cheaper.",
   "owner_one_room_left": "I only have one room left on the second floor.",
   "owner_cheapest": "Rest assured, it's the cheapest in the area.",

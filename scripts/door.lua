@@ -9,7 +9,7 @@ local hall_stair_first
 local locked_doors
 
 function door.load()
-	local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/" .. config.language .. ".json")
+	local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 	room_to_bathroom = rfr.add_entity()
 	rfr.set_position(room_to_bathroom, 256, 100)
 	rfr.set_location(room_to_bathroom, "Map.Mainroom")

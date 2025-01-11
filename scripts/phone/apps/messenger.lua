@@ -1,7 +1,7 @@
 local util = require "luamodules.utilities"
 local selection = require "phone.selection"
 
-local actor_names = util.load_json(rfr.gamepath() .. "data/interaction/" .. config.language .. ".json")
+local actor_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 
 local messages = {}
 
@@ -46,6 +46,9 @@ local states = {
 	}
 }
 
+local function load()
+	actor_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
+end
 
 local function update(dt)
 	states[current_state].update(dt)
@@ -59,4 +62,4 @@ function rfr.add_phone_messages(actor, content)
 	table.insert(messages[actor], content)
 end
 
-return {update = update, draw = draw}
+return {load = load, update = update, draw = draw}

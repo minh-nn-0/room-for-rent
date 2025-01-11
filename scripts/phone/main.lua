@@ -22,6 +22,9 @@ rfr.set_image(PHONE, "phone")
 rfr.set_image_source(PHONE, 0,0, phone_tex_width,phone_tex_height)
 rfr.set_scale(PHONE, config.cam_zoom, config.cam_zoom)
 rfr.add_tag(PHONE, "ui")
+for _,app in ipairs({"home","call","message","note"}) do
+	rfr.set_state_entry(PHONE, app, function() phone_states[app].load() end)
+end
 rfr.set_state(PHONE, "home")
 --local phone_screen_color = {40,40,40,255}
 --local phone_screen_rect = {3, 3, 42, 77}
@@ -57,6 +60,14 @@ local phone_lerp_timer = rfr.add_entity()
 rfr.set_timer(phone_lerp_timer, lerp_time)
 
 function rfr.toggle_phone()
+	phone_texts = util.load_json(rfr.gamepath() .. "data/ui/" .. config.language .. ".json")
+	phone_apps_info = {
+		call = {src = {x = 0, y = 32, w = 8, h = 8}, text = phone_texts["call"]},
+		message = {src = {x = 0, y = 40, w = 8, h = 8}, text = phone_texts["message"]},
+		note = {src = {x = 0, y = 48, w = 8, h = 8}, text = phone_texts["note"]},
+		setting = {src = {x = 0, y = 56, w = 8, h = 8}, text = phone_texts["setting"]},
+		exit = {src = {x = 8, y = 32, w = 8, h = 8}, text = phone_texts["exit"]},
+	}
 	rfr.toggle_flag("phone_opening")
 	rfr.set_timer(phone_lerp_timer, lerp_time)
 	if rfr.get_flag("phone_opening") then

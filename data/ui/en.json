@@ -1,3 +1,8 @@
 {
-	"home": "Home"
+	"home": "Home",
+	"call" : "Phone call",
+	"message" : "Messenger",
+	"note" : "Notes",
+	"setting" : "Settings",
+	"exit" : "Exit game"
 }

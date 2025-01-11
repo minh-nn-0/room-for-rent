@@ -41,7 +41,6 @@ function rfr.update_transition(dt)
 end
 
 function rfr.draw_transition()
-	if not active then return end
 	beaver.set_using_cam(false)
 	beaver.set_render_target("fade")
 	beaver.set_draw_color(0,0,0,opacity)

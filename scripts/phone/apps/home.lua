@@ -1,14 +1,19 @@
 local util = require "luamodules.utilities"
 local selection = require "phone.selection"
-local phone_texts = util.load_json(rfr.gamepath() .. "data/ui/" .. config.language .. ".json")
-local phone_apps_info = {
-	call = {src = {x = 0, y = 32, w = 8, h = 8}, text = phone_texts["call"]},
-	message = {src = {x = 0, y = 40, w = 8, h = 8}, text = phone_texts["message"]},
-	note = {src = {x = 0, y = 48, w = 8, h = 8}, text = phone_texts["note"]},
-	setting = {src = {x = 0, y = 56, w = 8, h = 8}, text = phone_texts["setting"]},
-	exit = {src = {x = 8, y = 32, w = 8, h = 8}, text = phone_texts["exit"]},
-}
+local phone_texts
+local phone_apps_info
 local phone_apps = {"call", "message", "note", "setting", "exit"}
+
+local function load()
+	phone_texts = util.load_json(rfr.gamepath() .. "data/ui/" .. config.language .. ".json")
+	phone_apps_info = {
+		call = {src = {x = 0, y = 32, w = 8, h = 8}, text = phone_texts["call"]},
+		message = {src = {x = 0, y = 40, w = 8, h = 8}, text = phone_texts["message"]},
+		note = {src = {x = 0, y = 48, w = 8, h = 8}, text = phone_texts["note"]},
+		setting = {src = {x = 0, y = 56, w = 8, h = 8}, text = phone_texts["setting"]},
+		exit = {src = {x = 8, y = 32, w = 8, h = 8}, text = phone_texts["exit"]},
+	}
+end
 local function update(dt)
 	selection.set_max(#phone_apps)
 	selection.update()
@@ -41,4 +46,4 @@ local function draw()
 	end
 end
 
-return {update = update, draw = draw}
+return {load = load, update = update, draw = draw}

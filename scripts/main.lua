@@ -2,7 +2,7 @@ local gamestate = require "gamestate"
 function LOAD()
 	beaver.set_render_logical_size(config.render_size[1], config.render_size[2])
 	beaver.set_integer_scale(true)
-	rfr.set_cam_smooth_speed(6)
+	rfr.set_cam_smooth_speed(8)
 	rfr.set_cam_zoom(config.cam_zoom)
 
 	beaver.new_image(rfr.gamepath() .. "assets/images/tileset.png")

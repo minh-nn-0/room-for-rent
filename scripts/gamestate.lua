@@ -1,6 +1,8 @@
 local player = require "player"
 local lighting = require "lighting"
 local door = require "door"
+require "interactions"
+require "cutscenes.prologue.prologue"
 require "phone.main"
 local gamestate = {
 	current_state = "ingame"
@@ -23,24 +25,28 @@ state["ingame"] = {
 		door.load()
 	end,
 	update = function(dt)
+		rfr.update_events()
+		rfr.update_event_listener()
+		rfr.update_cutscene(dt)
+		rfr.update_interaction()
+		rfr.update_character(dt)
+		rfr.update_dialogue(dt)
+		rfr.update_animation(dt)
+
 		config.text_scale = 1/rfr.get_cam_zoom()
 		rfr.set_location(PHONE, rfr.get_location(PLAYER))
 		player.update(dt)
+
 		rfr.set_only_player_location_visible()
 		rfr.update_transition(dt)
 		rfr.update_camera(dt)
-		rfr.update_character(dt)
-		rfr.update_cutscene(dt)
-		rfr.update_interaction()
-		rfr.update_animation(dt)
-		rfr.update_dialogue(dt)
 		rfr.update_phone(dt)
-		rfr.update_events()
-		rfr.update_event_listener()
 		rfr.update_timer(dt)
 		rfr.update_countdown(dt)
 		rfr.cleanup_entities()
 
+		local cx, cy,_,_ = rfr.get_cam_view()
+		print(cx, cy)
 		return true
 	end,
 	draw = function()

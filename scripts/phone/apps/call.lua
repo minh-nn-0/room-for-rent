@@ -1,5 +1,5 @@
 local util = require "luamodules.utilities"
-local character_name = util.load_json(rfr.gamepath() .. "data/interaction/" .. config.language .. ".json")
+local character_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local selection = require "phone.selection"
 local callee = ""
 local status = ""
@@ -84,7 +84,9 @@ local states = {
 		end,
 	}
 }
-
+local function load()
+	character_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
+end
 local function update(dt)
 	states[app_state].update(dt)
 end
@@ -96,4 +98,4 @@ function rfr.set_phone_dialogue(content)
 	call_content = content
 	text_index = 1
 end
-return {update = update, draw = draw}
+return {load = load, update = update, draw = draw}

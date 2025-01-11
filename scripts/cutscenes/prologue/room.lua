@@ -8,7 +8,7 @@ rfr.add_cutscene({
 	name = "cs_prologue_room",
 	init = function()
 		dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
-		local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/" .. config.language .. ".json")
+		local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 		rfr.set_flag("prologue_room")
 		rfr.fade_in(1.5)
 		rfr.set_current_map("room_before")

@@ -1,4 +1,7 @@
 {
+	"power_box" : "Power box",
+	"house_number" : "House number",
+	"metal_gate" : "Metal gate", 
 	"door_room_to_bathroom" : "Bathroom",
 	"door_bathroom_to_room" : "Mainroom",
 	"door_room_to_balcony" : "Balcony",
@@ -7,7 +10,6 @@
 	"door_hall_stair_first" : "Second floor",
 	"owner" : "Owner",
 	"mom" : "Mom",
+	"boss" : "Boss",
 	"neighbour" : "Neighbour"
 }
-	
-

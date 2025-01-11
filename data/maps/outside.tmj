@@ -108,7 +108,6 @@
                                  "image":"..\/..\/assets\/images\/outside_pole.png",
                                  "name":"pole",
                                  "opacity":1,
-                                 "parallaxx":1,
                                  "type":"imagelayer",
                                  "visible":true,
                                  "x":0,

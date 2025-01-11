@@ -1,4 +1,7 @@
 {
+	"power_box" : "Hộp điện",
+	"house_number" : "Biển số nhà",
+	"metal_gate" : "Cửa sắt", 
 	"door_room_to_bathroom" : "Phòng tắm",
 	"door_bathroom_to_room" : "Phòng chính",
 	"door_room_to_balcony" : "Ban công",
