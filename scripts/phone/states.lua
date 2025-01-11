@@ -1,18 +1,12 @@
 local home = require "phone.apps.home"
 local call = require "phone.apps.call"
 local messenger = require "phone.apps.messenger"
-local selection = require "phone.selection"
-
+local note = require "phone.apps.note"
 local phone_states =  {
 	["home"] = home,
 	["call"] = call,
 	["message"] = messenger,
-	["note"] = {
-		update = function(dt)
-		end,
-		draw = function()
-		end,
-	},
+	["note"] = note,
 	["setting"] = {
 		update = function(dt)
 		end,

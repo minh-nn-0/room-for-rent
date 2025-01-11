@@ -8,6 +8,13 @@ local phone_dsty = 10
 local phone_starty = 800
 local lerp_time = 0.5 -- takes how many seconds
 
+local phone_apps_info = {
+	call = {src = {x = 0, y = 32, w = 8, h = 8}, text = phone_texts["call"]},
+	message = {src = {x = 0, y = 40, w = 8, h = 8}, text = phone_texts["message"]},
+	note = {src = {x = 0, y = 48, w = 8, h = 8}, text = phone_texts["note"]},
+	setting = {src = {x = 0, y = 56, w = 8, h = 8}, text = phone_texts["setting"]},
+	exit = {src = {x = 8, y = 32, w = 8, h = 8}, text = phone_texts["exit"]},
+}
 PHONE = rfr.add_entity()
 --rfr.set_position(PHONE, config.render_size[1] / 2 - phone_tex_width * config.cam_zoom / 2, phone_starty)
 rfr.set_position(PHONE, 30, phone_starty)
@@ -21,9 +28,17 @@ rfr.set_state(PHONE, "home")
 local function draw_app_title()
 	beaver.set_draw_color(40,40,40,255)
 	local phone_position = rfr.get_position(PHONE)
-	beaver.draw_text_centered(phone_position.x + phone_tex_width / 2 * config.cam_zoom, phone_position.y + 15 * config.cam_zoom,
-								config.ui_font, 1,
-								phone_texts[rfr.get_state(PHONE)], 0, true)
+	if rfr.get_state(PHONE) == "home" then
+		beaver.draw_text_centered(phone_position.x + phone_tex_width / 2 * config.cam_zoom, phone_position.y + 15 * config.cam_zoom,
+									config.ui_font, 1,
+									phone_texts["home"], 0, true)
+	else
+		beaver.draw_texture("UI", {dst = { x = phone_position.x + (phone_tex_width / 2 - 4) * config.cam_zoom,
+										y = phone_position.y + 14 * config.cam_zoom,
+										w = 8 * config.cam_zoom,
+										h = 8 * config.cam_zoom},
+								src = phone_apps_info[rfr.get_state(PHONE)].src})
+	end
 end
 
 local function phone_at_position()

@@ -1,13 +1,33 @@
-# Mỗi ngày bạn có thể làm các việc sau:
-- Sáng:
-	+ Đánh răng rửa mặt(optional)
-	+ Ăn
-	+ Đi làm/ Nghỉ ngơi ở nhà
-- Tối:
-	+ Ăn tối
-	+ Học bài
-	+ Tắm rửa
-	+ Đi ngủ
-# Nếu bạn chọn ngủ buổi sáng thay vì đi làm, bạn sẽ ngủ đến chiều.
-# Màn chơi 1 ngày sẽ kết thúc khi bạn đi ngủ vào buổi tối. Bạn có thể về nhà bất cứ lúc nào. Điều đó đồng nghĩa với việc kết thúc game.
-# Lưu ý: những hành động mà bọn chọn có thể gây ra những kết thúc khác nhau cho câu chuyện. ) 
+Day2
+Sáng hôm sau: dev chọn 1 đồ vật để xê dịch. có thể chi tiết cửa sổ mở nắng chiếu vào.
+Sự kiện
+Nếu người chơi đi ra ngoài buổi sáng, xuất hiện c hàng xóm. Chọn tương tác trò chuyện. Hội thoại như ngày 1
+Nếu chọn đi ngủ: nằm mơ thấy học hành căng thẳng. Có thể là mơ đang ngồi học/ làm bài kiểm tra.  sau đó tỉnh dậy
+Đi tắm => Máu chảy từ vòi màu đỏ. thoáng hiện.
+Học bài: cảm giác như ai đó đang nhìn m. Bóng đen trong suốt xuất hiện nhấp nháy đằng sau.
+Đi ngủ: mơ như giấc ngủ trưa.
+Nếu người chơi chọn gọi điện cho mẹ: như day 1
+Làm bài tập
+1.Việt Nam có bao nhiêu tỉnh thành?
+63  b.64  c.65
+2. Thành phố nào lớn nhất cả nước về diện tích?
+Hà Nội b.Hồ Chí Minh c. Đà Nẵng d.Hải phòng
+3.	Việt Nam nằm trong đới khí hậu nào?
+Nhiệt đới  b.Cận nhiệt c.Hàn đới
+Day 3
+Sáng hôm sau: dev chọn 1 đồ vật để xê dịch. có thể chi tiết cửa sổ mở nắng chiếu vào.
+Sự kiện
+Nếu người chơi đi ra ngoài buổi sáng, xuất hiện c hàng xóm. Chọn tương tác trò chuyện. Hội thoại như ngày 1
+Tắm giặt quần áo (bàn tay gội hộ đầu)
+ Học bài
+Triều đại nào dài nhất trong lịch sử Việt Nam
+Nguyễn b. Hậu Lê c. Trần
+2.Tên gọi "Việt Nam" lần đầu tiên xuất hiện dưới triều đại nào?
+a. Nhà Nguyễn
+b. Nhà Tây Sơn
+c. Hồ
+3.Chủ tịch Hồ Chí Minh đã đọc Tuyên ngôn độc lập vào ngày nào?
+A. 30/4/1945
+C. 2/9/1945
+D. 3/2/1945
+
