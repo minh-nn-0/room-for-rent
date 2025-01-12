@@ -1,10 +1,9 @@
 local player = {}
-
-
 PLAYER = rfr.add_entity()
 rfr.set_properties(PLAYER, "walkspeed", 1)
-rfr.set_properties(PLAYER, "can_move", true)
-rfr.set_properties(PLAYER, "can_interact", true)
+rfr.set_flag("player_can_move")
+rfr.set_flag("player_can_interact")
+rfr.set_flag("player_can_open_phone")
 rfr.set_position(PLAYER, 144, 112)
 rfr.set_location(PLAYER, "Map.Mainroom")
 rfr.set_dialogue_position(PLAYER, 16, -3)
@@ -29,11 +28,11 @@ rfr.set_state_entry(PLAYER, "move",
 		})
 	end)
 rfr.set_state(PLAYER, "idle")
+
 function player.update(dt)
 	local ppos = rfr.get_position(PLAYER)
 	local walkspeed = rfr.get_properties(PLAYER, "walkspeed")
-
-	if rfr.get_properties(PLAYER, "can_move") then
+	if rfr.get_flag("player_can_move") then
 		if beaver.get_input("LEFT") > 0 then
 			ppos.x = ppos.x - walkspeed
 			rfr.set_state(PLAYER, "move")
@@ -64,25 +63,34 @@ function player.update(dt)
 
 	rfr.set_position(PLAYER, ppos.x, ppos.y)
 	if beaver.get_input("E") == 1 then
-		rfr.play_cutscene("cs_prologue_arrive")
+		rfr.play_cutscene(CS_PROLOGUE_ARRIVE)
 	end
 
-	if beaver.get_input("ESCAPE") == 1 then
+	if beaver.get_input("ESCAPE") == 1 and rfr.get_flag("player_can_open_phone") then
 		rfr.toggle_phone()
 	end
 
 	if beaver.get_input("C") == 1 then
 		rfr.set_dialogue(PLAYER, "Có phải cô A không ạ")
 	end
-
-	if rfr.having_dialogue_options() or rfr.has_active_dialogue(PLAYER) then
-		rfr.set_properties(PLAYER, "can_interact", false)
+	if rfr.having_dialogue_options() then
 		if not rfr.get_flag("phone_opening") then
 			if beaver.get_input("UP") == 1 then rfr.decrement_dialogue_options_selection() end
 			if beaver.get_input("DOWN") == 1 then rfr.increment_dialogue_options_selection() end
 			if beaver.get_input(config.button.interaction) == 1 then rfr.select_dialogue_options_selection() end
 		end
-	else rfr.set_properties(PLAYER, "can_interact", true)
+	end
+
+	if rfr.having_dialogue_options() or rfr.has_active_dialogue(PLAYER) then
+		rfr.unset_flag("player_can_interact")
+	elseif not rfr.get_flag("phone_opening") then
+		rfr.set_flag("player_can_interact")
+	end
+
+	if rfr.get_flag("phone_opening") then
+		if rfr.get_flipflag(PLAYER) == beaver.FLIP_H then
+			rfr.set_dialogue_position(PLAYER, 20, -3)
+		end
 	end
 end
 

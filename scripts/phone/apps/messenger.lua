@@ -6,7 +6,7 @@ local actor_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .
 local messages = {}
 
 local actors = {"boss"}
-local current_state = "home"
+local app_state = "home"
 local states = {
 	["home"] = {
 		update = function(dt)
@@ -51,10 +51,10 @@ local function load()
 end
 
 local function update(dt)
-	states[current_state].update(dt)
+	states[app_state].update(dt)
 end
 local function draw()
-	states[current_state].draw()
+	states[app_state].draw()
 end
 
 function rfr.add_phone_messages(actor, content)
@@ -62,4 +62,4 @@ function rfr.add_phone_messages(actor, content)
 	table.insert(messages[actor], content)
 end
 
-return {load = load, update = update, draw = draw}
+return {set_app_state = function(state) app_state = state end, load = load, update = update, draw = draw}

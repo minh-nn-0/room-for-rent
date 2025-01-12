@@ -16,9 +16,9 @@ void rfr::draw_interaction(const std::string& name, const mmath::fvec2& position
 	mmath::frect text_box {text_dst._pos.x - padding, 
 							text_dst._pos.y - 1.f,
 							text_dst._size.x + 2 * padding,
-							8};
+							text_dst._size.y + padding};
 
-	draw_textbox_3parts(text_box, {12,12}, 4, 8, *UI_tex, game._graphics);
+	draw_textbox_9parts(text_box, {12,0}, 4, *UI_tex, game._graphics);
 
 	game._graphics.texture(text, text_dst);
 

@@ -22,11 +22,12 @@ namespace rfr
 
 	struct cutscene_manager
 	{
-		std::string _current_cutscene_name;
-		std::unordered_map<std::string, cutscene> _cutscenes;
+		int _next_sceneid {-1};
+		int _current_sceneid;
+		std::vector<cutscene> _cutscenes;
 		cutscene_player _player;
 
-		void play(const std::string& scene_name);
+		void play(int scene_name);
 		void update(float dt);
 	};
 };

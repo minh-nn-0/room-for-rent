@@ -19,8 +19,7 @@ end
 local function owner_ready_to_talk()
 	return not rfr.has_active_dialogue(OWNER) and not player_behind()
 end
-rfr.add_cutscene({
-	name = "cs_prologue_hall",
+CS_PROLOGUE_HALL = rfr.add_cutscene({
 	init = function()
 		dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
 		rfr.set_flag("prologue_hall")
@@ -186,13 +185,12 @@ rfr.add_cutscene({
 	end
 })
 
-rfr.add_event("ev_prologue_player_open_door",
+local ev_prologue_player_open_door = rfr.add_event(
 	function()
 		return rfr.get_flag("prologue") and rfr.get_current_map() == "room_before"
 	end)
-local open_door_to_room = rfr.add_entity()
-rfr.set_event_listener(open_door_to_room, "ev_prologue_player_open_door",
+rfr.set_event_listener(PLAYER, ev_prologue_player_open_door,
 	function()
 		rfr.play_cutscene("cs_prologue_room")
-		rfr.set_active(open_door_to_room, false)
+		rfr.unset_event_listener(PLAYER, ev_prologue_player_open_door)
 	end)

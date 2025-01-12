@@ -53,17 +53,23 @@ local states = {
 	},
 	["calling"] = {
 		update = function(dt)
+			print(text_time)
 			if beaver.get_input(config.button.back) == 1 then
 				app_state = "home"
 			end
 			if status == "Calling" and not rfr.get_timer(call_timer).running then
 				status = "Failed"
 			end
-			if call_content ~= "" and text_index ~= #call_content then
+			if text_index < #call_content then
+				status = "In call"
 				text_time = text_time + config.cpf * dt
 				if text_time >= 1 then
 					text_index = text_index + math.floor(text_time)
 					text_time = 0
+				end
+			else
+				if text_time < config.dialogue_wait_time then
+					text_time = text_time + dt
 				end
 			end
 		end,
@@ -75,9 +81,8 @@ local states = {
 			beaver.draw_texture("character_heads", {dst = {x = posx, y = posy, w = 16 * config.cam_zoom, h = 16 * config.cam_zoom},
 													src = character_icon[callee]})
 			beaver.draw_text_centered(posx + 8 * config.cam_zoom, posy + 20 * config.cam_zoom, config.ui_font, 1, status, 0, true)
-
 			if call_content ~= "" then
-				beaver.draw_text(phone_position.x + 6 * config.cam_zoom, posy + 30 * config.cam_zoom, 
+				beaver.draw_text(phone_position.x + 6 * config.cam_zoom, posy + 30 * config.cam_zoom,
 								config.ui_font, 1,
 								string.sub(call_content,1,text_index), 155 ,true)
 				end
@@ -97,5 +102,26 @@ end
 function rfr.set_phone_dialogue(content)
 	call_content = content
 	text_index = 1
+	text_time = 0
 end
-return {load = load, update = update, draw = draw}
+function rfr.phone_caller_active()
+	return status == "In call" and text_time < config.dialogue_wait_time
+end
+function rfr.phone_caller_hangup()
+	status = "End Call"
+	call_content = ""
+end
+function rfr.is_making_phone_call()
+	return app_state == "calling"
+end
+
+function rfr.get_phone_call_status()
+	return status
+end
+function rfr.get_phone_callee()
+	return callee
+end
+function rfr.get_phone_wait_time()
+	return rfr.get_timer(call_timer).elapsed
+end
+return {set_app_state = function(state) app_state = state end, load = load, update = update, draw = draw}

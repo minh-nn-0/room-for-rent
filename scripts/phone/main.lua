@@ -7,7 +7,7 @@ local phone_tex_height = 84
 local phone_dsty = 10
 local phone_starty = 800
 local lerp_time = 0.5 -- takes how many seconds
-
+local apps = {"home", "call", "message", "note"}
 local phone_apps_info = {
 	call = {src = {x = 0, y = 32, w = 8, h = 8}, text = phone_texts["call"]},
 	message = {src = {x = 0, y = 40, w = 8, h = 8}, text = phone_texts["message"]},
@@ -22,7 +22,7 @@ rfr.set_image(PHONE, "phone")
 rfr.set_image_source(PHONE, 0,0, phone_tex_width,phone_tex_height)
 rfr.set_scale(PHONE, config.cam_zoom, config.cam_zoom)
 rfr.add_tag(PHONE, "ui")
-for _,app in ipairs({"home","call","message","note"}) do
+for _,app in ipairs(apps) do
 	rfr.set_state_entry(PHONE, app, function() phone_states[app].load() end)
 end
 rfr.set_state(PHONE, "home")
@@ -71,10 +71,12 @@ function rfr.toggle_phone()
 	rfr.toggle_flag("phone_opening")
 	rfr.set_timer(phone_lerp_timer, lerp_time)
 	if rfr.get_flag("phone_opening") then
-		rfr.set_properties(PLAYER, "can_move", false)
+		rfr.unset_flag("player_can_move")
+		rfr.unset_flag("player_can_interact")
 		rfr.set_state(PLAYER, "idle")
 	else
-		rfr.set_properties(PLAYER, "can_move", true)
+		rfr.set_flag("player_can_move")
+		rfr.set_flag("player_can_interact")
 	end
 end
 
@@ -89,10 +91,14 @@ function rfr.update_phone(dt)
 		end
 
 		rfr.set_position(PHONE, phone_position.x, phone_position.y)
-		return
 	end
-	if rfr.get_flag("phone_opening") then phone_states[rfr.get_state(PHONE)].update(dt)
-	else rfr.set_state(PHONE, "home")
+	if rfr.get_flag("phone_opening") then
+		phone_states[rfr.get_state(PHONE)].update(dt)
+	elseif phone_position.y >= config.render_size[2] then
+		rfr.set_state(PHONE, "home")
+		for _,app in ipairs(apps) do
+			if phone_states[app].set_app_state then phone_states[app].set_app_state("home") end
+		end
 	end
 	--if not screen_at_correct_brightness() then
 	--	if opening then

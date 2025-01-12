@@ -39,15 +39,20 @@ namespace rfr
 							if (dl->_text_index > dl->_content.size())
 								dl->_text_index = dl->_content.size();
 						}
-						else if (dl->_time < lua["config"]["dialogue_wait_time"].get<float>())
-							dl->_time += dt;
+						else
+						{
+							if (dl->_time < lua["config"]["dialogue_wait_time"].get<float>())
+								dl->_time += dt;
+							else
+								dl->_content.clear();
+						};
 					};
 				});
 		tbl.set_function("has_active_dialogue", [&](std::size_t eid)
 				{
 					auto& dl = ecs.template get_component<rfr::dialogue>(eid);
 					if (dl.has_value())
-						return dl->_text_index < dl->_content.size() || dl->_time < lua["config"]["dialogue_wait_time"].get<float>();
+						return !dl->_content.empty();
 					else return false;
 				});
 		//tbl.set_function("get_dialogue_time", [&](std::size_t eid) -> sol::object
@@ -161,9 +166,11 @@ namespace rfr
 	template<typename... Ts>
 	void bind_event(beaver::ecs<Ts...>& ecs, event_manager& events, sol::table& tbl)
 	{
-		tbl.set_function("add_event", [&](const std::string& name, sol::function trigger)
+		static std::vector<std::pair<std::size_t, std::size_t>> to_remove_listeners;
+		tbl.set_function("add_event", [&](sol::function trigger)
 				{
-					events._events[name] = trigger;
+					events._events.emplace_back(trigger);
+					return events._events.size() - 1;
 				});
 
 		//tbl.set_function("remove_event", [&](std::size_t eventid)
@@ -177,29 +184,33 @@ namespace rfr
 		//			events.remove_event(eventid);
 		//		});
 
-		tbl.set_function("set_event_listener", [&](std::size_t eid, const std::string& event_name, sol::function handler)
+		tbl.set_function("set_event_listener", [&](std::size_t eid, std::size_t eventid, sol::function handler)
 				{
 					auto& ev = ecs.template get_or_set_component<event_listener>(eid);	
-					ev.value()[event_name] = handler;
+					ev.value()[eventid] = handler;
 				});
 
-		tbl.set_function("unset_event_listener", [&](std::size_t eid, const std::string& event_name)
+		tbl.set_function("unset_event_listener", [&](std::size_t eid, std::size_t eventid)
 				{
-					auto& ev = ecs.template get_or_set_component<event_listener>(eid);	
-					ev->erase(event_name);
+					to_remove_listeners.emplace_back(eid, eventid);
 				});
 		tbl.set_function("update_event_listener", [&]()
 				{
 					for (auto&& eid: ecs.template with<event_listener>())
 						for (auto&& event: ecs.template get_component<event_listener>(eid).value())
 							if (events._current_events.contains(event.first)) event.second();	
+					for (const auto& [eid, eventid]: to_remove_listeners)
+					{
+						auto& listener = ecs.template get_component<event_listener>(eid);
+						listener->erase(eventid);
+					};
 				});
 
 		tbl.set_function("update_events", [&]()
 				{
 					events._current_events.clear();
-					for(const auto& [ename, etrigger]: events._events)
-						if (etrigger()) events._current_events.emplace(ename);
+					for (std::size_t i = 0; i != events._events.size(); i++)
+						if (events._events.at(i)()) events._current_events.emplace(i);
 				});
 	};
 
@@ -217,20 +228,21 @@ namespace rfr
 					for (auto& [_,v]: param["scripts"].get<sol::table>())
 						to_add._scripts.emplace_back(v.as<sol::function>());
 
-					cm._cutscenes.emplace(param["name"].get<std::string>(), to_add);
+					cm._cutscenes.emplace_back(to_add);
+					return cm._cutscenes.size() - 1;
 				});
 
-		tbl.set_function("get_current_cutscene_name", [&]()
+		tbl.set_function("get_current_cutscene", [&]()
 				{
-					return cm._current_cutscene_name;
+					return cm._current_sceneid;
 				});
 		tbl.set_function("is_cutscene_playing", [&]()
 				{
 					return cm._player._active;
 				});
-		tbl.set_function("play_cutscene", [&](const std::string& scene_name)
+		tbl.set_function("play_cutscene", [&](int scene)
 				{
-					cm.play(scene_name);
+					cm.play(scene);
 				});
 		tbl.set_function("update_cutscene", [&](float dt)
 				{

@@ -22,7 +22,7 @@ local function get_first_within_player_location()
 end
 
 function rfr.update_interaction()
-	if rfr.get_properties(PLAYER, "can_interact") then
+	if rfr.get_flag("player_can_interact") then
 		local available_interaction = get_first_within_player_location()
 		if available_interaction > 0 then
 			--local ppos = rfr.get_position(PLAYER)

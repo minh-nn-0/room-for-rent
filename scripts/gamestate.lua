@@ -25,28 +25,23 @@ state["ingame"] = {
 		door.load()
 	end,
 	update = function(dt)
+		config.text_scale = 1/rfr.get_cam_zoom()
+		player.update(dt)
+		rfr.update_phone(dt)
 		rfr.update_events()
 		rfr.update_event_listener()
 		rfr.update_cutscene(dt)
-		rfr.update_interaction()
 		rfr.update_character(dt)
-		rfr.update_dialogue(dt)
 		rfr.update_animation(dt)
-
-		config.text_scale = 1/rfr.get_cam_zoom()
-		rfr.set_location(PHONE, rfr.get_location(PLAYER))
-		player.update(dt)
-
+		rfr.update_dialogue(dt)
 		rfr.set_only_player_location_visible()
 		rfr.update_transition(dt)
 		rfr.update_camera(dt)
-		rfr.update_phone(dt)
+		rfr.update_interaction()
 		rfr.update_timer(dt)
 		rfr.update_countdown(dt)
 		rfr.cleanup_entities()
 
-		local cx, cy,_,_ = rfr.get_cam_view()
-		print(cx, cy)
 		return true
 	end,
 	draw = function()
@@ -66,7 +61,7 @@ state["ingame"] = {
 		for _, eid in ipairs(rfr.get_active_entities()) do
 			if rfr.get_location(eid) == rfr.get_location(PLAYER) then
 				beaver.set_draw_color(0,0,0,255)
-				if rfr.get_properties(PLAYER, "can_interact") then
+				if rfr.get_flag("player_can_interact") then
 					beaver.set_draw_color(255,255,255,255)
 					rfr.draw_interactions_info(eid)
 				end

@@ -5,12 +5,12 @@
 #include <set>
 namespace rfr
 {
-	using event_listener = std::unordered_map<std::string, std::function<void()>>;
+	using event_listener = std::unordered_map<std::size_t, std::function<void()>>;
 	
 	struct event_manager
 	{
-		std::set<std::string_view> _current_events;
-		std::unordered_map<std::string, std::function<bool()>> _events;
+		std::set<std::size_t> _current_events;
+		std::vector<std::function<bool()>> _events;
 	};
 
 };

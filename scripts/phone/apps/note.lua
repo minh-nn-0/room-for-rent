@@ -38,7 +38,7 @@ local states = {
 	},
 	["reading"] = {
 		update = function(dt)
-			if beaver.get_input("DOWN") > 0 then scroll = math.min(scroll + 0.6, string.len(text) / (wraplength / 16) - 20) end
+			if beaver.get_input("DOWN") > 0 then scroll = math.min(scroll + 0.6, string.len(text) / (wraplength / 16) - 10) end
 			if beaver.get_input("UP") > 0 then scroll = math.max(scroll - 0.6,0) end
 			if beaver.get_input(config.button.back) == 1 then app_state = "home" end
 		end,
@@ -71,4 +71,4 @@ local function draw()
 	states[app_state].draw()
 end
 
-return {load = load, update = update, draw = draw}
+return {set_app_state = function(state) app_state = state end, load = load, update = update, draw = draw}

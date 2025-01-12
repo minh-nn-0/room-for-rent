@@ -24,16 +24,22 @@ void rfr::cutscene_player::update(float dt)
 	};
 };
 
-void rfr::cutscene_manager::play(const std::string& scene_name)
+void rfr::cutscene_manager::play(int scene)
 {
-	if (_cutscenes.contains(scene_name))
-	{
-		_current_cutscene_name = scene_name;
-		_player.play(_cutscenes.at(scene_name));
-	}
-	else throw std::invalid_argument(std::format("scene {} doesn't exist", scene_name));
+	if (scene < _cutscenes.size())
+		_next_sceneid = scene;
+	else throw std::invalid_argument(std::format("scene {} out of bound", scene));
 };
 void rfr::cutscene_manager::update(float dt)
 {
-	if (_player._active) _player.update(dt);
+	if (!_player._active)
+	{
+		if (_next_sceneid != -1)
+		{
+			_player.play(_cutscenes.at(_next_sceneid));
+			_current_sceneid = _next_sceneid;
+			_next_sceneid = -1;
+		};
+	}
+	else _player.update(dt);
 };

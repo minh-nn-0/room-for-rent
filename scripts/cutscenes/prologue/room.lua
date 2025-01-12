@@ -14,7 +14,7 @@ rfr.add_cutscene({
 		rfr.set_current_map("room_before")
 		rfr.set_position(PLAYER, 290, 112)
 		rfr.set_flipflag(PLAYER, beaver.FLIP_H)
-		rfr.set_properties(PLAYER, "can_move", false)
+		rfr.unset_flag("player_can_interact")
 		rfr.set_position(OWNER, 278, 112)
 		rfr.set_location(OWNER, "Map.Mainroom")
 		rfr.set_state(OWNER, "idle")
@@ -70,7 +70,7 @@ rfr.add_cutscene({
 			rfr.set_position(cam_target1, cam_target_pos.x, cam_target_pos.y)
 		else
 			rfr.set_cam_target(PLAYER, 16, 0)
-			rfr.set_properties(PLAYER, "can_move", true)
+			rfr.set_flag("player_can_interact")
 		end
 	end
 })

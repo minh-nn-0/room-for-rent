@@ -32,7 +32,6 @@ void rfr::draw_dialogue(const mmath::fvec2& actor_position, const dialogue& dial
 
 	// Draw corners
 	
-	if (text_box._size.y > 8) draw_textbox_9parts(text_box, {0,0}, 4, *UI_tex, game._graphics);
-	else draw_textbox_3parts(text_box, {0,12}, 4, 8, *UI_tex, game._graphics);
+	draw_textbox_9parts(text_box, {0,0}, 4, *UI_tex, game._graphics);
 	game._graphics.texture(text, text_dst);
 };
