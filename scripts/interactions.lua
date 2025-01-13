@@ -25,14 +25,3 @@ rfr.set_interaction(house_number, interaction_names["house_number"],
 		rfr.set_flag("read_house_number")
 		rfr.set_dialogue(PLAYER, interaction_details["house_number"])
 	end)
-local metal_gate = rfr.add_entity()
-rfr.set_position(metal_gate, 533, 124)
-rfr.set_location(metal_gate, "Map.Outside")
-rfr.set_interaction(metal_gate, interaction_names["metal_gate"],
-	function()
-		local px, py = util.player_center()
-		return px >= 510 and px <= 550
-	end,
-	function()
-		if rfr.get_flag("prologue") then rfr.set_dialogue(PLAYER, interaction_details["metal_gate_first_time"]) end
-	end)

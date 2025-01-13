@@ -30,7 +30,6 @@ state["ingame"] = {
 		rfr.update_phone(dt)
 		rfr.update_events()
 		rfr.update_event_listener()
-		rfr.update_cutscene(dt)
 		rfr.update_character(dt)
 		rfr.update_animation(dt)
 		rfr.update_dialogue(dt)
@@ -58,6 +57,7 @@ state["ingame"] = {
 		rfr.update_interaction()
 		rfr.update_timer(dt)
 		rfr.update_countdown(dt)
+		rfr.update_cutscene(dt)
 		rfr.cleanup_entities()
 
 		return true
@@ -76,14 +76,10 @@ state["ingame"] = {
 		end
 		rfr.draw_map_by_layer(rfr.get_current_map(), rfr.get_location(PLAYER) .. ".Fg", 0, 0)
 		lighting.draw()
-		for _, eid in ipairs(rfr.get_active_entities()) do
-			if rfr.get_location(eid) == rfr.get_location(PLAYER) then
-				beaver.set_draw_color(0,0,0,255)
-				if rfr.get_flag("player_can_interact") then
-					beaver.set_draw_color(255,255,255,255)
-					rfr.draw_interactions_info(eid)
-				end
-			end
+		if rfr.get_flag("player_can_interact") and rfr.get_first_interaction() ~= -1 then
+			beaver.set_draw_color(255,255,255,255)
+			local i = rfr.get_first_interaction()
+			rfr.draw_interactions_info(i)
 		end
 
 		for _, eid in ipairs(rfr.get_active_entities()) do

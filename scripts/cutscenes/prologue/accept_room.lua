@@ -1,11 +1,13 @@
 local util = require "luamodules.utilities"
 local dialogues
-rfr.add_cutscene({
-	name = "cs_prologue_player_accept_room",
+CS_PROLOGUE_ACCEPT_ROOM = rfr.add_cutscene({
 	init = function()
 		dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
 	end,
-	exit = function() print("cs_prologue_accept_exit") end,
+	exit = function()
+		print("cs_prologue_accept_exit")
+		rfr.play_cutscene(CS_PROLOGUE_CLEAN_ROOM)
+	end,
 	scripts = {
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end

@@ -9,28 +9,29 @@
 --	function()
 --		lighting.toggle_light("room_desk_lamp")
 --	end)
---
-local function get_first_within_player_location()
+local last_interaction
+function rfr.get_first_interaction()
 	for _, eid in ipairs(rfr.get_active_entities()) do
 		if rfr.has_interaction(eid) and rfr.get_location(eid) == rfr.get_location(PLAYER)
-			and rfr.is_interaction_available(eid) then
+			and rfr.is_interaction_available(eid) and not rfr.get_properties(eid, "disable") then
 			return eid
 		end
 	end
-
 	return -1
 end
 
 function rfr.update_interaction()
 	if rfr.get_flag("player_can_interact") then
-		local available_interaction = get_first_within_player_location()
+		local available_interaction = rfr.get_first_interaction()
 		if available_interaction > 0 then
 			--local ppos = rfr.get_position(PLAYER)
 			--rfr.set_position(available_interaction, ppos.x + 16, ppos.y)
 			if beaver.get_input(config.button.interaction) == 1 then
 				rfr.trigger_interaction(available_interaction)
+				last_interaction = available_interaction
 			end
 		end
 	end
 end
 
+function rfr.get_last_interaction() return last_interaction end

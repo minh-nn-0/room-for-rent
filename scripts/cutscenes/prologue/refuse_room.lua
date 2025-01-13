@@ -1,11 +1,17 @@
 local util = require "luamodules.utilities"
 local dialogues
-rfr.add_cutscene({
-	name = "cs_prologue_player_refuse_room",
+CS_PROLOGUE_REFUSE_ROOM = rfr.add_cutscene({
 	init = function()
 		dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
 	end,
-	exit = function() print("cs_prologue_refuse_exit") end,
+	exit = function()
+		print("cs_prologue_refuse_exit")
+		if rfr.get_flag("reconsidered") then
+			rfr.play_cutscene(CS_PROLOGUE_ACCEPT_ROOM)
+		else
+			--rfr.play_cutscene(CS_PROLOGUE_LEAVE)
+		end
+	end,
 	scripts = {
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end
@@ -44,15 +50,3 @@ rfr.add_cutscene({
 	},
 	update = function(dt) end
 })
-rfr.add_event("ev_prologue_room_refuse", function()
-	return rfr.get_current_cutscene_name() == "cs_prologue_player_refuse_room" and not rfr.is_cutscene_playing()
-end)
-local reconsidered_room_event = rfr.add_entity()
-rfr.set_event_listener(reconsidered_room_event, "ev_prologue_room_refuse",
-	function()
-		if rfr.get_flag("reconsidered") then
-			rfr.play_cutscene("cs_prologue_player_accept_room")
-		else
-			rfr.play_cutscene("cs_prologue_player_leave")
-		end
-	end)

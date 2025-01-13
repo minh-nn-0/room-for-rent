@@ -53,7 +53,6 @@ local states = {
 	},
 	["calling"] = {
 		update = function(dt)
-			print(text_time)
 			if beaver.get_input(config.button.back) == 1 then
 				app_state = "home"
 			end

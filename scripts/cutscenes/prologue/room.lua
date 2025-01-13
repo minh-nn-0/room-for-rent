@@ -4,8 +4,7 @@ local cam_target1 = rfr.add_entity()
 rfr.set_position(cam_target1, 80, 112)
 local start_talking_timer = rfr.add_entity()
 local confirm_owner = rfr.add_entity()
-rfr.add_cutscene({
-	name = "cs_prologue_room",
+CS_PROLOGUE_ROOM = rfr.add_cutscene({
 	init = function()
 		dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
 		local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
@@ -14,7 +13,7 @@ rfr.add_cutscene({
 		rfr.set_current_map("room_before")
 		rfr.set_position(PLAYER, 290, 112)
 		rfr.set_flipflag(PLAYER, beaver.FLIP_H)
-		rfr.unset_flag("player_can_interact")
+		rfr.unset_flag("player_can_move")
 		rfr.set_position(OWNER, 278, 112)
 		rfr.set_location(OWNER, "Map.Mainroom")
 		rfr.set_state(OWNER, "idle")
@@ -39,12 +38,22 @@ rfr.add_cutscene({
 	end,
 	exit = function()
 		rfr.set_active(confirm_owner, false)
+		if rfr.get_flag("refuse_room") then
+			rfr.play_cutscene(CS_PROLOGUE_REFUSE_ROOM)
+		else
+			rfr.play_cutscene(CS_PROLOGUE_ACCEPT_ROOM)
+		end
 		print("exit prologue room")
 	end,
 	scripts = {
 		function(dt)
 			if rfr.get_position(cam_target1).x <= 250 then return false end
 			rfr.set_dialogue(OWNER, rfr.get_dialogue_from_json(dialogues, "owner_checkroom"))
+			return true
+		end,
+		function(dt)
+			if rfr.has_active_dialogue(OWNER) then return false end
+			rfr.set_flag("player_can_move")
 			return true
 		end,
 		function(dt)
@@ -70,19 +79,7 @@ rfr.add_cutscene({
 			rfr.set_position(cam_target1, cam_target_pos.x, cam_target_pos.y)
 		else
 			rfr.set_cam_target(PLAYER, 16, 0)
-			rfr.set_flag("player_can_interact")
 		end
 	end
 })
-
-rfr.add_event("ev_prologue_room_choice", function() return rfr.get_current_cutscene_name() == "cs_prologue_room" and not rfr.is_cutscene_playing() end)
-local refuse_room_event = rfr.add_entity()
-rfr.set_event_listener(refuse_room_event, "ev_prologue_room_choice",
-	function()
-		if rfr.get_flag("refuse_room") then
-			rfr.play_cutscene("cs_prologue_player_refuse_room")
-		else
-			rfr.play_cutscene("cs_prologue_player_accept_room")
-		end
-	end)
 

@@ -174,11 +174,11 @@ void rfr::game::setup_binding()
 					mmath::frect text_box {text_dst._pos.x - padding, 
 											text_dst._pos.y - 0.6f,
 											text_dst._size.x + 2 * padding,
-											8};
+											text_dst._size.y + padding};
 					
-					draw_textbox_3parts(text_box,
-										DIALOGUE_OPTIONS._selection == i ? mmath::ivec2{24,12} : mmath::ivec2{36, 12},
-										4, 8,
+					draw_textbox_9parts(text_box,
+										DIALOGUE_OPTIONS._selection == i ? mmath::ivec2{24, 0} : mmath::ivec2{36, 0},
+										4,
 										*UI_tex, _beaver._graphics);
 					_beaver._graphics.texture(text, text_dst);
 				};

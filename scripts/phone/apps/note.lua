@@ -5,7 +5,7 @@ local current_note = "guide"
 local text = util.load_text(rfr.gamepath() .. "data/note/" .. current_note .. "_" .. config.language .. ".txt")
 local entry_names = util.load_json(rfr.gamepath() .. "data/note/entry_" .. config.language .. ".json")
 local scroll = 0
-local wraplength = 155
+local wraplength = 140
 local app_state = "home"
 local states = {
 	["home"] = {
@@ -49,11 +49,13 @@ local states = {
 
 			beaver.draw_text_centered(phone_position.x + 48 * config.cam_zoom / 2, phone_position.y + 23 * config.cam_zoom, config.ui_font, 1,
 										entry_names[current_note], 0, true)
-			beaver.draw_rectangle(posx - 1, posy - 1, 36.5 * config.cam_zoom, 41 * config.cam_zoom, false)
+			beaver.set_draw_color(50,50,50,255)
+			beaver.draw_rectangle(posx - 2, posy - 1, 36.5 * config.cam_zoom, 41 * config.cam_zoom, false)
 			beaver.set_clip_rect(math.floor(posx), math.floor(posy),
 								math.floor(40 * config.cam_zoom),
 								math.floor(40 * config.cam_zoom))
-			beaver.draw_text(posx, posy - scroll * 2 * config.cam_zoom, config.ui_font, 1, text, wraplength, true)
+			beaver.set_draw_color(0,0,0,255)
+			beaver.draw_text(posx + 1 * config.cam_zoom, posy - scroll * 2 * config.cam_zoom, config.ui_font, 1, text, wraplength, true)
 			beaver.reset_clip_rect()
 		end
 	},

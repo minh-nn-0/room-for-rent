@@ -1,8 +1,6 @@
 local util = require "luamodules.utilities"
 local dialogues
-
-rfr.add_cutscene({
-	name = "cs_prologue_player_reconsidered",
+CS_PROLOGUE_RECONSIDERED = rfr.add_cutscene({
 	init = function()
 		dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
 	end,

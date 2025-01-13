@@ -63,7 +63,7 @@ function player.update(dt)
 
 	rfr.set_position(PLAYER, ppos.x, ppos.y)
 	if beaver.get_input("E") == 1 then
-		rfr.play_cutscene(CS_PROLOGUE_ARRIVE)
+		rfr.play_cutscene(CS_PROLOGUE_CLEAN_ROOM)
 	end
 
 	if beaver.get_input("ESCAPE") == 1 and rfr.get_flag("player_can_open_phone") then
@@ -73,14 +73,6 @@ function player.update(dt)
 	if beaver.get_input("C") == 1 then
 		rfr.set_dialogue(PLAYER, "Có phải cô A không ạ")
 	end
-	if rfr.having_dialogue_options() then
-		if not rfr.get_flag("phone_opening") then
-			if beaver.get_input("UP") == 1 then rfr.decrement_dialogue_options_selection() end
-			if beaver.get_input("DOWN") == 1 then rfr.increment_dialogue_options_selection() end
-			if beaver.get_input(config.button.interaction) == 1 then rfr.select_dialogue_options_selection() end
-		end
-	end
-
 	if rfr.having_dialogue_options() or rfr.has_active_dialogue(PLAYER) then
 		rfr.unset_flag("player_can_interact")
 	elseif not rfr.get_flag("phone_opening") then
@@ -92,6 +84,14 @@ function player.update(dt)
 			rfr.set_dialogue_position(PLAYER, 20, -3)
 		end
 	end
+	if rfr.having_dialogue_options() then
+		if not rfr.get_flag("phone_opening") then
+			if beaver.get_input("UP") == 1 then rfr.decrement_dialogue_options_selection() end
+			if beaver.get_input("DOWN") == 1 then rfr.increment_dialogue_options_selection() end
+			if beaver.get_input(config.button.interaction) == 1 then rfr.select_dialogue_options_selection() end
+		end
+	end
+
 end
 
 return player

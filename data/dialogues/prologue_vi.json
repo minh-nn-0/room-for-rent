@@ -8,7 +8,10 @@
   "player_call_introduce" : "cháu là người hôm nay có hẹn xem phòng ạ",
   "player_call_arrived" : "cháu đang ở dưới cổng rồi ạ",
   "owner_call_confirm" : "OKE CHÁU",
-  "owner_greeting": "Giờ gần Tết rồi nên giá phòng cũng rẻ.",
+  "owner_confused" : "Đi đâu thế cháu",
+  "owner_greeting" : "Cháu là MINH đúng không",
+  "owner_invite_house" : "Đi theo cô xem phòng nhé",
+  "owner_greeting2": "Giờ gần Tết rồi nên giá phòng cũng rẻ.",
   "owner_one_room_left": "Chỗ cô hiện tại chỉ còn 1 phòng duy nhất trên tầng 2.",
   "owner_cheapest": "Yên tâm là giá rẻ nhất cả khu này rồi.",
   "player_near_school": "Chỗ này cũng gần trường với chỗ làm cháu.",
@@ -21,7 +24,7 @@
   "player_choice": "Đồng ý xem phòng|Nghi ngờ",
   "player_agree": "Cháu cũng đang cần gấp do sắp Tết rồi thuê phòng hơi khó.",
   "player_doubt": "Sao phòng này giá rẻ vậy ạ. Có vấn đề gì không cô?",
-  "owner_invite": "Thế để cô dẫn cháu vào xem phòng nhé.",
+  "owner_invite_room": "Thế để cô dẫn cháu vào xem phòng nhé.",
   "owner_defensive": "Ơ… có vấn đề gì. Làm gì có vấn đề gì được chứ? Cháu xem phòng nhé.",
   "owner_checkroom": "Xem qua phòng đi cháu.",
   "player_choice_take_room": "Đồng ý căn phòng|Không vừa ý|...",
@@ -36,5 +39,8 @@
   "player_refuse_room": "Eo ơi phòng này bẩn quá! Khiếp quá thôi.",
   "player_choice_reconsider": "Ra về|Suy nghĩ",
   "player_leave": "Thôi cháu không ở đâu! Chào cô.",
-  "player_reconsider": "Thôi được rồi. Giá rẻ nên chấp nhận vậy."
+  "player_reconsider": "Thôi được rồi. Giá rẻ nên chấp nhận vậy.",
+  "player_shiver" : "Tự dưng mình cảm thấy có gì đó hơi lành lạnh.",
+  "player_shiver2" : "Có lẽ lâu rồi không ai ở đây?!",
+  "player_should_clean": "Có lẽ giờ phải dọn dẹp một chút."
 }

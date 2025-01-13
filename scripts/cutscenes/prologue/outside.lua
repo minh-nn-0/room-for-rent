@@ -1,5 +1,10 @@
 local util = require "luamodules.utilities"
 local dialogues
+local timer = rfr.add_entity()
+local owner_interaction = rfr.add_entity()
+local function player_near_gate()
+	return math.abs(rfr.get_position(PLAYER).x - 533) <= 80
+end
 CS_PROLOGUE_ARRIVE = rfr.add_cutscene({
 	init = function()
 		dialogues =util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
@@ -36,17 +41,69 @@ CS_PROLOGUE_ARRIVE = rfr.add_cutscene({
 	update = function(dt) end
 })
 
-local owner_pickup_timer = rfr.add_entity()
+local cs_prologue_talk_at_gate = rfr.add_cutscene({
+	init = function()
+		dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
+		rfr.set_active(owner_interaction, false)
+	end,
+	exit = function()
+		print("exit talk_at_gate")
+		rfr.unset_flag("prologue_outside")
+		rfr.play_cutscene(CS_PROLOGUE_HALL)
+	end,
+	scripts = {
+		function(dt)
+			if rfr.has_active_dialogue(OWNER) then return false end
+			rfr.set_dialogue(OWNER, dialogues["owner_greeting"])
+			return true
+		end,
+		function(dt)
+			if rfr.has_active_dialogue(OWNER) then return false end
+			rfr.set_dialogue(OWNER, dialogues["owner_invite_house"])
+			return true
+		end,
+		function(dt)
+			if rfr.has_active_dialogue(OWNER) then return false end
+			rfr.set_location(OWNER, "Map.Hall")
+			rfr.set_timer(timer, 10)
+			rfr.set_properties(METAL_GATE, "disable", false)
+			return true
+		end,
+		function(dt)
+			if not rfr.get_timer(timer).running then
+				if not rfr.has_active_dialogue(OWNER) then rfr.set_dialogue(OWNER, dialogues["owner_confused"]) end
+				rfr.set_timer(timer, 10)
+			end
+			if rfr.get_last_interaction() == METAL_GATE then return true end
+			return false
+		end,
+	},
+	update = function(dt)
+	end
+})
+
 local cs_prologue_owner_pickup = rfr.add_cutscene({
 	init = function()
-		rfr.set_timer(owner_pickup_timer, 5)
+		local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
+		rfr.set_timer(timer, 5)
+		rfr.set_location(owner_interaction, "Map.Outside")
+		rfr.set_position(owner_interaction, 533, 128)
+		rfr.set_interaction(owner_interaction, interaction_name["owner"],
+			function()
+				local px,_ = util.player_center()
+				return px >= 520 and px <= 540
+			end,
+			function()
+				rfr.play_cutscene(cs_prologue_talk_at_gate)
+			end)
 	end,
 	exit = function()
 		print("exit owner_pickup")
 	end,
 	scripts = {
 		function(dt)
-			if rfr.get_timer(owner_pickup_timer).running then return false end
+			if rfr.get_timer(timer).running or not player_near_gate() then return false end
+			rfr.set_properties(METAL_GATE, "disable", true)
 			rfr.set_position(OWNER, 524,144)
 			rfr.set_location(OWNER, "Map.Outside")
 			rfr.set_state(OWNER, "idle")
@@ -77,10 +134,17 @@ local cs_prologue_call_owner = rfr.add_cutscene({
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end
 			rfr.set_dialogue(PLAYER, dialogues["player_should_call"])
+			rfr.set_timer(timer, 10)
 			return true
 		end,
 		function(dt)
-			if not (rfr.is_making_phone_call() and rfr.get_phone_callee() == "owner") then return false end
+			if not (rfr.is_making_phone_call() and rfr.get_phone_callee() == "owner") then
+				if not rfr.get_timer(timer).running and not rfr.has_active_dialogue(PLAYER) then
+					if math.random() < 0.5 then rfr.set_dialogue(PLAYER, dialogues["player_should_call"]) end
+	 				rfr.set_timer(timer, 10)
+				end
+				return false
+			end
 			if rfr.get_phone_wait_time() < 5 then return false end
 			rfr.set_phone_dialogue(dialogues["owner_call_pickup"])
 			return true

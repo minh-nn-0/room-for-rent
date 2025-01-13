@@ -1,19 +1,20 @@
 local util = require "luamodules.utilities"
 local door = {}
-local room_to_bathroom
-local bathroom_to_room
-local room_to_hall
-local hall_to_room
-local hall_stair_second
-local hall_stair_first
+DOOR_ROOM_TO_BATHROOM = rfr.add_entity()
+DOOR_BATHROOM_TO_ROOM = rfr.add_entity()
+DOOR_ROOM_TO_HALL = rfr.add_entity()
+DOOR_HALL_TO_ROOM = rfr.add_entity()
+DOOR_HALL_STAIR_FIRST = rfr.add_entity()
+DOOR_HALL_STAIR_SECOND = rfr.add_entity()
+METAL_GATE = rfr.add_entity()
 local locked_doors
 
 function door.load()
 	local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
-	room_to_bathroom = rfr.add_entity()
-	rfr.set_position(room_to_bathroom, 256, 100)
-	rfr.set_location(room_to_bathroom, "Map.Mainroom")
-	rfr.set_interaction(room_to_bathroom, interaction_name["door_room_to_bathroom"],
+	local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
+	rfr.set_position(DOOR_ROOM_TO_BATHROOM, 256, 100)
+	rfr.set_location(DOOR_ROOM_TO_BATHROOM, "Map.Mainroom")
+	rfr.set_interaction(DOOR_ROOM_TO_BATHROOM, interaction_name["door_room_to_bathroom"],
 		function()
 			local px,_ = util.player_center()
 			return px >= 248 and px <= 264
@@ -25,10 +26,9 @@ function door.load()
 			rfr.fade_in(1)
 		end)
 
-	bathroom_to_room = rfr.add_entity()
-	rfr.set_position(bathroom_to_room, 256, 230)
-	rfr.set_location(bathroom_to_room, "Map.Bathroom")
-	rfr.set_interaction(bathroom_to_room, interaction_name["door_bathroom_to_room"],
+	rfr.set_position(DOOR_BATHROOM_TO_ROOM, 256, 230)
+	rfr.set_location(DOOR_BATHROOM_TO_ROOM, "Map.Bathroom")
+	rfr.set_interaction(DOOR_BATHROOM_TO_ROOM, interaction_name["door_bathroom_to_room"],
 		function()
 			local px,_ = util.player_center()
 			return px >= 248 and px <= 264
@@ -40,10 +40,9 @@ function door.load()
 			rfr.fade_in(1)
 		end)
 
-	room_to_hall = rfr.add_entity()
-	rfr.set_position(room_to_hall, 305, 100)
-	rfr.set_location(room_to_hall, "Map.Mainroom")
-	rfr.set_interaction(room_to_hall, interaction_name["door_room_to_hall"],
+	rfr.set_position(DOOR_ROOM_TO_HALL, 305, 100)
+	rfr.set_location(DOOR_ROOM_TO_HALL, "Map.Mainroom")
+	rfr.set_interaction(DOOR_ROOM_TO_HALL, interaction_name["door_room_to_hall"],
 		function()
 			local px,_ = util.player_center()
 			return px >= 300 and px <= 320 and not rfr.get_flag("prologue_room")
@@ -56,13 +55,12 @@ function door.load()
 			rfr.fade_in(1)
 		end)
 
-	hall_to_room = rfr.add_entity()
-	rfr.set_position(hall_to_room, 432, 70)
-	rfr.set_location(hall_to_room, "Map.Hall")
-	rfr.set_interaction(hall_to_room, interaction_name["door_hall_to_room"],
+	rfr.set_position(DOOR_HALL_TO_ROOM, 432, 70)
+	rfr.set_location(DOOR_HALL_TO_ROOM, "Map.Hall")
+	rfr.set_interaction(DOOR_HALL_TO_ROOM, interaction_name["door_hall_to_room"],
 		function()
 			local px,_ = util.player_center()
-			return px >= 420 and px <= 440 and not rfr.get_flag("prologue_hall")
+			return px >= 420 and px <= 440
 		end,
 		function()
 			rfr.set_cam_center(316, 112)
@@ -72,16 +70,32 @@ function door.load()
 			rfr.fade_in(1)
 		end)
 
-	hall_stair_first = rfr.add_entity()
-	rfr.set_position(hall_stair_first, 780, 124)
-	rfr.set_location(hall_stair_first, "Map.Hall")
-	rfr.set_interaction(hall_stair_first, interaction_name["door_hall_stair_first"],
+	rfr.set_position(DOOR_HALL_STAIR_FIRST, 780, 124)
+	rfr.set_location(DOOR_HALL_STAIR_FIRST, "Map.Hall")
+	rfr.set_interaction(DOOR_HALL_STAIR_FIRST, interaction_name["door_hall_stair_first"],
 		function()
 			local px,_ = util.player_center()
-			return px >= 760 and px <= 780
+			return px >= 770 and px <= 790
 		end,
 		function()
 			rfr.set_position(PLAYER, 770, 80)
 		end)
-end
+	rfr.set_position(METAL_GATE, 533, 124)
+	rfr.set_location(METAL_GATE, "Map.Outside")
+	rfr.set_interaction(METAL_GATE, interaction_name["metal_gate"],
+		function()
+			local px, py = util.player_center()
+			return px >= 510 and px <= 556
+		end,
+		function()
+			if rfr.get_flag("metal_gate_first_time") then rfr.set_dialogue(PLAYER, interaction_details["metal_gate_first_time"])
+			else
+				rfr.set_current_map("hall")
+				rfr.set_location(PLAYER, "Map.Hall")
+				rfr.set_cam_zoom(3)
+				rfr.set_position(PLAYER, 530,144)
+				rfr.fade_in(1)
+			end
+		end)
+	end
 return door
