@@ -1,17 +1,9 @@
-- Mỗi ngày bạn có thể làm các việc sau:
-
  - Sáng:
   + Đánh răng rửa mặt
   + Ăn
   + Đi làm/ Nghỉ ngơi ở nhà
-
  - Tối:
   + Ăn tối
   + Học bài
   + Tắm rửa
   + Đi ngủ
-
-- Nếu bạn chọn ngủ buổi sáng thay vì đi làm, bạn sẽ ngủ đến chiều.
-- Màn chơi 1 ngày sẽ kết thúc khi bạn đi ngủ vào buổi tối.
-- Bạn có thể về nhà bất cứ lúc nào. Điều đó đồng nghĩa với việc kết thúc game.
-- Lưu ý: những hành động mà bọn chọn có thể gây ra những kết thúc khác nhau cho câu chuyện. ) 
