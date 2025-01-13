@@ -8,13 +8,7 @@ local note_spacing = 2
 local function draw_note(posx, posy, note)
 	local text = util.load_text(rfr.gamepath() .. "data/note/" .. note .. "_" .. config.language .. ".txt")
 	local entry_names = util.load_json(rfr.gamepath() .. "data/note/entry_" .. config.language .. ".json")
-	local text_height = (string.len(text) / (wraplength / 16) + 28) * config.cam_zoom
-	beaver.set_draw_color(218,177,99,255)
-	beaver.draw_rectangle(posx, posy, 36.5 * config.cam_zoom, text_height, true)
-	beaver.set_draw_color(40,40,40,255)
-	beaver.draw_text(posx, posy + 0.5 * config.cam_zoom, config.ui_font, 1, text, wraplength, true)
-
-	return text_height + note_spacing * config.cam_zoom
+	return rfr.draw_note(posx, posy, text, note)
 end
 local states = {
 	["home"] = {

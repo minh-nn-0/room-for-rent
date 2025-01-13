@@ -3,6 +3,7 @@
 #include <beaver/ecs/systems/collision.hpp>
 #include <beaver/ecs/systems/animation.hpp>
 #include <beaver/ecs/systems/render_entity.hpp>
+#include "note_drawing.hpp"
 #include "textbox_drawing.hpp"
 #ifdef __EMSCRIPTEN__
 #include "/home/minhmacg/.cache/emscripten/sysroot/include/emscripten.h"
@@ -182,6 +183,10 @@ void rfr::game::setup_binding()
 										*UI_tex, _beaver._graphics);
 					_beaver._graphics.texture(text, text_dst);
 				};
+			});
+	rfr.set_function("draw_note", [&](float posx, float posy, const std::string& text, const std::string& header)
+			{
+				return rfr::draw_note(posx, posy, text, header, _beaver, _lua);
 			});
 	rfr.set_function("draw_map", [&](const std::string& map_name, float posx, float posy)
 			{
