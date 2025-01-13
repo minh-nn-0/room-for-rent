@@ -18,6 +18,8 @@ function LOAD()
 	beaver.new_image(rfr.gamepath() .. "assets/images/UI.png", "UI")
 	beaver.new_image(rfr.gamepath() .. "assets/images/phone.png", "phone")
 
+	beaver.new_sound(rfr.gamepath() .. "assets/audios/dialogue1.wav", "dialogue1")
+
 	beaver.new_font(rfr.gamepath() .. "assets/fonts/UnifontExMono.ttf", 16, "unifontexmono")
 	beaver.new_font(rfr.gamepath() .. "assets/fonts/unifont.otf", 16, "unifont")
 	beaver.new_font(rfr.gamepath() .. "assets/fonts/fs-tahoma/fs-tahoma-8px.ttf", 16, "fs-tahoma")

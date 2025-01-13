@@ -55,6 +55,13 @@ namespace rfr
 						return !dl->_content.empty();
 					else return false;
 				});
+		tbl.set_function("dialogue_reached_fulllength", [&](std::size_t eid)
+				{
+					auto& dl = ecs.template get_component<rfr::dialogue>(eid);
+					if (dl.has_value() && !dl->_content.empty())
+						return dl->_text_index >= dl->_content.size();
+					else return false;
+				});
 		//tbl.set_function("get_dialogue_time", [&](std::size_t eid) -> sol::object
 		//		{
 		//			auto& dl = ecs.template get_component<rfr::dialogue>(eid);
