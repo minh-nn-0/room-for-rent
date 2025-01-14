@@ -4,8 +4,6 @@ local fade_in = true
 local time = 0
 local elapsed = 0
 local active = false
-beaver.create_texture_for_drawing("fade", 1280, 720)
-beaver.set_texture_blend_mode("fade", "blend")
 
 function rfr.is_transition_active() return active end
 function rfr.fade_in(duration)
@@ -41,12 +39,6 @@ function rfr.update_transition(dt)
 end
 
 function rfr.draw_transition()
-	beaver.set_using_cam(false)
-	beaver.set_render_target("fade")
 	beaver.set_draw_color(0,0,0,opacity)
 	beaver.draw_rectangle(0,0,0,0,true)
-	beaver.set_using_cam(true)
-	beaver.set_render_target()
-
-	beaver.draw_texture("fade", {dst = {x = 0, y = 0, w = 1280, h = 720}})
 end

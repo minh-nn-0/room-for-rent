@@ -1,9 +1,8 @@
- - Sáng:
-  + Đánh răng rửa mặt
-  + Ăn
-  + Đi làm/ Nghỉ ngơi ở nhà
- - Tối:
-  + Ăn tối
-  + Học bài
-  + Tắm rửa
-  + Đi ngủ
+- Sáng:
+ + Ăn
+ + Đi làm/ Nghỉ ngơi ở nhà
+- Tối:
+ + Ăn tối
+ + Học bài
+ + Tắm rửa
+ + Đi ngủ

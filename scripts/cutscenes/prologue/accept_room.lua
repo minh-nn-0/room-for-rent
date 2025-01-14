@@ -5,6 +5,7 @@ CS_PROLOGUE_ACCEPT_ROOM = rfr.add_cutscene({
 		dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
 	end,
 	exit = function()
+		rfr.set_properties(DOOR_ROOM_TO_HALL, "disable", false)
 		print("cs_prologue_accept_exit")
 		rfr.play_cutscene(CS_PROLOGUE_CLEAN_ROOM)
 	end,

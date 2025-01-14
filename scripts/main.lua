@@ -2,8 +2,10 @@ local gamestate = require "gamestate"
 function LOAD()
 	beaver.set_render_logical_size(config.render_size[1], config.render_size[2])
 	beaver.set_integer_scale(true)
-	rfr.set_cam_smooth_speed(8)
+	rfr.set_cam_smooth_speed(10)
 	rfr.set_cam_zoom(config.cam_zoom)
+
+	beaver.set_render_blend_mode("blend")
 
 	beaver.new_image(rfr.gamepath() .. "assets/images/tileset.png")
 	beaver.new_image(rfr.gamepath() .. "assets/images/outside_wall.png")
@@ -17,6 +19,7 @@ function LOAD()
 	beaver.new_image(rfr.gamepath() .. "assets/images/character_heads.png", "character_heads")
 	beaver.new_image(rfr.gamepath() .. "assets/images/UI.png", "UI")
 	beaver.new_image(rfr.gamepath() .. "assets/images/phone.png", "phone")
+	beaver.new_image(rfr.gamepath() .. "assets/images/student_card.png", "student_card")
 
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/dialogue1.wav", "dialogue1")
 
@@ -28,6 +31,7 @@ function LOAD()
 	rfr.new_map("room_before", rfr.gamepath() .. "data/maps/rfr_room_before2.tmj")
 	rfr.new_map("hall", rfr.gamepath() .. "data/maps/hall2.tmj")
 	rfr.new_map("outside", rfr.gamepath() .. "data/maps/outside.tmj")
+	rfr.new_map("balcony", rfr.gamepath() .. "data/maps/behind1.tmj")
 
 	gamestate.load()
 end

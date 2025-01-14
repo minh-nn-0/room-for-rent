@@ -173,9 +173,9 @@ void rfr::game::setup_binding()
 											text._width * scale,
 											text._height * scale};
 					mmath::frect text_box {text_dst._pos.x - padding, 
-											text_dst._pos.y - 0.6f,
+											text_dst._pos.y - 1.5f,
 											text_dst._size.x + 2 * padding,
-											text_dst._size.y + padding};
+											text_dst._size.y + 3};
 					
 					draw_textbox_9parts(text_box,
 										DIALOGUE_OPTIONS._selection == i ? mmath::ivec2{24, 0} : mmath::ivec2{36, 0},

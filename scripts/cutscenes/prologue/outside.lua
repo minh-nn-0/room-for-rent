@@ -22,6 +22,8 @@ CS_PROLOGUE_ARRIVE = rfr.add_cutscene({
 		rfr.add_tag(PLAYER, "npc")
 		rfr.set_state(PLAYER, "move")
 		rfr.set_flipflag(PLAYER, beaver.FLIP_NONE)
+
+		rfr.set_flag("metal_gate_first_time")
 	end,
 	exit = function()
 		print("exit prologue_outside")
@@ -67,6 +69,7 @@ local cs_prologue_talk_at_gate = rfr.add_cutscene({
 			rfr.set_location(OWNER, "Map.Hall")
 			rfr.set_timer(timer, 10)
 			rfr.set_properties(METAL_GATE, "disable", false)
+			rfr.unset_flag("metal_gate_first_time")
 			return true
 		end,
 		function(dt)

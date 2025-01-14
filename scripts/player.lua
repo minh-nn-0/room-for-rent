@@ -71,7 +71,6 @@ function player.update(dt)
 	end
 
 	if beaver.get_input("C") == 1 then
-		rfr.set_dialogue(PLAYER, "Có phải cô A không ạ")
 	end
 	if rfr.having_dialogue_options() or rfr.has_active_dialogue(PLAYER) then
 		rfr.unset_flag("player_can_interact")

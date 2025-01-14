@@ -12,6 +12,7 @@ require "luamodules.character"
 require "luamodules.camera"
 require "luamodules.interaction"
 require "luamodules.transition"
+require "luamodules.narrative"
 require "luamodules.map"
 config = {
 	render_size = {640, 360},
@@ -20,12 +21,12 @@ config = {
 	text_scale = 1/4,
 	dialogue_font = "unifont",
 	ui_font = "unifont",
+	narrative_cpf = 20,
+	narrative_wait_time = 2,
 	dialogue_wait_time = 1,
 	dialogue_box_padding = 3,
 	dialogue_wraplength = 200,
 	interaction_box_padding = 3,
-	note_head_color = {90,90,90,255},
-	note_body_color = {200,150,90,255},
 	button = {
 		interaction = "X",
 		back = "Z",

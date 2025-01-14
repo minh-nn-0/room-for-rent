@@ -1,13 +1,15 @@
+GAME = rfr.add_entity()
+
+
 local player = require "player"
 local lighting = require "lighting"
-local door = require "door"
+require "door"
 require "interactions"
 require "cutscenes.prologue.prologue"
 require "phone.main"
 local gamestate = {
 	current_state = "ingame"
 }
-
 
 local state = {}
 state["menu"] = {
@@ -22,11 +24,11 @@ state["menu"] = {
 state["ingame"] = {
 	load = function()
 		rfr.set_cam_target(PLAYER, 16,0)
-		door.load()
 	end,
 	update = function(dt)
 		config.text_scale = 1/rfr.get_cam_zoom()
 		player.update(dt)
+		rfr.update_camera(dt)
 		rfr.update_phone(dt)
 		rfr.update_events()
 		rfr.update_event_listener()
@@ -51,13 +53,13 @@ state["ingame"] = {
 				end
 			end
 		end
-		rfr.set_only_player_location_visible()
-		rfr.update_transition(dt)
-		rfr.update_camera(dt)
-		rfr.update_interaction()
 		rfr.update_timer(dt)
 		rfr.update_countdown(dt)
 		rfr.update_cutscene(dt)
+		rfr.update_interaction()
+		rfr.update_narrative(dt)
+		rfr.update_transition(dt)
+		rfr.set_only_player_location_visible()
 		rfr.cleanup_entities()
 
 		return true
@@ -94,7 +96,6 @@ state["ingame"] = {
 		local cx,_,cw,_ = rfr.get_cam_view()
 		local player_near_right_edge = ppos.x >= cx + (cw / config.cam_zoom) - 70
 		rfr.draw_dialogue_options(player_near_right_edge and ppos.x or ppos.x + 30, ppos.y + 5, not player_near_right_edge)
-
 		beaver.set_draw_color(10,10,10,255)
 		beaver.set_using_cam(false)
 		config.text_scale = 1
@@ -102,6 +103,14 @@ state["ingame"] = {
 			rfr.draw_entities(eid)
 		end
 		rfr.draw_phone()
+
+		if rfr.get_flag("screen_fill") then
+			local fill_color = rfr.get_properties(GAME, "screen_fill_color") or {0,0,0,255}
+			beaver.set_draw_color(fill_color[1], fill_color[2], fill_color[3], fill_color[4])
+			beaver.draw_rectangle(0,0,1000,1000,true)
+		end
+		beaver.set_draw_color(255,255,255,255)
+		rfr.draw_narrative_text()
 		rfr.draw_transition()
 		beaver.set_using_cam(true)
 	end
