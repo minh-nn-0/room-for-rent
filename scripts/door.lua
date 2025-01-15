@@ -109,11 +109,21 @@ rfr.set_position(DOOR_HALL_STAIR_FIRST, 780, 124)
 rfr.set_location(DOOR_HALL_STAIR_FIRST, "Map.Hall")
 rfr.set_interaction(DOOR_HALL_STAIR_FIRST, interaction_name["door_hall_stair_first"],
 	function()
-		local px,_ = util.player_center()
-		return px >= 770 and px <= 790
+		local px, py = util.player_center()
+		return px >= 770 and px <= 790 and py == 160
 	end,
 	function()
 		rfr.set_position(PLAYER, 770, 80)
+	end)
+rfr.set_position(DOOR_HALL_STAIR_SECOND, 780, 70)
+rfr.set_location(DOOR_HALL_STAIR_SECOND, "Map.Hall")
+rfr.set_interaction(DOOR_HALL_STAIR_SECOND, interaction_name["door_hall_stair_second"],
+	function()
+		local px, py = util.player_center()
+		return px >= 770 and px <= 790 and py == 96
+	end,
+	function()
+		rfr.set_position(PLAYER, 770, 144)
 	end)
 rfr.set_position(METAL_GATE, 533, 124)
 rfr.set_location(METAL_GATE, "Map.Outside")

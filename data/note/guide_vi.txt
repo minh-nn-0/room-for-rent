@@ -1,6 +1,6 @@
 - Sáng:
  + Ăn
- + Đi làm/ Nghỉ ngơi ở nhà
+ + Đi làm/Ngủ
 - Tối:
  + Ăn tối
  + Học bài

@@ -71,6 +71,7 @@ function player.update(dt)
 	end
 
 	if beaver.get_input("C") == 1 then
+		rfr.set_phone_notification("note")
 	end
 	if rfr.having_dialogue_options() or rfr.has_active_dialogue(PLAYER) then
 		rfr.unset_flag("player_can_interact")

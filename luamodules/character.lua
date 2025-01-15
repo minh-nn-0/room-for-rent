@@ -1,13 +1,13 @@
 OWNER = rfr.add_entity()
-NEIGHBOR = rfr.add_entity()
+NEIGHBOUR = rfr.add_entity()
 rfr.add_tag(OWNER, "npc")
-rfr.add_tag(NEIGHBOR, "npc")
+rfr.add_tag(NEIGHBOUR, "npc")
 rfr.set_properties(OWNER, "walkspeed", 0.3)
-rfr.set_properties(NEIGHBOR, "walkspeed", 0.5)
+rfr.set_properties(NEIGHBOUR, "walkspeed", 0.5)
 rfr.set_properties(OWNER, "facing_direction", "left")
-rfr.set_properties(NEIGHBOR, "facing_direction", "left")
+rfr.set_properties(NEIGHBOUR, "facing_direction", "left")
 rfr.set_image(OWNER, "woman")
-rfr.set_image(NEIGHBOR, "neighbour")
+rfr.set_image(NEIGHBOUR, "neighbour")
 rfr.set_state_entry(OWNER, "idle",
 	function()
 		rfr.set_tileanimation(OWNER, {
@@ -29,16 +29,16 @@ rfr.set_state_entry(OWNER, "move",
 	end)
 rfr.set_state(OWNER, "idle")
 
-rfr.set_state_entry(NEIGHBOR, "idle",
+rfr.set_state_entry(NEIGHBOUR, "idle",
 	function()
-		rfr.set_tileanimation(NEIGHBOR, {
+		rfr.set_tileanimation(NEIGHBOUR, {
 			frames = {{0,400},{1,200},{2,200},{3,200}},
 			framewidth = 32,
 			frameheight = 32,
 			["repeat"] = true
 		})
 	end)
-rfr.set_state(NEIGHBOR, "idle")
+rfr.set_state(NEIGHBOUR, "idle")
 
 function rfr.update_character(dt)
 	for _,char in ipairs(rfr.get_entities_with_tags({"npc"})) do

@@ -12,8 +12,10 @@ local cs_prologue_after_broom = rfr.add_cutscene({
 		rfr.unset_flag("prologue_room")
 		rfr.set_layer_visible("balcony", "Map.Balcony.Bg.Garbage", false)
 		rfr.set_properties(GAME, "day_number", 1)
+		print("exit broom")
 		require "room_items"
 		require "events.pickup_card"
+		require "events.meet_neighbour_first_time"
 	end,
 	scripts = {
 		function(dt)

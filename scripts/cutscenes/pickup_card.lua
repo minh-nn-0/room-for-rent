@@ -2,14 +2,14 @@ local util = require "luamodules.utilities"
 
 local dialogues
 local card_start_posy = 500
-local card_end_posy = 40
+local card_end_posy = 100
 local showing = false
 local lerp_timer = rfr.add_entity()
 local lerp_time = 1
 
 local card = rfr.add_entity()
 rfr.add_tag(card, "ui")
-rfr.set_position(card, 360, card_start_posy)
+rfr.set_position(card, config.render_size[1]/2 - 32 * config.cam_zoom, card_start_posy)
 rfr.set_image(card, "student_card")
 rfr.set_image_source(card, 0, 0, 64, 40)
 rfr.set_scale(card, config.cam_zoom, config.cam_zoom)
@@ -34,11 +34,23 @@ CS_PICKUP_CARD = rfr.add_cutscene({
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end
 			showing = true
+			rfr.set_flag("screen_fill")
+			rfr.set_properties(GAME, "screen_fill_color", {20,20,20,150})
 			rfr.set_timer(lerp_timer, lerp_time)
 			return true
 		end,
 		function(dt)
+			if not card_at_position() then return false end
+			if beaver.get_input(config.button.back) == 1 then
+				showing = false
+				rfr.set_timer(lerp_timer, lerp_time)
+				return true
+			end
+			return false
+		end,
+		function(dt)
 			if rfr.has_active_dialogue(PLAYER) or not card_at_position() then return false end
+			rfr.unset_flag("screen_fill")
 			rfr.set_dialogue(PLAYER, dialogues["familiar"])
 			return true
 		end,

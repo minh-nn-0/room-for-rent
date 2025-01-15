@@ -1,0 +1,14 @@
+{
+  "player_greeting": "Em chào chị!",
+  "neighbour_greeting": "Chào!",
+  "player_introduction": "Ừm… Em là Sáng/Mây. Em mới chuyển tới, ở phòng 202 ạ. Mong chị giúp đỡ.",
+  "neighbour_response": "Ừ.",
+  "player_thought": "Ừm, có vẻ hàng xóm này không thân thiện lắm. M có nên nói chuyện tiếp không nhỉ, không chị ấy lại cáu lên.",
+  "player_choice_continue": "Nói tiếp|Không",
+  "player_friendly_continue": "Chị tên gì vậy ạ?",
+  "neighbour_name_reveal": "Trà.",
+  "player_question_duration": "Chị ở đây lâu chưa ạ?",
+  "neighbour_duration_response": "2 năm. Nhưng phòng 202 thì k ở đây được lâu đâu.",
+  "neighbour_exit": "(nói xong đi vào nhà)",
+  "player_confusion": "Ơ… là sao nhỉ."
+}

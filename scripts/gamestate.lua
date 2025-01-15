@@ -99,16 +99,17 @@ state["ingame"] = {
 		beaver.set_draw_color(10,10,10,255)
 		beaver.set_using_cam(false)
 		config.text_scale = 1
-		for _, eid in ipairs(rfr.get_entities_with_tags({"ui"})) do
-			rfr.draw_entities(eid)
-		end
-		rfr.draw_phone()
-
 		if rfr.get_flag("screen_fill") then
 			local fill_color = rfr.get_properties(GAME, "screen_fill_color") or {0,0,0,255}
 			beaver.set_draw_color(fill_color[1], fill_color[2], fill_color[3], fill_color[4])
 			beaver.draw_rectangle(0,0,1000,1000,true)
 		end
+		for _, eid in ipairs(rfr.get_entities_with_tags({"ui"})) do
+			rfr.draw_entities(eid)
+		end
+		rfr.draw_phone_notification()
+		rfr.draw_phone()
+
 		beaver.set_draw_color(255,255,255,255)
 		rfr.draw_narrative_text()
 		rfr.draw_transition()
