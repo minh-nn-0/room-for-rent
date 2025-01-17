@@ -11,7 +11,7 @@ rfr.set_interaction(power_box, interaction_names["power_box"],
 		return px >= 310 and px <= 330
 	end,
 	function()
-		rfr.set_dialogue(PLAYER, interaction_details["power_box"])
+		rfr.set_dialogue(PLAYER, {content = interaction_details["power_box"]})
 	end)
 local house_number = rfr.add_entity()
 rfr.set_position(house_number, 488, 128)
@@ -23,5 +23,5 @@ rfr.set_interaction(house_number, interaction_names["house_number"],
 	end,
 	function()
 		rfr.set_flag("read_house_number")
-		rfr.set_dialogue(PLAYER, interaction_details["house_number"])
+		rfr.set_dialogue(PLAYER, {content = interaction_details["house_number"]})
 	end)

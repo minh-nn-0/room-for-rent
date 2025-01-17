@@ -1,8 +1,11 @@
 - Sáng:
  + Ăn
- + Đi làm/Ngủ
+ * Đi làm/Ngủ
+
 - Tối:
  + Ăn tối
  + Học bài
  + Tắm rửa
- + Đi ngủ
+ * Đi ngủ
+
+Chú giải: "+" là những việc có thể làm hoặc không, "*" là những việc bắt buộc.

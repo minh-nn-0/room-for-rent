@@ -1,3 +1,4 @@
+local lighting = require "lighting"
 local player = {}
 PLAYER = rfr.add_entity()
 rfr.set_properties(PLAYER, "walkspeed", 1)
@@ -71,7 +72,8 @@ function player.update(dt)
 	end
 
 	if beaver.get_input("C") == 1 then
-		rfr.set_phone_notification("note")
+		lighting.toggle_light("room_ceiling")
+		lighting.set_background_color(20,20,20,255)
 	end
 	if rfr.having_dialogue_options() or rfr.has_active_dialogue(PLAYER) then
 		rfr.unset_flag("player_can_interact")

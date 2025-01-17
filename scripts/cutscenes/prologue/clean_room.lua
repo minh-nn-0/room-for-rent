@@ -13,7 +13,11 @@ local cs_prologue_after_broom = rfr.add_cutscene({
 		rfr.set_layer_visible("balcony", "Map.Balcony.Bg.Garbage", false)
 		rfr.set_properties(GAME, "day_number", 1)
 		print("exit broom")
+		rfr.set_phone_notification("note")
+		rfr.add_phone_note("guide")
+		rfr.add_phone_note("note")
 		require "room_items"
+		require "events.call_mom_first_time"
 		require "events.pickup_card"
 		require "events.meet_neighbour_first_time"
 	end,
@@ -41,7 +45,7 @@ local cs_prologue_after_broom = rfr.add_cutscene({
 		end,
 		function(dt)
 			if rfr.is_transition_active() then return false end
-			rfr.set_dialogue(PLAYER, dialogues["player_done_clean"])
+			rfr.set_dialogue(PLAYER, {content = dialogues["player_done_clean"]})
 			return true
 		end,
 	},
@@ -58,17 +62,17 @@ CS_PROLOGUE_CLEAN_ROOM = rfr.add_cutscene({
 	end,
 	scripts = {
 		function(dt)
-			rfr.set_dialogue(PLAYER, dialogues["player_shiver"])
+			rfr.set_dialogue(PLAYER, {content = dialogues["player_shiver"]})
 			return true
 		end,
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end
-			rfr.set_dialogue(PLAYER, dialogues["player_shiver2"])
+			rfr.set_dialogue(PLAYER, {content = dialogues["player_shiver2"]})
 			return true
 		end,
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end
-			rfr.set_dialogue(PLAYER, dialogues["player_should_clean"])
+			rfr.set_dialogue(PLAYER, {content = dialogues["player_should_clean"]})
 			rfr.set_position(broom, 218, 110)
 			rfr.set_location(broom, "Map.Mainroom")
 			rfr.set_interaction(broom, interaction_names["broom"],

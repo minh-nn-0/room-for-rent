@@ -48,7 +48,7 @@ rfr.set_interaction(DOOR_ROOM_TO_HALL, interaction_name["door_room_to_hall"],
 		return px >= 305 and px <= 320
 	end,
 	function()
-		if rfr.get_flag("prologue_room") then rfr.set_dialogue(PLAYER, interaction_details["door_room_to_hall_not_clean"])
+		if rfr.get_flag("prologue_room") then rfr.set_dialogue(PLAYER, {content = interaction_details["door_room_to_hall_not_clean"]})
 		else
 			rfr.set_cam_zoom(3)
 			rfr.set_cam_center(432, 96)
@@ -133,7 +133,7 @@ rfr.set_interaction(METAL_GATE, interaction_name["metal_gate"],
 		return px >= 510 and px <= 556
 	end,
 	function()
-		if rfr.get_flag("metal_gate_first_time") then rfr.set_dialogue(PLAYER, interaction_details["metal_gate_first_time"])
+		if rfr.get_flag("metal_gate_first_time") then rfr.set_dialogue(PLAYER, {content = interaction_details["metal_gate_first_time"]})
 		else
 			rfr.set_current_map("hall")
 			rfr.set_location(PLAYER, "Map.Hall")

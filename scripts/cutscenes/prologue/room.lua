@@ -33,8 +33,8 @@ CS_PROLOGUE_ROOM = rfr.add_cutscene({
 			end)
 
 		rfr.set_timer(start_talking_timer, 3)
-		rfr.set_dialogue(PLAYER, "")
-		rfr.set_dialogue(OWNER, "")
+		rfr.set_dialogue(PLAYER, {content = ""})
+		rfr.set_dialogue(OWNER, {content = ""})
 		rfr.set_cam_target(cam_target1)
 	end,
 	exit = function()
@@ -49,7 +49,7 @@ CS_PROLOGUE_ROOM = rfr.add_cutscene({
 	scripts = {
 		function(dt)
 			if rfr.get_position(cam_target1).x <= 250 then return false end
-			rfr.set_dialogue(OWNER, rfr.get_dialogue_from_json(dialogues, "owner_checkroom"))
+			rfr.set_dialogue(OWNER, {content = rfr.get_dialogue_from_json(dialogues, "owner_checkroom")})
 			return true
 		end,
 		function(dt)
@@ -62,7 +62,7 @@ CS_PROLOGUE_ROOM = rfr.add_cutscene({
 			if rfr.having_dialogue_options() then return false end
 			local sl = rfr.get_dialogue_options_selection()
 			if sl == 0 then
-				rfr.set_dialogue(PLAYER, rfr.get_dialogue_from_json(dialogues, "player_accept_room"))
+				rfr.set_dialogue(PLAYER, {content = rfr.get_dialogue_from_json(dialogues, "player_accept_room")})
 			elseif sl == 1 then
 				rfr.set_flag("refuse_room")
 			elseif sl == 2 then

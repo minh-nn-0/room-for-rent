@@ -1,6 +1,6 @@
 local util = require "luamodules.utilities"
 local selection = require "phone.selection"
-local notes = {"guide"}
+local notes = {}
 local scroll = 0
 local app_state = "home"
 local note_spacing = 1
@@ -14,7 +14,7 @@ end
 local states = {
 	["home"] = {
 		update = function(dt)
-			print(scroll)
+			if beaver.get_input(config.button.back) == 1 then rfr.set_state(PHONE, "home") end
 			if beaver.get_input("UP") > 0 then scroll = scroll + 1 end
 			if beaver.get_input("DOWN") > 0 then scroll = scroll - 1 end
 			local min_scroll = -((total_note_height - clip_rect_height)/ config.cam_zoom)
@@ -29,7 +29,7 @@ local states = {
 			beaver.set_clip_rect(math.floor(posx), math.floor(phone_position.y + 25 * config.cam_zoom),
 								math.floor(40 * config.cam_zoom),
 								clip_rect_height)
-			for _,note in ipairs({"guide", "guide1"}) do
+			for _,note in ipairs(notes) do
 				total_note_height = total_note_height + draw_note(posx, posy, note) + note_spacing * config.cam_zoom
 				posy = posy + total_note_height
 			end
@@ -43,6 +43,9 @@ local states = {
 		end
 	},
 }
+function rfr.add_phone_note(name)
+	table.insert(notes, name)
+end
 local function load()
 end
 local function update(dt)

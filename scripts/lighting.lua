@@ -5,9 +5,10 @@ local lights = {}
 beaver.new_image(rfr.gamepath() .. "assets/images/lights.png", "lights")
 beaver.create_texture_for_drawing("shadow", 1280, 720)
 beaver.set_texture_blend_mode("shadow", "modulate")
+beaver.set_texture_blend_mode("lights", "additive")
 
-lights["room_desk_lamp"] = {draw_properties = {dst = {x = 64, y = 119, w = 21, h = 11},
-										src = {x = 0, y = 6, w = 21, h = 11}},
+lights["room_ceiling"] = {draw_properties = {dst = {x = 64, y = 80, w = 256, h = 64},
+										src = {x = 44, y = 80, w = 256, h = 64}},
 							on = false}
 
 

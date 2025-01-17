@@ -17,7 +17,7 @@ rfr.set_interaction(BED, interaction_name["bed"],
 	end,
 	function()
 		if rfr.get_properties(BED, "normal") then
-			--rfr.set_dialogue(PLAYER, interaction_details["bed"])
+			--rfr.set_dialogue(PLAYER, {content = interaction_details["bed"]})
 			-- next_day
 		end
 	end)
@@ -31,7 +31,7 @@ rfr.set_interaction(ALTAR, interaction_name["altar"],
 	end,
 	function()
 		if rfr.get_properties(ALTAR, "normal") then
-			rfr.set_dialogue(PLAYER, interaction_details["altar"])
+			rfr.set_dialogue(PLAYER, {content = interaction_details["altar"]})
 		end
 	end)
 rfr.set_position(DESK, 184,100)
@@ -44,7 +44,7 @@ rfr.set_interaction(DESK, interaction_name["desk"],
 	end,
 	function()
 		if rfr.get_properties(DESK, "normal") then
-			rfr.set_dialogue(PLAYER, interaction_details["desk"])
+			rfr.set_dialogue(PLAYER, {content = interaction_details["desk"]})
 		end
 	end)
 rfr.set_position(CABINET, 288,100)
@@ -57,7 +57,7 @@ rfr.set_interaction(CABINET, interaction_name["cabinet"],
 	end,
 	function()
 		if rfr.get_properties(CABINET, "normal") then
-			-- rfr.set_dialogue(PLAYER, interaction_details["cabinet"])
+			-- rfr.set_dialogue(PLAYER, {content = interaction_details["cabinet"]})
 			-- change_clothes
 		end
 	end)

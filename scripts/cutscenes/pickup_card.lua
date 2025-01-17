@@ -28,7 +28,7 @@ CS_PICKUP_CARD = rfr.add_cutscene({
 	end,
 	scripts = {
 		function(dt)
-			rfr.set_dialogue(PLAYER, dialogues["surprised"])
+			rfr.set_dialogue(PLAYER, {content = dialogues["surprised"]})
 			return true
 		end,
 		function(dt)
@@ -51,12 +51,12 @@ CS_PICKUP_CARD = rfr.add_cutscene({
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) or not card_at_position() then return false end
 			rfr.unset_flag("screen_fill")
-			rfr.set_dialogue(PLAYER, dialogues["familiar"])
+			rfr.set_dialogue(PLAYER, {content = dialogues["familiar"]})
 			return true
 		end,
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end
-			rfr.set_dialogue(PLAYER, dialogues["same_school"])
+			rfr.set_dialogue(PLAYER, {content = dialogues["same_school"]})
 			return true
 		end,
 		function(dt)

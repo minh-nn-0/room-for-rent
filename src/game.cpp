@@ -146,7 +146,7 @@ void rfr::game::setup_binding()
 	rfr.set_function("draw_dialogue", [&](std::size_t eid)
 			{
 				auto& dialogue = _entities.get_component<rfr::dialogue>(eid);
-				if (dialogue.has_value() && dialogue->_text_index > 3)
+				if (dialogue.has_value() && dialogue->_text_index > 1)
 				{
 					auto pos = _entities.get_component<beaver::component::position>(eid).value();
 					rfr::draw_dialogue(pos._value , *dialogue, 

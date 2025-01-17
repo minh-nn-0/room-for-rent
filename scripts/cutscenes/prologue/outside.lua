@@ -36,7 +36,7 @@ CS_PROLOGUE_ARRIVE = rfr.add_cutscene({
 		function(dt)
 			if rfr.get_position(PLAYER).x < 280 then return false end
 			rfr.set_state(PLAYER, "idle")
-			rfr.set_dialogue(PLAYER, dialogues["player_arrive1"])
+			rfr.set_dialogue(PLAYER, {content = dialogues["player_arrive1"]})
 			return true
 		end,
 	},
@@ -56,12 +56,12 @@ local cs_prologue_talk_at_gate = rfr.add_cutscene({
 	scripts = {
 		function(dt)
 			if rfr.has_active_dialogue(OWNER) then return false end
-			rfr.set_dialogue(OWNER, dialogues["owner_greeting"])
+			rfr.set_dialogue(OWNER, {content = dialogues["owner_greeting"]})
 			return true
 		end,
 		function(dt)
 			if rfr.has_active_dialogue(OWNER) then return false end
-			rfr.set_dialogue(OWNER, dialogues["owner_invite_house"])
+			rfr.set_dialogue(OWNER, {content = dialogues["owner_invite_house"]})
 			return true
 		end,
 		function(dt)
@@ -74,7 +74,7 @@ local cs_prologue_talk_at_gate = rfr.add_cutscene({
 		end,
 		function(dt)
 			if not rfr.get_timer(timer).running then
-				if not rfr.has_active_dialogue(OWNER) then rfr.set_dialogue(OWNER, dialogues["owner_confused"]) end
+				if not rfr.has_active_dialogue(OWNER) then rfr.set_dialogue(OWNER, {content = dialogues["owner_confused"]}) end
 				rfr.set_timer(timer, 10)
 			end
 			if rfr.get_last_interaction() == METAL_GATE then return true end
@@ -131,19 +131,19 @@ local cs_prologue_call_owner = rfr.add_cutscene({
 	scripts = {
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end
-			rfr.set_dialogue(PLAYER, dialogues["player_correct_address"])
+			rfr.set_dialogue(PLAYER, {content = dialogues["player_correct_address"]})
 			return true
 		end,
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end
-			rfr.set_dialogue(PLAYER, dialogues["player_should_call"])
+			rfr.set_dialogue(PLAYER, {content = dialogues["player_should_call"]})
 			rfr.set_timer(timer, 10)
 			return true
 		end,
 		function(dt)
 			if not (rfr.is_making_phone_call() and rfr.get_phone_callee() == "owner") then
 				if not rfr.get_timer(timer).running and not rfr.has_active_dialogue(PLAYER) then
-					if math.random() < 0.5 then rfr.set_dialogue(PLAYER, dialogues["player_should_call"]) end
+					if math.random() < 0.5 then rfr.set_dialogue(PLAYER, {content = dialogues["player_should_call"]}) end
 	 				rfr.set_timer(timer, 10)
 				end
 				return false
@@ -154,7 +154,7 @@ local cs_prologue_call_owner = rfr.add_cutscene({
 		end,
 		function(dt)
 			if rfr.phone_caller_active() then return false end
-			rfr.set_dialogue(PLAYER, dialogues["player_call_greeting"])
+			rfr.set_dialogue(PLAYER, {content = dialogues["player_call_greeting"]})
 			return true
 		end,
 		function(dt)
@@ -164,12 +164,12 @@ local cs_prologue_call_owner = rfr.add_cutscene({
 		end,
 		function(dt)
 			if rfr.phone_caller_active() then return false end
-			rfr.set_dialogue(PLAYER, dialogues["player_call_introduce"])
+			rfr.set_dialogue(PLAYER, {content = dialogues["player_call_introduce"]})
 			return true
 		end,
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end
-			rfr.set_dialogue(PLAYER, dialogues["player_call_arrived"])
+			rfr.set_dialogue(PLAYER, {content = dialogues["player_call_arrived"]})
 			return true
 		end,
 		function(dt)

@@ -47,70 +47,70 @@ CS_PROLOGUE_HALL = rfr.add_cutscene({
 	scripts = {
 		function(dt)
 			if owner_ready_to_talk() then
-				rfr.set_dialogue(OWNER, rfr.get_dialogue_from_json(dialogues, "owner_greeting2"))
+				rfr.set_dialogue(OWNER, {content = rfr.get_dialogue_from_json(dialogues, "owner_greeting2")})
 				return true
 			end
 			return false
 		end,
 		function(dt)
 			if owner_ready_to_talk() then
-				rfr.set_dialogue(OWNER, rfr.get_dialogue_from_json(dialogues, "owner_one_room_left"))
+				rfr.set_dialogue(OWNER, {content = rfr.get_dialogue_from_json(dialogues, "owner_one_room_left")})
 				return true
 			end
 			return false
 		end,
 		function(dt)
 			if owner_ready_to_talk() then
-				rfr.set_dialogue(OWNER, rfr.get_dialogue_from_json(dialogues, "owner_cheapest"))
+				rfr.set_dialogue(OWNER, {content = rfr.get_dialogue_from_json(dialogues, "owner_cheapest")})
 				return true
 			end
 			return false
 		end,
 		function(dt)
 			if owner_ready_to_talk() then
-				rfr.set_dialogue(PLAYER, rfr.get_dialogue_from_json(dialogues, "player_near_school"))
+				rfr.set_dialogue(PLAYER, {content = rfr.get_dialogue_from_json(dialogues, "player_near_school")})
 				return true
 			end
 			return false
 		end,
 		function(dt)
 			if not rfr.has_active_dialogue(PLAYER) then
-				rfr.set_dialogue(PLAYER, rfr.get_dialogue_from_json(dialogues, "player_ask_details"))
+				rfr.set_dialogue(PLAYER, {content = rfr.get_dialogue_from_json(dialogues, "player_ask_details")})
 				return true
 			end
 			return false
 		end,
 		function(dt)
 			if not rfr.has_active_dialogue(PLAYER) and owner_ready_to_talk() then
-				rfr.set_dialogue(OWNER, rfr.get_dialogue_from_json(dialogues, "owner_room_details"))
+				rfr.set_dialogue(OWNER, {content = rfr.get_dialogue_from_json(dialogues, "owner_room_details")})
 				return true
 			end
 			return false
 		end,
 		function(dt)
 			if not rfr.has_active_dialogue(OWNER) then
-				rfr.set_dialogue(PLAYER, rfr.get_dialogue_from_json(dialogues, "player_surprised"))
+				rfr.set_dialogue(PLAYER, {content = rfr.get_dialogue_from_json(dialogues, "player_surprised")})
 				return true
 			end
 			return false
 		end,
 		function(dt)
 			if not rfr.has_active_dialogue(PLAYER) and owner_ready_to_talk() and on_second_floor() then
-				rfr.set_dialogue(OWNER, rfr.get_dialogue_from_json(dialogues, "owner_no_funding"))
+				rfr.set_dialogue(OWNER, {content = rfr.get_dialogue_from_json(dialogues, "owner_no_funding")})
 				return true
 			end
 			return false
 		end,
 		function(dt)
 			if owner_ready_to_talk() then
-				rfr.set_dialogue(OWNER, rfr.get_dialogue_from_json(dialogues, "owner_special_price"))
+				rfr.set_dialogue(OWNER, {content = rfr.get_dialogue_from_json(dialogues, "owner_special_price")})
 				return true
 			end
 			return false
 		end,
 		function(dt)
 			if owner_ready_to_talk() then
-				rfr.set_dialogue(OWNER, rfr.get_dialogue_from_json(dialogues, "owner_normal_price"))
+				rfr.set_dialogue(OWNER, {content = rfr.get_dialogue_from_json(dialogues, "owner_normal_price")})
 				return true
 			end
 			return false
@@ -126,9 +126,9 @@ CS_PROLOGUE_HALL = rfr.add_cutscene({
 			if not rfr.having_dialogue_options() then
 				local sl = rfr.get_dialogue_options_selection()
 				if sl == 0 then
-					rfr.set_dialogue(PLAYER, rfr.get_dialogue_from_json(dialogues, "player_agree"))
+					rfr.set_dialogue(PLAYER, {content = rfr.get_dialogue_from_json(dialogues, "player_agree")})
 				else
-					rfr.set_dialogue(PLAYER, rfr.get_dialogue_from_json(dialogues, "player_doubt"))
+					rfr.set_dialogue(PLAYER, {content = rfr.get_dialogue_from_json(dialogues, "player_doubt")})
 				end
 				return true
 			end
@@ -138,9 +138,9 @@ CS_PROLOGUE_HALL = rfr.add_cutscene({
 			if not rfr.has_active_dialogue(PLAYER) then
 				local sl = rfr.get_dialogue_options_selection()
 				if sl == 0 then
-					rfr.set_dialogue(OWNER, rfr.get_dialogue_from_json(dialogues, "owner_invite"))
+					rfr.set_dialogue(OWNER, {content = rfr.get_dialogue_from_json(dialogues, "owner_invite")})
 				else
-					rfr.set_dialogue(OWNER, rfr.get_dialogue_from_json(dialogues, "owner_defensive"))
+					rfr.set_dialogue(OWNER, {content = rfr.get_dialogue_from_json(dialogues, "owner_defensive")})
 				end
 				return true
 			end

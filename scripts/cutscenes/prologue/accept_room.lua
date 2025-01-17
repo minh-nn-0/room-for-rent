@@ -12,22 +12,22 @@ CS_PROLOGUE_ACCEPT_ROOM = rfr.add_cutscene({
 	scripts = {
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end
-			rfr.set_dialogue(PLAYER, rfr.get_dialogue_from_json(dialogues, "player_sign"))
+			rfr.set_dialogue(PLAYER, {content = rfr.get_dialogue_from_json(dialogues, "player_sign")})
 			return true
 		end,
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end
-			rfr.set_dialogue(OWNER, rfr.get_dialogue_from_json(dialogues, "owner_sign"))
+			rfr.set_dialogue(OWNER, {content = rfr.get_dialogue_from_json(dialogues, "owner_sign")})
 			return true
 		end,
 		function(dt)
 			if rfr.has_active_dialogue(OWNER) then return false end
-			rfr.set_dialogue(OWNER, rfr.get_dialogue_from_json(dialogues, "owner_remind"))
+			rfr.set_dialogue(OWNER, {content = rfr.get_dialogue_from_json(dialogues, "owner_remind")})
 			return true
 		end,
 		function(dt)
 			if rfr.has_active_dialogue(OWNER) then return false end
-			rfr.set_dialogue(PLAYER, rfr.get_dialogue_from_json(dialogues, "player_thank"))
+			rfr.set_dialogue(PLAYER, {content = rfr.get_dialogue_from_json(dialogues, "player_thank")})
 			return true
 		end,
 		function(dt)

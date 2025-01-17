@@ -12,12 +12,31 @@ namespace rfr
 	template<typename... Ts>
 	void bind_dialogue(beaver::ecs<Ts...>& ecs, dialogue_options& dialogue_options, sol::table& tbl, sol::state& lua)
 	{
-		tbl.set_function("set_dialogue", [&](std::size_t eid, const std::string& content)
+		tbl.set_function("set_dialogue", [&](std::size_t eid, const sol::table& param)
 				{
 					auto& dl = ecs.template get_or_set_component<rfr::dialogue>(eid);
-					dl->_content = content;
+					std::array<unsigned char, 4> text_color {0,0,0,255};
+					if (param["color"].is<sol::table>())
+					{
+						sol::table colortbl = param["color"].get<sol::table>();
+						for (int i = 0; i != 3; i++)
+							text_color[i] = colortbl[i+1];
+					}
+					dl->_sound = param["sound"].get_or(lua["config"]["default_dialogue_sound"].get<std::string>());
+					dl->_verbal = param["verbal"].get_or(true);
+					dl->_cpf = param["cpf"].get_or(lua["config"]["cpf"].get<float>());
+					dl->_text_color = text_color;
+					dl->_content = param["content"].get<std::string>();
 					dl->_text_index = 0;
 					dl->_time = 0;
+				});
+		tbl.set_function("get_dialogue_info", [&](std::size_t eid) -> sol::object
+				{
+					if (auto& dl = ecs.template get_component<rfr::dialogue>(eid); dl.has_value())
+					{
+						return lua.create_table_with("sound", dl->_sound, "verbal", dl->_verbal);
+					}
+					else return sol::nil;
 				});
 		tbl.set_function("set_dialogue_position", [&](std::size_t eid, float x, float y)
 				{
@@ -30,7 +49,7 @@ namespace rfr
 						auto& dl = ecs.template get_component<rfr::dialogue>(eid);
 						if (dl->_text_index < dl->_content.size())
 						{
-							dl->_time += lua["config"]["cpf"].get<float>() * dt;
+							dl->_time += dl->_cpf * dt;
 							if (dl->_time > 1)
 							{
 								dl->_text_index += static_cast<int>(dl->_time);

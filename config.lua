@@ -27,6 +27,7 @@ config = {
 	dialogue_box_padding = 3,
 	dialogue_wraplength = 200,
 	interaction_box_padding = 3,
+	default_dialogue_sound = "dialogue1",
 	button = {
 		interaction = "X",
 		back = "Z",

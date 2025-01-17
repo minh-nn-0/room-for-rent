@@ -19,8 +19,8 @@ function rfr.draw_phone_notification()
 	if notifying_app == "" or rfr.get_flag("phone_opening") then return end
 	local text = util.load_json(rfr.gamepath() .. "data/ui/" .. config.language .. ".json")["phone_noti"]
 
-	beaver.draw_texture("UI", {dst = {x = 40, y = 20, w = 8 * config.cam_zoom, h = 14 * config.cam_zoom},
-								src = {x = 56, y = 50, w = 8, h = 14}})
+	beaver.draw_texture("UI", {dst = {x = 20, y = 15, w = 6 * config.cam_zoom, h = 10 * config.cam_zoom},
+								src = {x = 0, y = 22, w = 6, h = 10}})
 	beaver.set_draw_color(255,255,255,255)
-	beaver.draw_text(90, 40, config.ui_font, 1, text, 0, true)
+	beaver.draw_text(60, 20, config.ui_font, 1, text, 0, true)
 end
