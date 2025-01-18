@@ -9,7 +9,8 @@ DOOR_BALCONY_TO_ROOM = rfr.add_entity()
 DOOR_HALL_TO_ROOM = rfr.add_entity()
 DOOR_HALL_STAIR_FIRST = rfr.add_entity()
 DOOR_HALL_STAIR_SECOND = rfr.add_entity()
-METAL_GATE = rfr.add_entity()
+METAL_GATE_OUTSIDE = rfr.add_entity()
+METAL_GATE_INSIDE = rfr.add_entity()
 local locked_doors
 
 rfr.set_position(DOOR_ROOM_TO_BATHROOM, 256, 100)
@@ -125,9 +126,10 @@ rfr.set_interaction(DOOR_HALL_STAIR_SECOND, interaction_name["door_hall_stair_se
 	function()
 		rfr.set_position(PLAYER, 770, 144)
 	end)
-rfr.set_position(METAL_GATE, 533, 124)
-rfr.set_location(METAL_GATE, "Map.Outside")
-rfr.set_interaction(METAL_GATE, interaction_name["metal_gate"],
+
+rfr.set_position(METAL_GATE_OUTSIDE, 536, 124)
+rfr.set_location(METAL_GATE_OUTSIDE, "Map.Outside")
+rfr.set_interaction(METAL_GATE_OUTSIDE, interaction_name["metal_gate"],
 	function()
 		local px, py = util.player_center()
 		return px >= 510 and px <= 556
@@ -139,6 +141,6 @@ rfr.set_interaction(METAL_GATE, interaction_name["metal_gate"],
 			rfr.set_location(PLAYER, "Map.Hall")
 			rfr.set_cam_zoom(3)
 			rfr.set_position(PLAYER, 530,144)
-			rfr.fade_in(1)
+			rfr.fade_in(2)
 		end
 	end)

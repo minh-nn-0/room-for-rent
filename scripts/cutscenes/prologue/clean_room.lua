@@ -20,6 +20,8 @@ local cs_prologue_after_broom = rfr.add_cutscene({
 		require "events.call_mom_first_time"
 		require "events.pickup_card"
 		require "events.meet_neighbour_first_time"
+		require "activities.shower"
+		require "activities.work"
 	end,
 	scripts = {
 		function(dt)

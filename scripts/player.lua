@@ -72,8 +72,8 @@ function player.update(dt)
 	end
 
 	if beaver.get_input("C") == 1 then
-		lighting.toggle_light("room_ceiling")
-		lighting.set_background_color(20,20,20,255)
+		lighting.toggle_light("room")
+		lighting.set_background_color(50,50,50,255)
 	end
 	if rfr.having_dialogue_options() or rfr.has_active_dialogue(PLAYER) then
 		rfr.unset_flag("player_can_interact")

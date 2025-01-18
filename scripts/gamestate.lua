@@ -75,8 +75,8 @@ state["ingame"] = {
 				rfr.draw_entities(eid)
 			end
 		end
-		lighting.draw()
 		rfr.draw_map_by_layer(rfr.get_current_map(), rfr.get_location(PLAYER) .. ".Fg", 0, 0)
+		lighting.draw()
 		if rfr.get_flag("player_can_interact") and rfr.get_first_interaction() ~= -1 then
 			beaver.set_draw_color(255,255,255,255)
 			local i = rfr.get_first_interaction()
