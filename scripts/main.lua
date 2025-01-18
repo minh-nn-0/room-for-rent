@@ -19,6 +19,7 @@ function LOAD()
 	beaver.new_image(rfr.gamepath() .. "assets/images/character_heads.png", "character_heads")
 	beaver.new_image(rfr.gamepath() .. "assets/images/UI.png", "UI")
 	beaver.new_image(rfr.gamepath() .. "assets/images/phone.png", "phone")
+	beaver.new_image(rfr.gamepath() .. "assets/images/notebook.png", "notebook")
 	beaver.new_image(rfr.gamepath() .. "assets/images/student_card.png", "student_card")
 
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/dialogue1.wav", "dialogue1")

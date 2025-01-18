@@ -75,6 +75,10 @@ function player.update(dt)
 		lighting.toggle_light("room")
 		lighting.set_background_color(50,50,50,255)
 	end
+
+	if beaver.get_input("B") == 1 then
+		rfr.set_properties(GAME, "day_number", 2)
+	end
 	if rfr.having_dialogue_options() or rfr.has_active_dialogue(PLAYER) then
 		rfr.unset_flag("player_can_interact")
 	elseif not rfr.get_flag("phone_opening") then

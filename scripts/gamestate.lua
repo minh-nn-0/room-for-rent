@@ -7,6 +7,8 @@ require "door"
 require "interactions"
 require "cutscenes.prologue.prologue"
 require "phone.main"
+
+require "activities.homework"
 local gamestate = {
 	current_state = "ingame"
 }
@@ -61,6 +63,7 @@ state["ingame"] = {
 		rfr.update_narrative(dt)
 		rfr.update_transition(dt)
 		rfr.set_only_player_location_visible()
+		rfr.update_notebook()
 		rfr.cleanup_entities()
 
 		return true
@@ -106,6 +109,7 @@ state["ingame"] = {
 		for _, eid in ipairs(rfr.get_entities_with_tags({"ui"})) do
 			rfr.draw_entities(eid)
 		end
+		rfr.draw_notebook(4)
 		rfr.draw_phone_notification()
 		rfr.draw_phone()
 

@@ -1,0 +1,24 @@
+{
+	"questions" : [
+		{
+			"topic": "Chọn từ đúng chính tả",
+			"answers": ["Ngành học", "Nghành học"],
+			"correct" : 1
+		},
+		{
+			"topic": "Chọn từ đúng chính tả",
+			"answers": ["Đều như vắt chanh", "Đều như vắt tranh"],
+			"correct" : 2
+		},
+		{
+			"topic": "Chọn từ đúng chính tả",
+			"answers": ["Vô hình chung", "Vô hình trung"],
+			"correct": 2
+		},
+		{
+			"topic": "Triều đại nào dài nhất trong lịch sử Việt Nam",
+			"answers": ["Nguyễn", "Hậu Lê", "Trần"],
+			"correct" : 2
+		}
+	]
+}
