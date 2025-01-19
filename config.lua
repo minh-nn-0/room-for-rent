@@ -13,6 +13,7 @@ require "luamodules.camera"
 require "luamodules.interaction"
 require "luamodules.transition"
 require "luamodules.narrative"
+require "luamodules.gametime"
 require "luamodules.map"
 config = {
 	render_size = {640, 360},

@@ -11,7 +11,6 @@ local cs_prologue_after_broom = rfr.add_cutscene({
 	exit = function()
 		rfr.unset_flag("prologue_room")
 		rfr.set_layer_visible("balcony", "Map.Balcony.Bg.Garbage", false)
-		rfr.set_properties(GAME, "day_number", 1)
 		print("exit broom")
 		rfr.set_phone_notification("note")
 		rfr.add_phone_note("guide")

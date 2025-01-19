@@ -1,3 +1,4 @@
+require "activities.homework"
 local lighting = require "lighting"
 local player = {}
 PLAYER = rfr.add_entity()
@@ -77,11 +78,11 @@ function player.update(dt)
 	end
 
 	if beaver.get_input("B") == 1 then
-		rfr.set_properties(GAME, "day_number", 2)
+		rfr.advance_time()
 	end
 	if rfr.having_dialogue_options() or rfr.has_active_dialogue(PLAYER) then
 		rfr.unset_flag("player_can_interact")
-	elseif not rfr.get_flag("phone_opening") then
+	elseif not (rfr.get_flag("phone_opening") or rfr.get_flag("notebook_opening")) then
 		rfr.set_flag("player_can_interact")
 	end
 

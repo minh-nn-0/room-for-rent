@@ -39,17 +39,3 @@ local cs_gotowork = rfr.add_cutscene({
 	},
 	update = function(dt) end
 })
-
-
-
-
-rfr.set_position(METAL_GATE_INSIDE, 536, 124)
-rfr.set_location(METAL_GATE_INSIDE, "Map.Hall")
-rfr.set_interaction(METAL_GATE_INSIDE, interaction_names["metal_gate"],
-	function()
-		local px,_ = util.player_center()
-		return px >= 512 and px <= 560
-	end,
-	function()
-		rfr.play_cutscene(cs_gotowork)
-	end)

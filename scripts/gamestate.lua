@@ -62,8 +62,10 @@ state["ingame"] = {
 		rfr.update_interaction()
 		rfr.update_narrative(dt)
 		rfr.update_transition(dt)
+
+		rfr.update_homework()
+
 		rfr.set_only_player_location_visible()
-		rfr.update_notebook()
 		rfr.cleanup_entities()
 
 		return true
@@ -109,10 +111,10 @@ state["ingame"] = {
 		for _, eid in ipairs(rfr.get_entities_with_tags({"ui"})) do
 			rfr.draw_entities(eid)
 		end
-		rfr.draw_notebook(4)
 		rfr.draw_phone_notification()
 		rfr.draw_phone()
 
+		rfr.draw_homework()
 		beaver.set_draw_color(255,255,255,255)
 		rfr.draw_narrative_text()
 		rfr.draw_transition()

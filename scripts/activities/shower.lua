@@ -1,5 +1,6 @@
 local util = require "luamodules.utilities"
 local interaction_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
+local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
 
 rfr.set_state_entry(PLAYER, "shower",
 	function()
@@ -15,7 +16,9 @@ local cs_shower = rfr.add_cutscene({
 	init = function()
 		rfr.fade_out(2)
 	end,
-	exit = function() end,
+	exit = function()
+		rfr.set_flag("showered")
+	end,
 	scripts = {
 		function(dt)
 			if rfr.is_transition_active() then return false end
@@ -58,5 +61,7 @@ rfr.set_interaction(SHOWER, interaction_names["shower"],
 		return px >= 176 and px <= 200
 	end,
 	function()
-		rfr.play_cutscene(cs_shower)
+		if rfr.get_flag("showered") then rfr.set_dialogue(PLAYER, {content = interaction_details["showered"]})
+		else rfr.play_cutscene(cs_shower)
+		end
 	end)

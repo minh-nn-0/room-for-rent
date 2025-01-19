@@ -3,7 +3,6 @@ local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/name
 local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
 BED = rfr.add_entity()
 ALTAR = rfr.add_entity()
-DESK = rfr.add_entity()
 CABINET = rfr.add_entity()
 
 
@@ -16,7 +15,7 @@ rfr.set_interaction(BED, interaction_name["bed"],
 		return px >= 90 and px <= 120
 	end,
 	function()
-		if rfr.get_properties(BED, "normal") then
+		if rfr.get_flag("can_sleep") then
 			--rfr.set_dialogue(PLAYER, {content = interaction_details["bed"]})
 			-- next_day
 		end
@@ -32,19 +31,6 @@ rfr.set_interaction(ALTAR, interaction_name["altar"],
 	function()
 		if rfr.get_properties(ALTAR, "normal") then
 			rfr.set_dialogue(PLAYER, {content = interaction_details["altar"]})
-		end
-	end)
-rfr.set_position(DESK, 184,100)
-rfr.set_properties(DESK, "normal", true)
-rfr.set_location(DESK, "Map.Mainroom")
-rfr.set_interaction(DESK, interaction_name["desk"],
-	function()
-		local px,_ = util.player_center()
-		return px >= 176 and px <= 190
-	end,
-	function()
-		if rfr.get_properties(DESK, "normal") then
-			rfr.set_dialogue(PLAYER, {content = interaction_details["desk"]})
 		end
 	end)
 rfr.set_position(CABINET, 288,100)

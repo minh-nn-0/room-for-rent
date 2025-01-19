@@ -68,7 +68,7 @@ local cs_prologue_talk_at_gate = rfr.add_cutscene({
 			if rfr.has_active_dialogue(OWNER) then return false end
 			rfr.set_location(OWNER, "Map.Hall")
 			rfr.set_timer(timer, 10)
-			rfr.set_properties(METAL_GATE, "disable", false)
+			rfr.set_properties(METAL_GATE_OUTSIDE, "disable", false)
 			rfr.unset_flag("metal_gate_first_time")
 			return true
 		end,
@@ -77,7 +77,7 @@ local cs_prologue_talk_at_gate = rfr.add_cutscene({
 				if not rfr.has_active_dialogue(OWNER) then rfr.set_dialogue(OWNER, {content = dialogues["owner_confused"]}) end
 				rfr.set_timer(timer, 10)
 			end
-			if rfr.get_last_interaction() == METAL_GATE then return true end
+			if rfr.get_last_interaction() == METAL_GATE_OUTSIDE then return true end
 			return false
 		end,
 	},
@@ -106,7 +106,7 @@ local cs_prologue_owner_pickup = rfr.add_cutscene({
 	scripts = {
 		function(dt)
 			if rfr.get_timer(timer).running or not player_near_gate() then return false end
-			rfr.set_properties(METAL_GATE, "disable", true)
+			rfr.set_properties(METAL_GATE_OUTSIDE, "disable", true)
 			rfr.set_position(OWNER, 524,144)
 			rfr.set_location(OWNER, "Map.Outside")
 			rfr.set_state(OWNER, "idle")

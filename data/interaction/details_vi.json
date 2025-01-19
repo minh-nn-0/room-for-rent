@@ -4,5 +4,7 @@
 	"metal_gate_first_time" : "Mình không thể tự vào nhà",
 	"door_room_to_hall_not_clean" : "Mình cần phải dọn phòng đã",
 	"altar" : "Một chiếc bàn thờ",
-	"desk" : "Mình không cần phải làm bài tập bây giờ."
+	"homework_not_time" : "Mình không cần phải làm bài tập bây giờ.",
+	"homework_done" : "Mình đã hoàn thành bài tập ngày hôm nay",
+	"showered" : "Mình vừa tắm xong"
 }

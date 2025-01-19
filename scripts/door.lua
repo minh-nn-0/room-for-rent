@@ -131,7 +131,7 @@ rfr.set_position(METAL_GATE_OUTSIDE, 536, 124)
 rfr.set_location(METAL_GATE_OUTSIDE, "Map.Outside")
 rfr.set_interaction(METAL_GATE_OUTSIDE, interaction_name["metal_gate"],
 	function()
-		local px, py = util.player_center()
+		local px,_ = util.player_center()
 		return px >= 510 and px <= 556
 	end,
 	function()
@@ -143,4 +143,19 @@ rfr.set_interaction(METAL_GATE_OUTSIDE, interaction_name["metal_gate"],
 			rfr.set_position(PLAYER, 530,144)
 			rfr.fade_in(2)
 		end
+	end)
+rfr.set_position(METAL_GATE_INSIDE, 536, 124)
+rfr.set_location(METAL_GATE_INSIDE, "Map.Hall")
+rfr.set_interaction(METAL_GATE_INSIDE, interaction_name["metal_gate"],
+	function()
+		local px,py = util.player_center()
+		return px >= 512 and px <= 560 and py == 160
+	end,
+	function()
+		rfr.set_current_map("outside")
+		rfr.set_location(PLAYER, "Map.Outside")
+		rfr.set_cam_zoom(2)
+		rfr.set_position(PLAYER, 530,144)
+		rfr.set_cam_target(PLAYER, 16, -20)
+		rfr.fade_in(2)
 	end)

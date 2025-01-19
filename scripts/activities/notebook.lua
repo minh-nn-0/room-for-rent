@@ -1,5 +1,6 @@
 local util = require("luamodules.utilities")
 local selection = require "phone.selection"
+local notebook = {}
 
 local questions = util.load_json(rfr.gamepath() .. "data/homework/" .. config.language .. ".json")["questions"]
 local answered = {}
@@ -10,52 +11,110 @@ local homework_per_day = {
 local current_selection = 1
 local current_questionid = 1
 
-local function day_has_questions(day, questionid)
-	local current_day = rfr.get_properties(GAME, "day_number") or 1
-	local current_questions = homework_per_day[current_day]
+function notebook.current_questions()
+	local current_day, _ = rfr.current_time()
+	return homework_per_day[current_day]
+end
 
+
+local function day_has_questions(day, questionid)
+	local current_questions = homework_per_day[day]
 	for _,v in ipairs(current_questions) do
 		if v == questionid then return true end
 	end
 	return false
 end
 
-function rfr.update_notebook()
+local book_start_posy = 600
+local book_end_posy = 50
+local book_posy = book_start_posy
+local book_posx = config.render_size[1] / 2 - 26 * config.cam_zoom
+
+
+local lerp_timer = rfr.add_entity()
+local lerp_time = 1
+rfr.set_timer(lerp_timer, lerp_time)
+
+function notebook.at_position()
+	if rfr.get_flag("notebook_opening") then return book_posy <= book_end_posy
+	else return book_posy >= book_start_posy
+	end
+end
+
+function notebook.toggle()
+	rfr.toggle_flag("notebook_opening")
+	rfr.set_timer(lerp_timer, lerp_time)
+
+	if rfr.get_flag("notebook_opening") then
+		rfr.set_flag("screen_fill")
+		rfr.unset_flag("player_can_move")
+		rfr.unset_flag("player_can_interact")
+		rfr.set_tileanimation(PLAYER, {
+			frames = {{12,100}},
+			framewidth = 32,
+			frameheight = 32,
+			["repeat"] = false
+		})
+		rfr.set_position(PLAYER, 169, 112)
+	else
+		rfr.set_flag("player_can_move")
+		rfr.set_flag("player_can_interact")
+	end
+
+end
+function notebook.update()
 	-- Scroll through homework with left and right
-
-	local current_day = rfr.get_properties(GAME, "day_number") or 1
-	local current_questions = homework_per_day[current_day]
-	local max_questionid = current_questions[#current_questions]
-	if beaver.get_input("LEFT") == 1 then
-		current_questionid = math.max(current_questionid - 1, 1)
-		current_selection = 1
+	if not notebook.at_position() then
+		local t = rfr.get_timer(lerp_timer).elapsed
+		if rfr.get_flag("notebook_opening") then
+			rfr.set_properties(GAME, "screen_fill_color", {20,20,20,math.floor(200 * math.min(t * 2,1))})
+			book_posy = book_start_posy + (book_end_posy - book_start_posy) * util.ease_in_out(math.min(t / lerp_time, 1))
+		else
+			rfr.set_properties(GAME, "screen_fill_color", {20,20,20,math.floor(200 * (1 - math.min(t * 2,1)))})
+			if t >= lerp_time then rfr.unset_flag("screen_fill") end
+			book_posy = book_end_posy + (book_start_posy - book_end_posy) * util.ease_in_out(math.min(t / lerp_time, 1))
+		end
+		return
 	end
-	if beaver.get_input("RIGHT") == 1 then
-		current_questionid = math.min(current_questionid + 1, max_questionid)
-		current_selection = 1
-	end
 
-	if day_has_questions(current_day, current_questionid) then
-		local current_question_max_answer = #questions[current_questionid]["answers"]
-		if beaver.get_input("UP") == 1 then current_selection = math.max(current_selection - 1, 1) end
-		if beaver.get_input("DOWN") == 1 then current_selection = math.min(current_selection + 1, current_question_max_answer) end
+	if rfr.get_flag("notebook_opening") then
+		if beaver.get_input(config.button.back) == 1 then notebook.toggle() end
+		local current_day,_ = rfr.current_time()
+		local current_questions = homework_per_day[current_day]
+		local max_questionid = current_questions[#current_questions]
+		if beaver.get_input("LEFT") == 1 then
+			current_questionid = math.max(current_questionid - 1, 1)
+			current_selection = 1
+		end
+		if beaver.get_input("RIGHT") == 1 then
+			current_questionid = math.min(current_questionid + 1, max_questionid)
+			current_selection = 1
+		end
 
-		if beaver.get_input(config.button.interaction) == 1 then
-			answered[current_questionid] = current_selection
+		if day_has_questions(current_day, current_questionid) then
+			local current_question_max_answer = #questions[current_questionid]["answers"]
+			if beaver.get_input("UP") == 1 then current_selection = math.max(current_selection - 1, 1) end
+			if beaver.get_input("DOWN") == 1 then current_selection = math.min(current_selection + 1, current_question_max_answer) end
+
+			if beaver.get_input(config.button.interaction) == 1 then
+				answered[current_questionid] = current_selection
+			end
 		end
 	end
 	-- Back with Z
 end
 
-function rfr.draw_notebook()
-	local current_day = rfr.get_properties(GAME, "day_number") or 1
-	local current_questions = homework_per_day[current_day]
+function notebook.draw()
+	if not rfr.get_flag("notebook_opening") and notebook.at_position() then return end
+	local book_dst = {x = book_posx, y = book_posy, w = 52 * config.cam_zoom, h = 70 * config.cam_zoom}
+	beaver.draw_texture("notebook", {dst = book_dst})
+	beaver.set_draw_color(0,0,0,255)
+	beaver.draw_text_centered(book_posx + 26 * config.cam_zoom, book_posy + (70 - 8) * config.cam_zoom,
+								config.ui_font, 1,
+								tostring(current_questionid), 0, true)
 
+	local current_day,_ = rfr.current_time()
 	local past_question = not day_has_questions(current_day, current_questionid)
-
-	local book_posx = config.render_size[1]/2 - 26 * config.cam_zoom
-	local book_posy = 50
-	beaver.draw_texture("notebook", {dst = {x = book_posx, y = book_posy, w = 52 * config.cam_zoom, h = 70 * config.cam_zoom}})
 	local topic = questions[current_questionid]["topic"]
 	local answers = questions[current_questionid]["answers"]
 	local current_correct_answer = questions[current_questionid]["correct"]
@@ -73,7 +132,6 @@ function rfr.draw_notebook()
 	for i, answer in ipairs(answers) do
 		answer_posy = answer_posy + 8 * config.cam_zoom
 		local prefix = (current_answer == i) and "☒ " or "☐ "
-		beaver.set_draw_color(0,0,0,255)
 		if past_question then
 			if current_answer == current_correct_answer then
 				beaver.set_draw_color(38,133,76,255)
@@ -94,5 +152,6 @@ function rfr.draw_notebook()
 							config.ui_font, 1,
 							prefix .. answer, 0, true)
 	end
-
 end
+
+return notebook
