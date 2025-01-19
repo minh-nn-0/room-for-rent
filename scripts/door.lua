@@ -21,10 +21,11 @@ rfr.set_interaction(DOOR_ROOM_TO_BATHROOM, interaction_name["door_room_to_bathro
 		return px >= 248 and px <= 264
 	end,
 	function()
+		beaver.play_sound("dooropen")
 		rfr.set_cam_center(256, 240)
 		rfr.set_location(PLAYER, "Map.Bathroom")
 		rfr.set_position(PLAYER, 240, 240)
-		rfr.fade_in(1)
+		rfr.fade_in(2)
 	end)
 
 rfr.set_position(DOOR_BATHROOM_TO_ROOM, 256, 230)
@@ -35,10 +36,11 @@ rfr.set_interaction(DOOR_BATHROOM_TO_ROOM, interaction_name["door_bathroom_to_ro
 		return px >= 248 and px <= 264
 	end,
 	function()
+		beaver.play_sound("dooropen")
 		rfr.set_cam_center(256, 112)
 		rfr.set_location(PLAYER, "Map.Mainroom")
 		rfr.set_position(PLAYER, 240, 112)
-		rfr.fade_in(1)
+		rfr.fade_in(2)
 	end)
 
 rfr.set_position(DOOR_ROOM_TO_HALL, 305, 100)
@@ -51,12 +53,13 @@ rfr.set_interaction(DOOR_ROOM_TO_HALL, interaction_name["door_room_to_hall"],
 	function()
 		if rfr.get_flag("prologue_room") then rfr.set_dialogue(PLAYER, {content = interaction_details["door_room_to_hall_not_clean"]})
 		else
+			beaver.play_sound("dooropen2")
 			rfr.set_cam_zoom(3)
 			rfr.set_cam_center(432, 96)
 			rfr.set_current_map("hall")
 			rfr.set_location(PLAYER, "Map.Hall")
 			rfr.set_position(PLAYER, 416,80)
-			rfr.fade_in(1)
+			rfr.fade_in(2)
 		end
 	end)
 rfr.set_position(DOOR_ROOM_TO_BALCONY, 80,100)
@@ -98,12 +101,13 @@ rfr.set_interaction(DOOR_HALL_TO_ROOM, interaction_name["door_hall_to_room"],
 		return px >= 420 and px <= 440
 	end,
 	function()
+		beaver.play_sound("dooropen2")
 		rfr.set_cam_zoom(config.cam_zoom)
 		rfr.set_cam_center(316, 112)
 		rfr.set_current_map("room")
 		rfr.set_location(PLAYER, "Map.Mainroom")
 		rfr.set_position(PLAYER, 290,112)
-		rfr.fade_in(1)
+		rfr.fade_in(2)
 	end)
 
 rfr.set_position(DOOR_HALL_STAIR_FIRST, 780, 124)
@@ -141,6 +145,7 @@ rfr.set_interaction(METAL_GATE_OUTSIDE, interaction_name["metal_gate"],
 			rfr.set_location(PLAYER, "Map.Hall")
 			rfr.set_cam_zoom(3)
 			rfr.set_position(PLAYER, 530,144)
+			rfr.set_cam_target(PLAYER, 16, 0)
 			rfr.fade_in(2)
 		end
 	end)

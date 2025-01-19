@@ -23,6 +23,8 @@ function LOAD()
 	beaver.new_image(rfr.gamepath() .. "assets/images/student_card.png", "student_card")
 
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/dialogue1.wav", "dialogue1")
+	beaver.new_sound(rfr.gamepath() .. "assets/audios/dooropen.wav", "dooropen")
+	beaver.new_sound(rfr.gamepath() .. "assets/audios/dooropen2.wav", "dooropen2")
 
 	beaver.new_font(rfr.gamepath() .. "assets/fonts/UnifontExMono.ttf", 16, "unifontexmono")
 	beaver.new_font(rfr.gamepath() .. "assets/fonts/unifont.otf", 16, "unifont")

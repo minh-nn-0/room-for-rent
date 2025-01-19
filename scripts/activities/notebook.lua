@@ -28,7 +28,7 @@ end
 local book_start_posy = 600
 local book_end_posy = 50
 local book_posy = book_start_posy
-local book_posx = config.render_size[1] / 2 - 26 * config.cam_zoom
+local book_posx = config.render_size[1] / 2 + 40
 
 
 local lerp_timer = rfr.add_entity()

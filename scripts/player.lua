@@ -1,6 +1,6 @@
 local player = {}
 PLAYER = rfr.add_entity()
-rfr.set_properties(PLAYER, "walkspeed", 1)
+rfr.set_properties(PLAYER, "walkspeed", 2)
 rfr.set_flag("player_can_move")
 rfr.set_flag("player_can_interact")
 rfr.set_flag("player_can_open_phone")
@@ -29,6 +29,8 @@ rfr.set_state_entry(PLAYER, "move",
 	end)
 rfr.set_state(PLAYER, "idle")
 
+require "activities.sleep"
+require "events.ghost_in_mirror"
 function player.update(dt)
 	local ppos = rfr.get_position(PLAYER)
 	local walkspeed = rfr.get_properties(PLAYER, "walkspeed")

@@ -14,7 +14,7 @@ lights["room"] = {draw_properties = {dst = {x = 64, y = 80, w = 272, h = 64},
 					flicker_rate = 0.01,
 					flicker_timer = rfr.add_entity(),
 					flickering = false,
-					tint = {255,255,255,255},
+					tint = {220,150,120,255},
 					location = "Map.Mainroom"}
 
 lights["bathroom"] = {draw_properties = {dst = {x = 112, y = 208, w = 176, h = 64},
@@ -57,7 +57,7 @@ lights["hall_firstfloor_right"] = {draw_properties = {dst = {x = 548, y = 118, w
 								flickering = false,
 								tint = {220,240,220,255},
 								location = "Map.Hall"}
-for _,light in ipairs(lights) do rfr.set_timer(light.flicker_timer, flicker_wait_time) end
+for _,light in pairs(lights) do rfr.set_timer(light.flicker_timer, flicker_wait_time) end
 function lighting.set_background_color(r,g,b,a)
 	bg_color = {r,g,b,a}
 end
@@ -78,7 +78,7 @@ function lighting.light_flickering(name)
 end
 function lighting.update(dt)
 	local d,tod = rfr.current_time()
-	bg_color = tod == 2 and {40,40,40,255} or {255,255,255,255}
+	bg_color = tod == 2 and {40,60,80,255} or {220,200,200,255}
 
 	for _,light in pairs(lights) do
 		if light.on and light.location == rfr.get_location(PLAYER) then

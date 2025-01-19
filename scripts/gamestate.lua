@@ -7,7 +7,7 @@ require "door"
 require "interactions"
 require "cutscenes.prologue.prologue"
 require "phone.main"
-
+require "helper"
 require "activities.homework"
 local gamestate = {
 	current_state = "ingame"
@@ -114,8 +114,9 @@ state["ingame"] = {
 		end
 		rfr.draw_phone_notification()
 		rfr.draw_phone()
-
 		rfr.draw_homework()
+
+		rfr.draw_helper()
 		beaver.set_draw_color(255,255,255,255)
 		rfr.draw_narrative_text()
 		rfr.draw_transition()

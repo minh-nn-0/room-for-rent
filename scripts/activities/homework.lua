@@ -10,13 +10,12 @@ function rfr.draw_homework()
 	notebook.draw()
 	if rfr.get_flag("notebook_opening") then
 		beaver.set_draw_color(255,255,255,255)
-		beaver.draw_text(40, 90, config.ui_font, 1, UI_name["today_homework"], 0, true)
 		local hwstr = ""
 		for _, hw in ipairs(notebook.current_questions()) do
 			hwstr = hwstr .. tostring(hw) .. ", "
 		end
 		hwstr = string.sub(hwstr,1,#hwstr - 2)
-		beaver.draw_text(40, 130, config.ui_font, 1, UI_name["page"] .. " " .. hwstr, 0, true)
+		beaver.draw_text(60, 90, config.ui_font, 1, UI_name["today_homework"] .. ": " .. UI_name["page"] .. " " .. hwstr, 0, true)
 	end
 end
 

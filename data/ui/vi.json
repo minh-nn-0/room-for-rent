@@ -7,5 +7,9 @@
 	"exit" : "Thoát game",
 	"phone_noti" : "Bạn có thông báo mới",
 	"page" : "Trang",
-	"today_homework" : "Bài tập hôm nay:" 
+	"turn_page" : "Lật trang",
+	"back" : "Quay lại",
+	"select_answer" : "Select answer",
+	"today_homework" : "Bài tập hôm nay",
+	"sleep_helper" : "Dậy"
 }
