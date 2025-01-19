@@ -25,6 +25,9 @@ function LOAD()
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/dialogue1.wav", "dialogue1")
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/dooropen.wav", "dooropen")
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/dooropen2.wav", "dooropen2")
+	beaver.new_sound(rfr.gamepath() .. "assets/audios/footstep1.wav", "footstep1")
+
+	beaver.set_volume_sound("footstep1", 50)
 
 	beaver.new_font(rfr.gamepath() .. "assets/fonts/UnifontExMono.ttf", 16, "unifontexmono")
 	beaver.new_font(rfr.gamepath() .. "assets/fonts/unifont.otf", 16, "unifont")

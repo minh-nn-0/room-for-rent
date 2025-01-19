@@ -9,6 +9,8 @@ require "cutscenes.prologue.prologue"
 require "phone.main"
 require "helper"
 require "activities.homework"
+
+require "audios"
 local gamestate = {
 	current_state = "ingame"
 }
@@ -38,25 +40,6 @@ state["ingame"] = {
 		rfr.update_character(dt)
 		rfr.update_animation(dt)
 		rfr.update_dialogue(dt)
-		for _, eid in ipairs(rfr.get_active_entities()) do
-			if rfr.get_location(eid) == rfr.get_location(PLAYER) then
-				local dialogue_info = rfr.get_dialogue_info(eid)
-				if dialogue_info and dialogue_info.verbal and rfr.has_active_dialogue(eid) and not rfr.dialogue_reached_fulllength(eid) then
-					if not rfr.get_properties(eid, "dialogue_audio_timer") then
-						rfr.set_properties(eid, "dialogue_audio_timer", rfr.add_entity()) end
-					local audio_timerid = rfr.get_properties(eid, "dialogue_audio_timer")
-					local audio_timer = rfr.get_timer(audio_timerid)
-					if audio_timer then
-						if not audio_timer.running then
-							beaver.play_sound(dialogue_info.sound)
-							rfr.set_timer(audio_timerid, 5/config.cpf)
-						end
-					else
-						rfr.set_timer(audio_timerid, 5/config.cpf)
-					end
-				end
-			end
-		end
 		rfr.update_timer(dt)
 		rfr.update_countdown(dt)
 		rfr.update_cutscene(dt)
@@ -66,6 +49,7 @@ state["ingame"] = {
 
 		rfr.update_homework()
 
+		rfr.update_audios()
 		rfr.set_only_player_location_visible()
 		rfr.cleanup_entities()
 

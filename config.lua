@@ -35,6 +35,6 @@ config = {
 		move_left = "LEFT",
 		move_right = "RIGHT"
 	},
-	base_character_move_animation_speed = 70,
+	base_character_move_animation_speed = 80,
 	language = "vi",
 }

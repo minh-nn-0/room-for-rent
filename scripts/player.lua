@@ -1,6 +1,6 @@
 local player = {}
 PLAYER = rfr.add_entity()
-rfr.set_properties(PLAYER, "walkspeed", 2)
+rfr.set_properties(PLAYER, "walkspeed", 0.6)
 rfr.set_flag("player_can_move")
 rfr.set_flag("player_can_interact")
 rfr.set_flag("player_can_open_phone")
