@@ -198,7 +198,6 @@ namespace rfr
 					events._events.emplace_back(trigger);
 					return events._events.size() - 1;
 				});
-
 		//tbl.set_function("remove_event", [&](std::size_t eventid)
 		//		{
 		//			for (auto&& eid: ecs.template with<event_listener>())
@@ -226,10 +225,8 @@ namespace rfr
 						for (auto&& event: ecs.template get_component<event_listener>(eid).value())
 							if (events._current_events.contains(event.first)) event.second();	
 					for (const auto& [eid, eventid]: to_remove_listeners)
-					{
-						auto& listener = ecs.template get_component<event_listener>(eid);
-						listener->erase(eventid);
-					};
+						ecs.template get_component<event_listener>(eid)->erase(eventid);
+					to_remove_listeners.clear();
 				});
 
 		tbl.set_function("update_events", [&]()

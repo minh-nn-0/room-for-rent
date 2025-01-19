@@ -20,11 +20,12 @@ local function card_at_position()
 	else return card_position.y >= card_start_posy
 	end
 end
-CS_PICKUP_CARD = rfr.add_cutscene({
+local cs_pickup_card = rfr.add_cutscene({
 	init = function()
 		dialogues =util.load_json(rfr.gamepath() .. "data/dialogues/events/pickup_card_" .. config.language .. ".json")
 	end,
 	exit = function()
+		rfr.set_flag("picked_up_card")
 	end,
 	scripts = {
 		function(dt)
@@ -82,9 +83,7 @@ CS_PICKUP_CARD = rfr.add_cutscene({
 			end
 			rfr.set_position(card, card_position.x, card_position.y)
 		end
-		if showing and rfr.get_position(PLAYER).x >= 250 then
-			rfr.set_dialogue_position(PLAYER, 30 - rfr.get_position(PLAYER).x,0)
-		end
 	end
 })
 
+return cs_pickup_card

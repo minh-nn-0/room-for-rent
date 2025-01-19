@@ -30,6 +30,7 @@ state["ingame"] = {
 	update = function(dt)
 		config.text_scale = 1/rfr.get_cam_zoom()
 		player.update(dt)
+		lighting.update(dt)
 		rfr.update_camera(dt)
 		rfr.update_phone(dt)
 		rfr.update_events()

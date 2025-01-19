@@ -1,5 +1,3 @@
-require "activities.homework"
-local lighting = require "lighting"
 local player = {}
 PLAYER = rfr.add_entity()
 rfr.set_properties(PLAYER, "walkspeed", 1)
@@ -70,11 +68,6 @@ function player.update(dt)
 
 	if beaver.get_input("ESCAPE") == 1 and rfr.get_flag("player_can_open_phone") then
 		rfr.toggle_phone()
-	end
-
-	if beaver.get_input("C") == 1 then
-		lighting.toggle_light("room")
-		lighting.set_background_color(50,50,50,255)
 	end
 
 	if beaver.get_input("B") == 1 then
