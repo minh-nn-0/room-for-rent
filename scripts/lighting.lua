@@ -10,7 +10,7 @@ beaver.set_texture_blend_mode("lights", "additive")
 local flicker_wait_time = 0.1
 lights["room"] = {draw_properties = {dst = {x = 64, y = 80, w = 272, h = 64},
 										src = {x = 16, y = 144, w = 272, h = 64}},
-					on = true,
+					on = false,
 					flicker_rate = 0.01,
 					flicker_timer = rfr.add_entity(),
 					flickering = false,
@@ -19,7 +19,7 @@ lights["room"] = {draw_properties = {dst = {x = 64, y = 80, w = 272, h = 64},
 
 lights["bathroom"] = {draw_properties = {dst = {x = 112, y = 208, w = 176, h = 64},
 										src = {x = 48, y = 144, w = 176, h = 64}},
-					on = true,
+					on = false,
 					flicker_rate = 0,
 					flicker_timer = rfr.add_entity(),
 					flickering = false,
@@ -27,7 +27,7 @@ lights["bathroom"] = {draw_properties = {dst = {x = 112, y = 208, w = 176, h = 6
 					location = "Map.Bathroom"}
 lights["hall_secondfloor_left"] = {draw_properties = {dst = {x = 364, y = 64, w = 272, h = 48},
 										src = {x = 16, y = 144, w = 272, h = 48}},
-								on = true,
+								on = false,
 								flicker_rate = 0,
 								flicker_timer = rfr.add_entity(),
 								flickering = false,
@@ -35,7 +35,7 @@ lights["hall_secondfloor_left"] = {draw_properties = {dst = {x = 364, y = 64, w 
 								location = "Map.Hall"}
 lights["hall_secondfloor_right"] = {draw_properties = {dst = {x = 548, y = 64, w = 272, h = 48},
 										src = {x = 16, y = 144, w = 272, h = 48}},
-								on = true,
+								on = false,
 								flicker_rate = 0,
 								flicker_timer = rfr.add_entity(),
 								flickering = false,
@@ -43,7 +43,7 @@ lights["hall_secondfloor_right"] = {draw_properties = {dst = {x = 548, y = 64, w
 								location = "Map.Hall"}
 lights["hall_firstfloor_left"] = {draw_properties = {dst = {x = 364, y = 118, w = 272, h = 58},
 										src = {x = 16, y = 144, w = 272, h = 58}},
-								on = true,
+								on = false,
 								flicker_rate = 0,
 								flicker_timer = rfr.add_entity(),
 								flickering = false,
@@ -51,7 +51,7 @@ lights["hall_firstfloor_left"] = {draw_properties = {dst = {x = 364, y = 118, w 
 								location = "Map.Hall"}
 lights["hall_firstfloor_right"] = {draw_properties = {dst = {x = 548, y = 118, w = 272, h = 58},
 										src = {x = 16, y = 144, w = 272, h = 58}},
-								on = true,
+								on = false,
 								flicker_rate = 0,
 								flicker_timer = rfr.add_entity(),
 								flickering = false,
@@ -78,7 +78,7 @@ function lighting.light_flickering(name)
 end
 function lighting.update(dt)
 	local d,tod = rfr.current_time()
-	bg_color = tod == 2 and {40,60,80,255} or {220,200,200,255}
+	bg_color = tod == 2 and {40,60,80,255} or {250,250,250,255}
 
 	for _,light in pairs(lights) do
 		if light.on and light.location == rfr.get_location(PLAYER) then

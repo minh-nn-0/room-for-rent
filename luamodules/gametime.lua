@@ -1,7 +1,12 @@
 local day_number = 1
 local time_of_day = 1
 
+local daily_init = {}
 
+--- @param func function
+function rfr.set_daily_init(day, func)
+	daily_init[day] = func
+end
 function rfr.current_time()
 	return day_number, time_of_day
 end
@@ -12,5 +17,6 @@ function rfr.advance_time()
 		-- new day
 		day_number = day_number + 1
 		time_of_day = 1
+		if daily_init[day_number] then daily_init[day_number]() end
 	end
 end

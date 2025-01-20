@@ -1,6 +1,7 @@
 local player = {}
 PLAYER = rfr.add_entity()
 rfr.set_properties(PLAYER, "walkspeed", 0.6)
+rfr.set_properties(PLAYER, "footstep_sound", "footstep_tile_heavy")
 rfr.set_flag("player_can_move")
 rfr.set_flag("player_can_interact")
 rfr.set_flag("player_can_open_phone")
@@ -28,9 +29,6 @@ rfr.set_state_entry(PLAYER, "move",
 		})
 	end)
 rfr.set_state(PLAYER, "idle")
-
-require "activities.sleep"
-require "events.ghost_in_mirror"
 function player.update(dt)
 	local ppos = rfr.get_position(PLAYER)
 	local walkspeed = rfr.get_properties(PLAYER, "walkspeed")
@@ -65,7 +63,7 @@ function player.update(dt)
 
 	rfr.set_position(PLAYER, ppos.x, ppos.y)
 	if beaver.get_input("E") == 1 then
-		rfr.play_cutscene(CS_PROLOGUE_CLEAN_ROOM)
+		rfr.play_cutscene(CS_PROLOGUE_ARRIVE)
 	end
 
 	if beaver.get_input("ESCAPE") == 1 and rfr.get_flag("player_can_open_phone") then
@@ -75,9 +73,10 @@ function player.update(dt)
 	if beaver.get_input("B") == 1 then
 		rfr.advance_time()
 	end
+
 	if rfr.having_dialogue_options() or rfr.has_active_dialogue(PLAYER) then
 		rfr.unset_flag("player_can_interact")
-	elseif not (rfr.get_flag("phone_opening") or rfr.get_flag("notebook_opening")) then
+	elseif not (rfr.get_flag("phone_opening") or rfr.get_flag("notebook_opening") or rfr.get_flag("inbed")) then
 		rfr.set_flag("player_can_interact")
 	end
 
@@ -86,6 +85,7 @@ function player.update(dt)
 			rfr.set_dialogue_position(PLAYER, 20, -3)
 		end
 	end
+
 	if rfr.having_dialogue_options() then
 		if not rfr.get_flag("phone_opening") then
 			if beaver.get_input("UP") == 1 then rfr.decrement_dialogue_options_selection() end

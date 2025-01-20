@@ -8,7 +8,6 @@ require "interactions"
 require "cutscenes.prologue.prologue"
 require "phone.main"
 require "helper"
-require "activities.homework"
 
 require "audios"
 local gamestate = {
@@ -47,7 +46,8 @@ state["ingame"] = {
 		rfr.update_narrative(dt)
 		rfr.update_transition(dt)
 
-		rfr.update_homework()
+		if rfr.update_homework then rfr.update_homework() end
+		if rfr.update_bed then rfr.update_bed() end
 
 		rfr.update_audios()
 		rfr.set_only_player_location_visible()
@@ -87,6 +87,9 @@ state["ingame"] = {
 		rfr.draw_dialogue_options(player_near_right_edge and ppos.x or ppos.x + 30, ppos.y + 5, not player_near_right_edge)
 		beaver.set_draw_color(10,10,10,255)
 		beaver.set_using_cam(false)
+
+		rfr.draw_helper()
+
 		config.text_scale = 1
 		if rfr.get_flag("screen_fill") then
 			local fill_color = rfr.get_properties(GAME, "screen_fill_color") or {0,0,0,255}
@@ -98,9 +101,8 @@ state["ingame"] = {
 		end
 		rfr.draw_phone_notification()
 		rfr.draw_phone()
-		rfr.draw_homework()
+		if rfr.draw_homework then rfr.draw_homework() end
 
-		rfr.draw_helper()
 		beaver.set_draw_color(255,255,255,255)
 		rfr.draw_narrative_text()
 		rfr.draw_transition()

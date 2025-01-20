@@ -205,6 +205,15 @@ void rfr::game::setup_binding()
 	{
 		std::println("error loading script: {}", e.what()); 
 	};
+	_lua.script(R"(
+    function safe_update(dt)
+        local success, result = pcall(UPDATE, dt)
+        if not success then
+            error(result) -- Propagate the error back to C++
+        end
+        return result
+    end
+	)");
 
 };
 
@@ -212,7 +221,7 @@ void rfr::game::setup_binding()
 bool rfr::game::update(float dt)
 {
 	_camera._view._size = _beaver.render_logical_size();
-	sol::protected_function lua_update = _lua["UPDATE"];
+	sol::protected_function lua_update = _lua["safe_update"];
 	auto update_result = lua_update(dt);
 	if (!update_result.valid())
 		throw std::runtime_error(std::format("runtime error: {}", sol::error{update_result}.what()));

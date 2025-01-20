@@ -21,8 +21,11 @@ local cs_prologue_after_broom = rfr.add_cutscene({
 		require "events.meet_neighbour_first_time"
 		require "events.complain_lights"
 		require "events.ghost_in_mirror"
+		require "events.sleep_1"
 		require "activities.shower"
 		require "activities.work"
+		require "activities.sleep"
+		require "activities.homework"
 	end,
 	scripts = {
 		function(dt)
