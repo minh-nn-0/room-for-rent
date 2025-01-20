@@ -11,5 +11,10 @@
 	"back" : "Quay lại",
 	"select_answer" : "Select answer",
 	"today_homework" : "Bài tập hôm nay",
-	"sleep_helper" : "Dậy"
+	"sleep_helper" : "Dậy",
+	"phone": {
+    "Calling":"Đang gọi ...",
+    "Failed":"Cuộc gọi kết thúc",
+		"In call":"Kết nối"
+  }
 }

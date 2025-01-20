@@ -4,5 +4,10 @@
 	"message" : "Messenger",
 	"note" : "Notes",
 	"setting" : "Settings",
-	"exit" : "Exit game"
+	"exit" : "Exit game",
+	"phone": {
+    "Calling":"Calling ...",
+    "Failed":"Failed",
+		"In call":"In call"
+  }
 }

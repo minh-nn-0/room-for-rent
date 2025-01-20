@@ -15,5 +15,6 @@ target_compile_definitions(rfr PRIVATE
 	GAMEPATH="${CMAKE_CURRENT_SOURCE_DIR}"
 )
 target_link_libraries(rfr PRIVATE beaver)
-#install(FILES $<TARGET_RUNTIME_DLLS:palenight> DESTINATION bin/palenight)
-#install(TARGETS palenight RUNTIME DESTINATION bin/palenight)
+<<<<<<< HEAD
+=======
+>>>>>>> origin/qa
