@@ -6,6 +6,7 @@ local status = ""
 local call_content = ""
 local text_index = 1
 local text_time = 0
+local phone_label = util.load_json(rfr.gamepath() .. "data/ui/" .. config.language .. ".json")
 local phonebook = {"owner", "mom"}
 local character_icon = {
 	["owner"] = {x = 0, y = 8, w = 8, h = 8},
@@ -23,7 +24,7 @@ local states = {
 			end
 			if beaver.get_input(config.button.interaction) == 1 then
 				callee = phonebook[selection.get()]
-				rfr.set_timer(call_timer, 10)
+				rfr.set_timer(call_timer, 4)
 				app_state = "calling"
 				status = "Calling"
 			end
@@ -79,7 +80,7 @@ local states = {
 			local posy = phone_position.y + 25 * config.cam_zoom
 			beaver.draw_texture("character_heads", {dst = {x = posx, y = posy, w = 16 * config.cam_zoom, h = 16 * config.cam_zoom},
 													src = character_icon[callee]})
-			beaver.draw_text_centered(posx + 8 * config.cam_zoom, posy + 20 * config.cam_zoom, config.ui_font, 1, status, 0, true)
+			beaver.draw_text_centered(posx + 8 * config.cam_zoom, posy + 20 * config.cam_zoom, config.ui_font, 1, phone_label["phone"][status], 0, true)
 			if call_content ~= "" then
 				beaver.draw_text(phone_position.x + 6 * config.cam_zoom, posy + 30 * config.cam_zoom,
 								config.ui_font, 1,
