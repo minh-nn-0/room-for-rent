@@ -29,7 +29,7 @@ local cs_sleep_1 = rfr.add_cutscene({
 			bed.go_to_sleep_normally()
 			rfr.unset_flag("screen_fill")
 			rfr.set_dialogue_position(BED, 0, 16)
-			rfr.set_dialogue(BED, {content = count == 1 and "DM THANG NAO GO CUA DAY" or "SAO NUA???"})
+			rfr.set_dialogue(BED, {content = count == 1 and dialogues["complain1"] or dialogues["complain2"]})
 			return true
 		end,
 		function(dt)
@@ -47,7 +47,7 @@ local cs_sleep_1 = rfr.add_cutscene({
 		end,
 		function(dt)
 			if rfr.get_last_interaction() == DOOR_HALL_TO_ROOM then
-				rfr.set_dialogue(PLAYER, {content = "LA THAT, chang le mo ngu ?"})
+				rfr.set_dialogue(PLAYER, {content = dialogues["confused"]})
 				return true
 			end
 			return false
