@@ -1,9 +1,10 @@
 local day_number = 1
 local time_of_day = 1
 
+local meet_neighbour_scenes = require "events.neighbour"
 local daily_init = {
 	[2] = function()
-		require "events.meet_neighbour_second_time"
+		meet_neighbour_scenes.setup_neighbour()
 		require "events.ghost_when_doing_homework"
 		require "events.noshower"
 	end

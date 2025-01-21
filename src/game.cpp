@@ -210,6 +210,7 @@ void rfr::game::setup_binding()
     function safe_update(dt)
         local success, result = pcall(UPDATE, dt)
         if not success then
+			print(debug.traceback())
             error(result) -- Propagate the error back to C++
         end
         return result

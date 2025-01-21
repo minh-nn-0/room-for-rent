@@ -1,6 +1,6 @@
 local util = require "luamodules.utilities"
 local dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/events/call_mom_first_time_" .. config.language .. ".json")
-
+local call = require "phone.apps.call"
 local call_timer = rfr.add_entity()
 local cs_call_mom_first_time = rfr.add_cutscene({
 	init = function()
@@ -10,22 +10,22 @@ local cs_call_mom_first_time = rfr.add_cutscene({
 	scripts = {
 		function(dt)
 			if rfr.get_timer(call_timer).running then return false end
-			rfr.set_phone_dialogue(dialogues["mom_greeting"])
+			call.set_dialogue(dialogues["mom_greeting"])
 			return true
 		end,
 		function(dt)
-			if rfr.phone_caller_active() then return false end
+			if call.caller_active() then return false end
 			rfr.set_dialogue(PLAYER, {content = dialogues["player_respond"]})
 			return true
 		end,
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end
-			rfr.set_phone_dialogue(dialogues["mom_remind"])
+			call.set_dialogue(dialogues["mom_remind"])
 			return true
 		end,
 		function(dt)
-			if rfr.phone_caller_active() then return false end
-			rfr.phone_caller_hangup()
+			if call.caller_active() then return false end
+			call.caller_hangup()
 			return true
 		end
 	},
@@ -33,7 +33,7 @@ local cs_call_mom_first_time = rfr.add_cutscene({
 })
 local call_mom_ev = rfr.add_event(
 	function()
-		return rfr.is_making_phone_call() and rfr.get_phone_callee() == "mom"
+		return call.is_making_phone_call() and call.get_callee() == "mom"
 	end)
 
 rfr.set_event_listener(PLAYER, call_mom_ev,

@@ -5,16 +5,20 @@ local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/d
 SHOWER = rfr.add_entity()
 
 rfr.set_particle_emitter_config(SHOWER, {
-	emitting_position = {x = 100, y = 200},
-	linear_acceleration = {x = 0, y = 10},
-	size_variation = {min = 1, max = 3},
-	area = {x = 8, y = 6},
+	emitting_position = {x = 198, y = 224},
+	linear_acceleration = {x = 0, y = 0},
+	color_gradient = {
+		{time = 0.0, color = {146,228,255,255}},
+		{time = 0.5, color = {51,136,222,255}},
+	},
+	area = {x = -8, y = 8},
 	direction = math.rad(90),
-	spread = 20,
-	lifetime = 1,
-	rate = 20
+	spread = math.rad(30),
+	size_variation = {min = 0.5, max = 1},
+	speed_variation = {min = 50, max = 60},
+	lifetime = 0.7,
+	rate = 100
 })
-rfr.set_particle_emitter_auto(SHOWER, true)
 rfr.set_state_entry(PLAYER, "shower",
 	function()
 		rfr.set_tileanimation(PLAYER, {

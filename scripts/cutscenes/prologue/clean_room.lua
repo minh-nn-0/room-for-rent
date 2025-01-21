@@ -18,7 +18,7 @@ local cs_prologue_after_broom = rfr.add_cutscene({
 		require "room_items"
 		require "events.call_mom_first_time"
 		require "events.pickup_card"
-		require "events.meet_neighbour_first_time"
+		require "events.neighbour".setup_neighbour()
 		require "events.complain_lights"
 		require "events.ghost_in_mirror"
 		require "events.sleep_1"

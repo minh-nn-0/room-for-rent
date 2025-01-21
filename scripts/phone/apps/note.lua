@@ -7,7 +7,7 @@ local note_spacing = 1
 local total_note_height = 0
 local clip_rect_height = math.floor(40 * config.cam_zoom)
 function note.draw_note(posx, posy, entry)
-	local text = util.load_text(rfr.gamepath() .. "data/note/" .. note .. "_" .. config.language .. ".txt")
+	local text = util.load_text(rfr.gamepath() .. "data/note/" .. entry .. "_" .. config.language .. ".txt")
 	local entry_names = util.load_json(rfr.gamepath() .. "data/note/entry_" .. config.language .. ".json")
 	return rfr.draw_note(posx, posy, text, entry_names[entry])
 end
