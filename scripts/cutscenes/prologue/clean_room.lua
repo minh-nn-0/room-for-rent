@@ -1,7 +1,7 @@
 local util = require "luamodules.utilities"
 local dialogues
 local interaction_names
-
+local narrative = util.load_json(rfr.gamepath() .. "data/narratives/" .. config.language .. ".json")
 local broom = rfr.add_entity()
 local cs_prologue_after_broom = rfr.add_cutscene({
 	init = function()
@@ -36,7 +36,7 @@ local cs_prologue_after_broom = rfr.add_cutscene({
 		end,
 		function(dt)
 			if rfr.is_transition_active() then return false end
-			rfr.set_narrative_text("SAU 3 NĂM")
+			rfr.set_narrative_text(narrative['clean_room'])
 			rfr.set_narrative_position(config.render_size[1]/2, config.render_size[2]/2)
 			rfr.set_narrative_scale(2)
 			return true

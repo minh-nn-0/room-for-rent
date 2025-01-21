@@ -138,7 +138,7 @@ CS_PROLOGUE_HALL = rfr.add_cutscene({
 			if not rfr.has_active_dialogue(PLAYER) then
 				local sl = rfr.get_dialogue_options_selection()
 				if sl == 0 then
-					rfr.set_dialogue(OWNER, {content = rfr.get_dialogue_from_json(dialogues, "owner_invite")})
+					rfr.set_dialogue(OWNER, {content = rfr.get_dialogue_from_json(dialogues, "owner_invite_room")})
 				else
 					rfr.set_dialogue(OWNER, {content = rfr.get_dialogue_from_json(dialogues, "owner_defensive")})
 				end

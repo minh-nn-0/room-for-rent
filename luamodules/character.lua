@@ -6,7 +6,7 @@ CHARACTER_INFO = {
 	},
 	main_female = {
 		name = "Mây",
-		department = "IT",
+		department = "IT"
 	},
 	neighbour = {
 		name = "Trà"
@@ -63,15 +63,15 @@ rfr.set_state_entry(NEIGHBOUR, "idle",
 	end)
 rfr.set_state(NEIGHBOUR, "idle")
 
- function character.getTextByCharacter(text, character)
-	local characterName = CHARACTER_INFO[character]['name']
-	if character == 'main' then
-		local name =  character .. "_" .. current_main_character
-		print(name)
-		characterName =  CHARACTER_INFO[name]['name']
-		print(characterName)
+ function character.getTextByCharacter(text, characterType)
+	if characterType == 'main' then
+		local nameByType =  characterType .. "_" .. current_main_character
+		local characterName =  CHARACTER_INFO[nameByType]['name']
+		return text:gsub("{name}", characterName)
+	else
+		local characterName = CHARACTER_INFO[characterType]['name']
+		return text:gsub("{name}", characterName)
 	end
-	return text:gsub("{name}", characterName)
 end
 
 function rfr.update_character(dt)

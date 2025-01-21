@@ -24,7 +24,7 @@
   "player_choice": "Agree to see the room|Doubt",
   "player_agree": "I need one urgently since it's close to Tet and hard to find rooms.",
   "player_doubt": "Why is this room so cheap? Is there a catch?",
-  "owner_invite": "Alright, go check the room.",
+  "owner_invite_room": "Alright, go check the room.",
   "owner_defensive": "Huh? There's no catch. Go check the room!",
   "player_choice_take_room": "Take the room|Refuse",
   "player_accept_room": "This room is indeed old. But I need a place right now.",
