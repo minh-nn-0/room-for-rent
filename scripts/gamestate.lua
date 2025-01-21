@@ -34,7 +34,6 @@ state["ingame"] = {
 		lighting.update(dt)
 		rfr.update_camera(dt)
 		rfr.update_phone(dt)
-		rfr.update_events()
 		rfr.update_event_listener()
 		rfr.update_character(dt)
 		rfr.update_animation(dt)
@@ -45,7 +44,7 @@ state["ingame"] = {
 		rfr.update_interaction()
 		rfr.update_narrative(dt)
 		rfr.update_transition(dt)
-
+		rfr.update_particle_emitter(dt)
 		if rfr.update_homework then rfr.update_homework() end
 		if rfr.update_bed then rfr.update_bed() end
 
@@ -62,6 +61,7 @@ state["ingame"] = {
 		rfr.draw_map_by_layer(rfr.get_current_map(), rfr.get_location(PLAYER) .. ".Bg", 0, 0)
 		for _, eid in ipairs(rfr.get_active_entities()) do
 			if rfr.get_location(eid) == rfr.get_location(PLAYER) and not rfr.has_tag(eid, "ui") then
+				rfr.draw_particles(eid)
 				rfr.draw_entities(eid)
 			end
 		end
@@ -85,6 +85,7 @@ state["ingame"] = {
 		local cx,_,cw,_ = rfr.get_cam_view()
 		local player_near_right_edge = ppos.x >= cx + (cw / config.cam_zoom) - 70
 		rfr.draw_dialogue_options(player_near_right_edge and ppos.x or ppos.x + 30, ppos.y + 5, not player_near_right_edge)
+
 		beaver.set_draw_color(10,10,10,255)
 		beaver.set_using_cam(false)
 

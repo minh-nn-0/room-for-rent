@@ -128,7 +128,8 @@ void rfr::game::setup_binding()
 			});
 	rfr.set_function("draw_particles", [&](std::size_t eid)
 			{
-				_entities.get_component<particle_emitter>(eid)->draw(_beaver._graphics);
+				if (_entities.has_component<particle_emitter>(eid))
+					_entities.get_component<particle_emitter>(eid)->draw(_beaver._graphics);
 			});
 	rfr.set_function("draw_interactions_info", [&](std::size_t eid)
 			{

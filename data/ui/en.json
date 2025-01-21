@@ -6,8 +6,9 @@
 	"setting" : "Settings",
 	"exit" : "Exit game",
 	"phone": {
-    "Calling":"Calling ...",
-    "Failed":"Failed",
-		"In call":"In call"
+		"Calling":"Calling ...",
+		"Failed":"Failed",
+		"In call":"Connected",
+		"End call": "Call ended"
   }
 }

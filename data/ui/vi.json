@@ -15,6 +15,7 @@
 	"phone": {
 		"Calling":"Đang gọi ...",
 		"Failed":"Cuộc gọi kết thúc",
-		"In call":"Kết nối"
+		"In call":"Kết nối",
+		"End call": "Cuộc gọi kết thúc"
 	  }
 }

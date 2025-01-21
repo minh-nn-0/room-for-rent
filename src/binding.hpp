@@ -223,18 +223,18 @@ namespace rfr
 				{
 					for (auto&& eid: ecs.template with<event_listener>())
 						for (auto&& event: ecs.template get_component<event_listener>(eid).value())
-							if (events._current_events.contains(event.first)) event.second();	
+							if (events._events.at(event.first)()) event.second();	
 					for (const auto& [eid, eventid]: to_remove_listeners)
 						ecs.template get_component<event_listener>(eid)->erase(eventid);
 					to_remove_listeners.clear();
 				});
 
-		tbl.set_function("update_events", [&]()
-				{
-					events._current_events.clear();
-					for (std::size_t i = 0; i != events._events.size(); i++)
-						if (events._events.at(i)()) events._current_events.emplace(i);
-				});
+		//tbl.set_function("update_events", [&]()
+		//		{
+		//			events._current_events.clear();
+		//			for (std::size_t i = 0; i != events._events.size(); i++)
+		//				if (events._events.at(i)()) events._current_events.emplace(i);
+		//		});
 	};
 
 

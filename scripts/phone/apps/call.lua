@@ -132,7 +132,7 @@ function call.caller_active()
 	return status == "In call" and text_time < config.dialogue_wait_time
 end
 function call.caller_hangup()
-	status = "End Call"
+	status = "End call"
 	call_content = ""
 end
 function call.is_making_phone_call()

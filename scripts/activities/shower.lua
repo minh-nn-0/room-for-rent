@@ -2,6 +2,19 @@ local util = require "luamodules.utilities"
 local interaction_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
 
+SHOWER = rfr.add_entity()
+
+rfr.set_particle_emitter_config(SHOWER, {
+	emitting_position = {x = 100, y = 200},
+	linear_acceleration = {x = 0, y = 10},
+	size_variation = {min = 1, max = 3},
+	area = {x = 8, y = 6},
+	direction = math.rad(90),
+	spread = 20,
+	lifetime = 1,
+	rate = 20
+})
+rfr.set_particle_emitter_auto(SHOWER, true)
 rfr.set_state_entry(PLAYER, "shower",
 	function()
 		rfr.set_tileanimation(PLAYER, {
@@ -12,17 +25,21 @@ rfr.set_state_entry(PLAYER, "shower",
 	end)
 
 local shower_timer = rfr.add_entity()
+
 local cs_shower = rfr.add_cutscene({
 	init = function()
 		rfr.fade_out(2)
 	end,
 	exit = function()
-		rfr.set_flag("showered")
+		local d,_ = rfr.current_time()
+		rfr.set_particle_emitter_auto(SHOWER, false)
+		rfr.set_day_flag(d,"showered")
 	end,
 	scripts = {
 		function(dt)
 			if rfr.is_transition_active() then return false end
 			rfr.set_state(PLAYER, "shower")
+			rfr.set_particle_emitter_auto(SHOWER, true)
 			rfr.unset_flag("player_can_move")
 			rfr.unset_flag("player_can_interact")
 			rfr.set_position(PLAYER, 176, 240)
@@ -52,8 +69,7 @@ local cs_shower = rfr.add_cutscene({
 })
 
 
-SHOWER = rfr.add_entity()
-rfr.set_position(SHOWER, 192, 224)
+rfr.set_position(SHOWER, 194, 224)
 rfr.set_location(SHOWER, "Map.Bathroom")
 rfr.set_interaction(SHOWER, interaction_names["shower"],
 	function()
@@ -61,7 +77,10 @@ rfr.set_interaction(SHOWER, interaction_names["shower"],
 		return px >= 176 and px <= 200
 	end,
 	function()
-		if rfr.get_flag("showered") then rfr.set_dialogue(PLAYER, {content = interaction_details["showered"]})
-		else rfr.play_cutscene(cs_shower)
+		local d,_ = rfr.current_time()
+		if rfr.get_day_flag(d,"showered") then
+			rfr.set_dialogue(PLAYER, {content = interaction_details["showered"]})
+		else
+			rfr.play_cutscene(cs_shower)
 		end
 	end)

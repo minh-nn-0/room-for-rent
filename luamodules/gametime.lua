@@ -5,6 +5,7 @@ local daily_init = {
 	[2] = function()
 		require "events.meet_neighbour_second_time"
 		require "events.ghost_when_doing_homework"
+		require "events.noshower"
 	end
 }
 
@@ -18,12 +19,17 @@ end
 function rfr.current_time()
 	return day_number, time_of_day
 end
-function rfr.get_day_flag(day)
-	return daily_flag[day]
+function rfr.get_day_flag(day, flag)
+	if not daily_flag[day] then daily_flag[day] = {} end
+	return daily_flag[day][flag] or false
 end
-function rfr.set_day_flag(day, flag, value)
-	if not daily_flag[day] then daily_flag[flag] = {} end
-	daily_flag[day][flag] = value
+function rfr.set_day_flag(day, flag)
+	if not daily_flag[day] then daily_flag[day] = {} end
+	daily_flag[day][flag] = true
+end
+function rfr.unset_day_flag(day, flag)
+	if not daily_flag[day] then daily_flag[day] = {} end
+	daily_flag[day][flag] = false
 end
 function rfr.advance_time()
 	time_of_day = time_of_day + 1

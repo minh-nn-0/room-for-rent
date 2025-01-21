@@ -5,7 +5,7 @@ local timer = rfr.add_entity()
 local doorknock_track
 
 local inbed = true
-local count = 1
+local count = 0
 local shadow = rfr.add_entity()
 local shadow_appeared = false
 local shadow_timer = 0
