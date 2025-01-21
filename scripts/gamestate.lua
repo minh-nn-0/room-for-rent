@@ -81,7 +81,7 @@ state["ingame"] = {
 				end
 			end
 		end
-		--beaver.draw_circle(100,200,1,true)
+		beaver.draw_circle(100,200,50,false)
 		beaver.set_draw_color(255,255,255,255)
 		local cx,_,cw,_ = rfr.get_cam_view()
 		local player_near_right_edge = ppos.x >= cx + (cw / config.cam_zoom) - 70

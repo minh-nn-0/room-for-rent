@@ -33,16 +33,16 @@ require "events.sleep_1"
 require "activities.sleep"
 require "activities.homework"
 require "activities.shower"
---rfr.set_particle_emitter_config(PLAYER, {
---	emitting_position = {x = 200, y = 100},
---	linear_acceleration = {x = 0, y = 0},
---	direction = math.rad(270),
---	spread = math.rad(360),
---	size_variation = {min = 0.2, max = 0.5},
---	speed_variation = {min = 3, max = 4},
---	lifetime = 3,
---	rate = 20
---})
+rfr.set_particle_emitter_config(PLAYER, {
+	emitting_position = {x = 200, y = 100},
+	linear_acceleration = {x = 0, y = 0},
+	direction = math.rad(270),
+	spread = math.rad(360),
+	size_variation = {min = 1, max = 3},
+	speed_variation = {min = 3, max = 4},
+	lifetime = 3,
+	rate = 20
+})
 rfr.set_particle_emitter_auto(PLAYER, true)
 function player.update(dt)
 	local ppos = rfr.get_position(PLAYER)
