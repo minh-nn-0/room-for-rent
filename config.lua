@@ -1,20 +1,3 @@
-package.path = package.path .. ";" .. rfr.gamepath() .. "/?.lua"
-package.path = package.path .. ";" .. rfr.gamepath() .. "/luamodules/?.lua"
-package.path = package.path .. ";" .. rfr.gamepath() .. "/scripts/?.lua"
-
-beaver = require "beaver"
-rfr = rfr or {}
-
-require "luamodules.properties"
-require "luamodules.gameflags"
-require "luamodules.dialogue"
-require "luamodules.character"
-require "luamodules.camera"
-require "luamodules.interaction"
-require "luamodules.transition"
-require "luamodules.narrative"
-require "luamodules.gametime"
-require "luamodules.map"
 config = {
 	render_size = {640, 360},
 	cam_zoom = 4,
@@ -38,3 +21,21 @@ config = {
 	base_character_move_animation_speed = 80,
 	language = "vi",
 }
+
+package.path = package.path .. ";" .. rfr.gamepath() .. "/?.lua"
+package.path = package.path .. ";" .. rfr.gamepath() .. "/luamodules/?.lua"
+package.path = package.path .. ";" .. rfr.gamepath() .. "/scripts/?.lua"
+
+beaver = require "beaver"
+rfr = rfr or {}
+
+require "luamodules.properties"
+require "luamodules.gameflags"
+require "luamodules.dialogue"
+require "luamodules.character"
+require "luamodules.camera"
+require "luamodules.interaction"
+require "luamodules.transition"
+require "luamodules.narrative"
+require "luamodules.gametime"
+require "luamodules.map"

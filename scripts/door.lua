@@ -21,7 +21,7 @@ rfr.set_interaction(DOOR_ROOM_TO_BATHROOM, interaction_name["door_room_to_bathro
 		return px >= 248 and px <= 264
 	end,
 	function()
-		beaver.play_sound("dooropen",1)
+		beaver.play_sound("dooropen")
 		rfr.set_cam_center(256, 240)
 		rfr.set_location(PLAYER, "Map.Bathroom")
 		rfr.set_position(PLAYER, 240, 240)

@@ -2,6 +2,7 @@ local util = require "luamodules.utilities"
 local dialogues
 local timer = rfr.add_entity()
 local owner_interaction = rfr.add_entity()
+local call = require "phone.apps.call"
 local function player_near_gate()
 	return math.abs(rfr.get_position(PLAYER).x - 533) <= 80
 end
@@ -141,29 +142,29 @@ local cs_prologue_call_owner = rfr.add_cutscene({
 			return true
 		end,
 		function(dt)
-			if not (rfr.is_making_phone_call() and rfr.get_phone_callee() == "owner") then
+			if not (call.is_making_phone_call() and call.get_callee() == "owner") then
 				if not rfr.get_timer(timer).running and not rfr.has_active_dialogue(PLAYER) then
 					if math.random() < 0.5 then rfr.set_dialogue(PLAYER, {content = dialogues["player_should_call"]}) end
 	 				rfr.set_timer(timer, 10)
 				end
 				return false
 			end
-			if rfr.get_phone_wait_time() < 5 then return false end
-			rfr.set_phone_dialogue(dialogues["owner_call_pickup"])
+			if call.get_waited_time() < 5 then return false end
+			call.set_dialogue(dialogues["owner_call_pickup"])
 			return true
 		end,
 		function(dt)
-			if rfr.phone_caller_active() then return false end
+			if call.caller_active() then return false end
 			rfr.set_dialogue(PLAYER, {content = dialogues["player_call_greeting"]})
 			return true
 		end,
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end
-			rfr.set_phone_dialogue(dialogues["owner_call_greeting"])
+			call.set_dialogue(dialogues["owner_call_greeting"])
 			return true
 		end,
 		function(dt)
-			if rfr.phone_caller_active() then return false end
+			if call.caller_active() then return false end
 			rfr.set_dialogue(PLAYER, {content = dialogues["player_call_introduce"]})
 			return true
 		end,
@@ -174,12 +175,12 @@ local cs_prologue_call_owner = rfr.add_cutscene({
 		end,
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end
-			rfr.set_phone_dialogue(dialogues["owner_call_confirm"])
+			call.set_dialogue(dialogues["owner_call_confirm"])
 			return true
 		end,
 		function(dt)
-			if rfr.phone_caller_active() then return false end
-			rfr.phone_caller_hangup()
+			if call.caller_active() then return false end
+			call.caller_hangup()
 			return true
 		end
 	},
