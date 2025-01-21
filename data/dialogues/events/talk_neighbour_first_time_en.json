@@ -1,0 +1,15 @@
+{
+  "player_greeting": "Hi!",
+	"neighbour_greeting": "Hello",
+	"player_introduction": "Um... I'm Sáng. I just moved in, I'm in room 202. Hope you can help me.",
+	"player_introduction_female": "Um... I'm Mây. I just moved in, I'm in room 202. Hope you can help me.",
+	"neighbour_response": "Uh.",
+	"player_thought": "Hmm, seems like this neighbor isn't very friendly.",
+	"player_should_talk": "Should I keep talking? I don't want her to get upset.",
+	"player_friendly_continue": "What's your name?",
+	"neighbour_name_reveal": "Trà.",
+	"player_question_duration": "Have you been living here long?",
+	"neighbour_duration_response": "2 years. But you won't be able to stay in room 202 for long.",
+	"neighbour_exit": "(says this and goes into the house)",
+	"player_confusion": "Huh... what does that mean?"
+}
