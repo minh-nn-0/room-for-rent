@@ -60,6 +60,8 @@ end
 function rfr.add_phone_messages(actor, content)
 	if not messages[actor] then messages[actor] = {} end
 	table.insert(messages[actor], content)
+	local noti = require "phone.notification"
+	noti.set("message")
 end
 
 return {set_app_state = function(state) app_state = state end, load = load, update = update, draw = draw}

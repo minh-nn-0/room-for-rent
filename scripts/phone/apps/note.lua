@@ -1,15 +1,15 @@
 local util = require "luamodules.utilities"
-local selection = require "phone.selection"
-local notes = {}
+local note = {}
+local note_entries = {}
 local scroll = 0
 local app_state = "home"
 local note_spacing = 1
 local total_note_height = 0
 local clip_rect_height = math.floor(40 * config.cam_zoom)
-local function draw_note(posx, posy, note)
+function note.draw_note(posx, posy, entry)
 	local text = util.load_text(rfr.gamepath() .. "data/note/" .. note .. "_" .. config.language .. ".txt")
 	local entry_names = util.load_json(rfr.gamepath() .. "data/note/entry_" .. config.language .. ".json")
-	return rfr.draw_note(posx, posy, text, entry_names[note])
+	return rfr.draw_note(posx, posy, text, entry_names[entry])
 end
 local states = {
 	["home"] = {
@@ -29,8 +29,8 @@ local states = {
 			beaver.set_clip_rect(math.floor(posx), math.floor(phone_position.y + 25 * config.cam_zoom),
 								math.floor(40 * config.cam_zoom),
 								clip_rect_height)
-			for _,note in ipairs(notes) do
-				total_note_height = total_note_height + draw_note(posx, posy, note) + note_spacing * config.cam_zoom
+			for _,entry in ipairs(note_entries) do
+				total_note_height = total_note_height + note.draw_note(posx, posy, entry) + note_spacing * config.cam_zoom
 				posy = posy + total_note_height
 			end
 			beaver.reset_clip_rect()
@@ -43,17 +43,19 @@ local states = {
 		end
 	},
 }
-function rfr.add_phone_note(name)
-	table.insert(notes, name)
+function note.add(name)
+	table.insert(note_entries, name)
+	local noti = require "phone.notification"
+	noti.set("note")
 end
-local function load()
+function note.load()
 end
-local function update(dt)
+function note.update(dt)
 	states[app_state].update(dt)
 end
 
-local function draw()
+function note.draw()
 	states[app_state].draw()
 end
 
-return {set_app_state = function(state) app_state = state end, load = load, update = update, draw = draw}
+return note

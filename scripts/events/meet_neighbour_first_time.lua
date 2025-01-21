@@ -11,7 +11,9 @@ rfr.set_location(neighbour_interaction, "Map.Hall")
 
 local cs_friendly_continue = rfr.add_cutscene({
 	init = function() end,
-	exit = function() end,
+	exit = function()
+		rfr.set_active(neighbour_interaction, false)
+	end,
 	scripts = {
 		function(dt)
 			rfr.set_dialogue(PLAYER, {content = dialogues["player_friendly_continue"]})

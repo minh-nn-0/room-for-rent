@@ -1,6 +1,6 @@
 local util = require "luamodules.utilities"
 local selection = require "phone.selection"
-require "phone.notification"
+local noti = require "phone.notification"
 local phone_texts
 local phone_apps_info
 local phone_apps = {"call", "message", "note", "setting", "exit"}
@@ -38,7 +38,7 @@ local function draw()
 		local app_text = phone_apps_info[app].text
 		beaver.draw_texture("UI", {dst = {x = app_posx, y = app_posy, w = 8 * config.cam_zoom, h = 8 * config.cam_zoom},
 									src = app_src})
-		if app == rfr.get_phone_notifying_app() then
+		if noti.get_notifying_apps()[app] then
 			beaver.draw_texture("UI", {dst = {x = app_posx + 5 * config.cam_zoom, y = app_posy - 1 * config.cam_zoom, w = 5 * config.cam_zoom, h = 7 * config.cam_zoom},
 										src = {x = 8, y = 40, w = 5, h = 7}})
 		end

@@ -12,9 +12,9 @@ local cs_prologue_after_broom = rfr.add_cutscene({
 		rfr.unset_flag("prologue_room")
 		rfr.set_layer_visible("balcony", "Map.Balcony.Bg.Garbage", false)
 		print("exit broom")
-		rfr.set_phone_notification("note")
-		rfr.add_phone_note("guide")
-		rfr.add_phone_note("note")
+		local note = require "phone.apps.note"
+		note.add("guide")
+		note.add("note")
 		require "room_items"
 		require "events.call_mom_first_time"
 		require "events.pickup_card"

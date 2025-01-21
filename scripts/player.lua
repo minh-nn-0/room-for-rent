@@ -29,6 +29,9 @@ rfr.set_state_entry(PLAYER, "move",
 		})
 	end)
 rfr.set_state(PLAYER, "idle")
+require "events.sleep_1"
+require "activities.sleep"
+require "activities.homework"
 function player.update(dt)
 	local ppos = rfr.get_position(PLAYER)
 	local walkspeed = rfr.get_properties(PLAYER, "walkspeed")

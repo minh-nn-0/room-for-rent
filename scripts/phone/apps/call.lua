@@ -1,6 +1,7 @@
 local util = require "luamodules.utilities"
 local character_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local selection = require "phone.selection"
+local call = {}
 local callee = ""
 local status = ""
 local call_content = ""
@@ -14,6 +15,13 @@ local character_icon = {
 }
 local app_state = "home"
 local call_timer = rfr.add_entity()
+
+
+local circle_sw = rfr.add_entity()
+rfr.set_stopwatch(circle_sw)
+local audio_channel = 31
+
+function call.get_audio_channel() return audio_channel end
 local states = {
 	["home"] = {
 		update = function(dt)
@@ -24,9 +32,10 @@ local states = {
 			end
 			if beaver.get_input(config.button.interaction) == 1 then
 				callee = phonebook[selection.get()]
-				rfr.set_timer(call_timer, 4)
+				rfr.set_timer(call_timer, 10)
 				app_state = "calling"
 				status = "Calling"
+				beaver.play_sound("phonering",audio_channel)
 			end
 		end,
 		draw = function()
@@ -55,6 +64,7 @@ local states = {
 	["calling"] = {
 		update = function(dt)
 			if beaver.get_input(config.button.back) == 1 then
+				beaver.halt_channel(audio_channel)
 				app_state = "home"
 			end
 			if status == "Calling" and not rfr.get_timer(call_timer).running then
@@ -72,56 +82,71 @@ local states = {
 					text_time = text_time + dt
 				end
 			end
+
+			if status ~= "Calling" or not rfr.get_flag("phone_opening") then
+				beaver.halt_channel(ring_channel)
+			end
 		end,
 		draw = function()
 			beaver.set_draw_color(40,40,40,255)
 			local phone_position = rfr.get_position(PHONE)
 			local posx = phone_position.x + (48 / 2 - 16 / 2) * config.cam_zoom
-			local posy = phone_position.y + 25 * config.cam_zoom
+			local posy = phone_position.y + 28 * config.cam_zoom
+			beaver.set_draw_color(38,133,76,255)
+			beaver.draw_circle(posx + 8 * config.cam_zoom, posy + 8 * config.cam_zoom,math.max(45, math.min(55 * math.sin(rfr.get_stopwatch(circle_sw) * 0.8 * 2 * math.pi),55)), true)
+			beaver.set_draw_color(30,64,68,255)
+			beaver.draw_circle(posx + 8 * config.cam_zoom, posy + 8 * config.cam_zoom,math.max(40, math.min(45 * math.sin(rfr.get_stopwatch(circle_sw) * 0.5 * 2 * math.pi),45)), true)
 			beaver.draw_texture("character_heads", {dst = {x = posx, y = posy, w = 16 * config.cam_zoom, h = 16 * config.cam_zoom},
 													src = character_icon[callee]})
+			beaver.set_draw_color(40,40,40,255)
 			beaver.draw_text_centered(posx + 8 * config.cam_zoom, posy + 20 * config.cam_zoom, config.ui_font, 1, phone_label["phone"][status], 0, true)
 			if call_content ~= "" then
-				beaver.draw_text(phone_position.x + 6 * config.cam_zoom, posy + 30 * config.cam_zoom,
+					beaver.draw_text(phone_position.x + 6 * config.cam_zoom, posy + 30 * config.cam_zoom,
 								config.ui_font, 1,
 								string.sub(call_content,1,text_index), 155 ,true)
 				end
 		end,
 	}
 }
-local function load()
+
+function call.set_app_state(state)
+	app_state = state
+end
+
+function call.load()
 	character_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 end
-local function update(dt)
+function call.update(dt)
 	states[app_state].update(dt)
 end
-local function draw()
+function call.draw()
 	states[app_state].draw()
 end
 
-function rfr.set_phone_dialogue(content)
+function call.set_dialogue(content)
 	call_content = content
 	text_index = 1
 	text_time = 0
 end
-function rfr.phone_caller_active()
+function call.caller_active()
 	return status == "In call" and text_time < config.dialogue_wait_time
 end
-function rfr.phone_caller_hangup()
+function call.caller_hangup()
 	status = "End Call"
 	call_content = ""
 end
-function rfr.is_making_phone_call()
+function call.is_making_phone_call()
 	return app_state == "calling"
 end
 
-function rfr.get_phone_call_status()
+function call.get_status()
 	return status
 end
-function rfr.get_phone_callee()
+function call.get_callee()
 	return callee
 end
-function rfr.get_phone_wait_time()
+function call.get_waited_time()
 	return rfr.get_timer(call_timer).elapsed
 end
-return {set_app_state = function(state) app_state = state end, load = load, update = update, draw = draw}
+
+return call

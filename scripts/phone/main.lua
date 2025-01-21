@@ -94,12 +94,14 @@ function rfr.update_phone(dt)
 	end
 	if rfr.get_flag("phone_opening") then
 		phone_states[rfr.get_state(PHONE)].update(dt)
-		if rfr.get_state(PHONE) == rfr.get_phone_notifying_app() then rfr.clear_phone_notification() end
 	elseif phone_position.y >= config.render_size[2] then
 		rfr.set_state(PHONE, "home")
 		for _,app in ipairs(apps) do
 			if phone_states[app].set_app_state then phone_states[app].set_app_state("home") end
 		end
+
+		local call = require "phone.apps.call"
+		beaver.halt_channel(call.get_audio_channel())
 	end
 	--if not screen_at_correct_brightness() then
 	--	if opening then

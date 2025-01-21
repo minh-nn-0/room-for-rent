@@ -1,16 +1,30 @@
 local day_number = 1
 local time_of_day = 1
 
-local daily_init = {}
+local daily_init = {
+	[2] = function()
+		require "events.meet_neighbour_second_time"
+		require "events.ghost_when_doing_homework"
+	end
+}
+
+local daily_flag = {}
 
 --- @param func function
 function rfr.set_daily_init(day, func)
 	daily_init[day] = func
 end
+
 function rfr.current_time()
 	return day_number, time_of_day
 end
-
+function rfr.get_day_flag(day)
+	return daily_flag[day]
+end
+function rfr.set_day_flag(day, flag, value)
+	if not daily_flag[day] then daily_flag[flag] = {} end
+	daily_flag[day][flag] = value
+end
 function rfr.advance_time()
 	time_of_day = time_of_day + 1
 	if time_of_day > 2 then

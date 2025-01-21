@@ -30,6 +30,8 @@ function LOAD()
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/footstep_tile_light.wav", "footstep_tile_light")
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/footstep_tile_medium.wav", "footstep_tile_medium")
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/doorknock.wav", "doorknock")
+	beaver.new_sound(rfr.gamepath() .. "assets/audios/doorknock_panright.wav", "doorknock_panright")
+	beaver.new_sound(rfr.gamepath() .. "assets/audios/phonering.wav", "phonering")
 
 	beaver.set_volume_sound("dialogue1", 40)
 
