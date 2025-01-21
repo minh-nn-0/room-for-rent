@@ -1,5 +1,10 @@
 {
-	"power_box" : "An ordinary looking power box",
-	"house_number" : "3xx Kim Ma",
-	"metal_gate_first_time" : "I can't go in without permission"
+	"power_box" : "A power box that looks unremarkable",
+	"house_number" : "3xx Le Chi",
+	"metal_gate_first_time" : "I can't enter the house on my own",
+	"door_room_to_hall_not_clean" : "I need to clean the room first",
+	"altar" : "An altar table",
+	"homework_not_time" : "I don't need to do homework right now.",
+	"homework_done" : "I have completed today's homework",
+	"showered" : "I just finished taking a shower"
 }
