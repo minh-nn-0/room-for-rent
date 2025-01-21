@@ -43,7 +43,7 @@ require "activities.shower"
 --	lifetime = 3,
 --	rate = 20
 --})
---rfr.set_particle_emitter_auto(PLAYER, true)
+rfr.set_particle_emitter_auto(PLAYER, true)
 function player.update(dt)
 	local ppos = rfr.get_position(PLAYER)
 	local walkspeed = rfr.get_properties(PLAYER, "walkspeed")
