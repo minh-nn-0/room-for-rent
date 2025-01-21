@@ -20,6 +20,7 @@ config = {
 	},
 	base_character_move_animation_speed = 80,
 	language = "vi",
+	current_main_character = 'male'
 }
 
 package.path = package.path .. ";" .. rfr.gamepath() .. "/?.lua"

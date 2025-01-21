@@ -1,3 +1,23 @@
+
+CHARACTER_INFO = {
+	main_male = {
+		name = "Sáng",
+		department = "IT",
+	},
+	main_female = {
+		name = "Mây",
+		department = "IT",
+	},
+	neighbour = {
+		name = "Trà"
+	},
+	woman = {
+		name = "Thắm"
+	}
+}
+local current_main_character = config.current_main_character
+local character = {}
+
 OWNER = rfr.add_entity()
 NEIGHBOUR = rfr.add_entity()
 rfr.add_tag(OWNER, "npc")
@@ -41,6 +61,17 @@ rfr.set_state_entry(NEIGHBOUR, "idle",
 	end)
 rfr.set_state(NEIGHBOUR, "idle")
 
+ function character.getTextByCharacter(text, character)
+	local characterName = CHARACTER_INFO[character]['name']
+	if character == 'main' then
+		local name =  character .. "_" .. current_main_character
+		print(name)
+		characterName =  CHARACTER_INFO[name]['name']
+		print(characterName)
+	end
+	return text:gsub("{name}", characterName)
+end
+
 function rfr.update_character(dt)
 	for _,char in ipairs(rfr.get_entities_with_tags({"npc"})) do
 		local dir = rfr.get_properties(char, "facing_direction")
@@ -63,3 +94,4 @@ function rfr.update_character(dt)
 		end
 	end
 end
+return character
