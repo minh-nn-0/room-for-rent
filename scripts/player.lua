@@ -33,6 +33,7 @@ require "events.sleep_1"
 require "activities.sleep"
 require "activities.homework"
 require "activities.shower"
+require "room_items"
 
 rfr.set_particle_emitter_auto(PLAYER, true)
 function player.update(dt)

@@ -9,6 +9,7 @@ function LOAD()
 
 	beaver.new_image(rfr.gamepath() .. "assets/images/tileset.png", "tileset")
 	beaver.new_image(rfr.gamepath() .. "assets/images/outside_wall.png")
+	beaver.new_image(rfr.gamepath() .. "assets/images/outside_wall2.png")
 	beaver.new_image(rfr.gamepath() .. "assets/images/outside_pole.png")
 	beaver.new_image(rfr.gamepath() .. "assets/images/tree1.png")
 	beaver.new_image(rfr.gamepath() .. "assets/images/male_shirt.png", "male_shirt")

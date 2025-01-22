@@ -25,9 +25,10 @@ local tileframes = 3
 local bed_animation_timer = rfr.add_entity()
 local anim_time = 0.6
 rfr.set_timer(bed_animation_timer, anim_time)
+
 function bed.animate_bed_sleep()
-	if rfr.get_timer(bed_animation_timer).running then
-		tileframes = tileframes > 4 and 3 or tileframes + 1
+	if not rfr.get_timer(bed_animation_timer).running then
+		tileframes = tileframes == 4 and 3 or tileframes + 1
 		rfr.set_timer(bed_animation_timer, anim_time)
 	end
 	bed.set_tiles(tileframes)

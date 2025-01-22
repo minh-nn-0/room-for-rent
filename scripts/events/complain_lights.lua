@@ -4,12 +4,12 @@ local lighting = require "lighting"
 local light_flickering = rfr.add_event(
 	function()
 		local d,tod = rfr.current_time()
-		return d == 1 and tod == 2 and lighting.light_flickering("room")
+		return d == 1 and tod == 2 and lighting.light_flickering("room_ceiling")
 	end)
 
 rfr.set_event_listener(PLAYER, light_flickering,
 	function()
 		rfr.set_dialogue(PLAYER, {content = dialogues["complain"]})
-		lighting.set_flicker("room", 0)
+		lighting.set_flicker("room_ceiling", 0)
 		rfr.unset_event_listener(PLAYER, light_flickering)
 	end)

@@ -43,7 +43,7 @@ rfr.set_interaction(LIGHT_SWITCH_MAINROOM, interaction_name["light_switch"],
 		return px >= 128 and px < 144
 	end,
 	function()
-		lighting.toggle_light("room")
+		lighting.toggle_light("room_ceiling")
 	end)
 
 rfr.set_position(LIGHT_SWITCH_BATHROOM, 272,224)
@@ -54,5 +54,5 @@ rfr.set_interaction(LIGHT_SWITCH_BATHROOM, interaction_name["light_switch"],
 		return px >= 272 and px < 287
 	end,
 	function()
-		lighting.toggle_light("bathroom")
+		lighting.toggle_light("bathroom_ceiling")
 	end)
