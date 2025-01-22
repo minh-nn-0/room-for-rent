@@ -8,8 +8,9 @@ require "interactions"
 require "cutscenes.prologue.prologue"
 require "phone.main"
 require "helper"
-
 require "audios"
+
+local ghost = require "ghost"
 local gamestate = {
 	current_state = "ingame"
 }
@@ -30,6 +31,7 @@ state["ingame"] = {
 	update = function(dt)
 		config.text_scale = 1/rfr.get_cam_zoom()
 		player.update(dt)
+		ghost.update(dt)
 		lighting.update(dt)
 		rfr.update_camera(dt)
 		rfr.update_phone(dt)

@@ -28,6 +28,18 @@ rfr.set_state_entry(PLAYER, "move",
 			["repeat"] = true
 		})
 	end)
+
+-- Exactly the same
+rfr.set_state_entry(PLAYER, "move_fast",
+	function()
+		local speed = config.base_character_move_animation_speed / rfr.get_properties(PLAYER, "walkspeed")
+		rfr.set_tileanimation(PLAYER, {
+			frames = {{4,speed},{5,speed},{6,speed},{7,speed},{8,speed},{9,speed},{10,speed},{11,speed}},
+			framewidth = 32,
+			frameheight = 32,
+			["repeat"] = true
+		})
+	end)
 rfr.set_state(PLAYER, "idle")
 require "events.sleep_1"
 require "activities.sleep"
@@ -35,26 +47,36 @@ require "activities.homework"
 require "activities.shower"
 require "room_items"
 
+local ghost = require "ghost"
 rfr.set_particle_emitter_auto(PLAYER, true)
 function player.update(dt)
 	local ppos = rfr.get_position(PLAYER)
-	local walkspeed = rfr.get_properties(PLAYER, "walkspeed")
+	local pstate = rfr.get_state(PLAYER)
 	if rfr.get_flag("player_can_move") then
+		local walkspeed = rfr.get_properties(PLAYER, "walkspeed")
 		if beaver.get_input("LEFT") > 0 then
 			ppos.x = ppos.x - walkspeed
-			rfr.set_state(PLAYER, "move")
+			if pstate ~= "move_fast" then pstate = "move" end
 			rfr.set_flipflag(PLAYER, beaver.FLIP_H)
 			rfr.set_dialogue_position(PLAYER, 10, -3)
 		elseif beaver.get_input("RIGHT") > 0 then
 			ppos.x = ppos.x + walkspeed
-			rfr.set_state(PLAYER, "move")
+			if pstate ~= "move_fast" then pstate = "move" end
 			rfr.set_flipflag(PLAYER, beaver.FLIP_NONE)
 			rfr.set_dialogue_position(PLAYER, 22, -3)
 		else
-			rfr.set_state(PLAYER, "idle")
+			pstate = "idle"
 		end
-	end
 
+		if beaver.get_input("LSHIFT") > 0 then
+			rfr.set_properties(PLAYER, "walkspeed", 0.8)
+			pstate = "move_fast"
+		else
+			rfr.set_properties(PLAYER, "walkspeed", 0.6)
+			if pstate == "move_fast" then pstate = "move" end
+		end
+		rfr.set_state(PLAYER, pstate)
+	end
 	--print(ppos.x + 16, ppos.y + 16)
 	if beaver.get_input("S") == 1 then
 		rfr.set_image(PLAYER, "girl")
@@ -100,7 +122,7 @@ function player.update(dt)
 			if beaver.get_input(config.button.interaction) == 1 then rfr.select_dialogue_options_selection() end
 		end
 	end
-
+	ghost.set_target(ppos.x + 16, ppos.y + 16)
 end
 
 return player
