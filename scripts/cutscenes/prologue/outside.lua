@@ -1,3 +1,4 @@
+local character = require "luamodules.character"
 local util = require "luamodules.utilities"
 local dialogues
 local timer = rfr.add_entity()
@@ -6,6 +7,8 @@ local call = require "phone.apps.call"
 local function player_near_gate()
 	return math.abs(rfr.get_position(PLAYER).x - 533) <= 80
 end
+
+
 CS_PROLOGUE_ARRIVE = rfr.add_cutscene({
 	init = function()
 		dialogues =util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
@@ -57,7 +60,7 @@ local cs_prologue_talk_at_gate = rfr.add_cutscene({
 	scripts = {
 		function(dt)
 			if rfr.has_active_dialogue(OWNER) then return false end
-			rfr.set_dialogue(OWNER, {content = dialogues["owner_greeting"]})
+			rfr.set_dialogue(OWNER, {content = character.getTextByCharacter(dialogues["owner_greeting"], 'main')} )
 			return true
 		end,
 		function(dt)
@@ -155,7 +158,7 @@ local cs_prologue_call_owner = rfr.add_cutscene({
 		end,
 		function(dt)
 			if call.caller_active() then return false end
-			rfr.set_dialogue(PLAYER, {content = dialogues["player_call_greeting"]})
+			rfr.set_dialogue(PLAYER, {content = character.getTextByCharacter(dialogues["player_call_greeting"], 'woman')} )
 			return true
 		end,
 		function(dt)
