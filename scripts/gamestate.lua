@@ -11,8 +11,8 @@ require "helper"
 require "audios"
 
 --local ghost = require "ghost"
-local outside = require "outside"
 
+local map = require "luamodules.map"
 local gamestate = {
 	current_state = "ingame"
 }
@@ -69,14 +69,14 @@ state["ingame"] = {
 			beaver.set_draw_color(10,10,10,255)
 		end
 		beaver.draw_rectangle(0,0,0,0,true)
-		if plocation == "Map.Outside" or plocation == "Map.Hall" then outside.draw() end
-		rfr.draw_map_by_layer(rfr.get_current_map(), (plocation == "Map.Hall" and "Map.Outside" or plocation) .. ".Bg", 0, 0)
+		map.draw_bg()
 		for _, eid in ipairs(rfr.get_active_entities()) do
 			if rfr.get_location(eid) == plocation and not rfr.has_tag(eid, "ui") then
 				rfr.draw_particles(eid)
 				rfr.draw_entities(eid)
 			end
 		end
+		map.draw_fg()
 		rfr.draw_map_by_layer(rfr.get_current_map(), (plocation == "Map.Hall" and "Map.Outside" or plocation) .. ".Fg", 0, 0)
 		lighting.draw()
 		if rfr.get_flag("player_can_interact") and rfr.get_first_interaction() ~= -1 then

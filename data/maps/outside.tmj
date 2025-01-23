@@ -69,6 +69,20 @@
                                  "y":0
                                 }, 
                                 {
+                                 "id":36,
+                                 "image":"..\/..\/assets\/images\/fences.png",
+                                 "imageheight":116,
+                                 "imagewidth":400,
+                                 "name":"fences",
+                                 "offsetx":348,
+                                 "offsety":60,
+                                 "opacity":1,
+                                 "type":"imagelayer",
+                                 "visible":true,
+                                 "x":0,
+                                 "y":0
+                                }, 
+                                {
                                  "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -185,12 +199,12 @@
                                  "image":"..\/..\/assets\/images\/fences.png",
                                  "imageheight":116,
                                  "imagewidth":400,
-                                 "name":"Fences",
+                                 "name":"fences",
                                  "offsetx":348,
                                  "offsety":60,
                                  "opacity":1,
                                  "type":"imagelayer",
-                                 "visible":true,
+                                 "visible":false,
                                  "x":0,
                                  "y":0
                                 }],
@@ -226,7 +240,7 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":36,
+ "nextlayerid":37,
  "nextobjectid":8,
  "orientation":"orthogonal",
  "renderorder":"right-down",
