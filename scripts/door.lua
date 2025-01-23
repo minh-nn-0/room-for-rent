@@ -56,7 +56,7 @@ rfr.set_interaction(DOOR_ROOM_TO_HALL, interaction_name["door_room_to_hall"],
 			beaver.play_sound("dooropen2")
 			rfr.set_cam_zoom(3)
 			rfr.set_cam_center(432, 96)
-			rfr.set_current_map("hall")
+			rfr.set_current_map("outside")
 			rfr.set_location(PLAYER, "Map.Hall")
 			rfr.set_position(PLAYER, 416,80)
 			rfr.fade_in(2)
@@ -87,7 +87,7 @@ rfr.set_interaction(DOOR_BALCONY_TO_ROOM, interaction_name["door_balcony_to_room
 	function()
 		rfr.set_cam_zoom(config.cam_zoom)
 		rfr.set_cam_center(80, 128)
-		rfr.set_current_map(rfr.get_flag("prologue_room") and "room_before" or "room")
+		rfr.set_current_map("room")
 		rfr.set_location(PLAYER, "Map.Mainroom")
 		rfr.set_position(PLAYER, 64,112)
 		rfr.fade_in(1)
@@ -110,57 +110,57 @@ rfr.set_interaction(DOOR_HALL_TO_ROOM, interaction_name["door_hall_to_room"],
 		rfr.fade_in(2)
 	end)
 
-rfr.set_position(DOOR_HALL_STAIR_FIRST, 780, 124)
+rfr.set_position(DOOR_HALL_STAIR_FIRST, 654, 134)
 rfr.set_location(DOOR_HALL_STAIR_FIRST, "Map.Hall")
 rfr.set_interaction(DOOR_HALL_STAIR_FIRST, interaction_name["door_hall_stair_first"],
 	function()
 		local px, py = util.player_center()
-		return px >= 770 and px <= 790 and py == 160
+		return px >= 640 and px <= 660 and py == 160
 	end,
 	function()
-		rfr.set_position(PLAYER, 770, 80)
+		rfr.set_position(PLAYER, 654, 96)
 	end)
-rfr.set_position(DOOR_HALL_STAIR_SECOND, 780, 70)
+rfr.set_position(DOOR_HALL_STAIR_SECOND, 654, 80)
 rfr.set_location(DOOR_HALL_STAIR_SECOND, "Map.Hall")
 rfr.set_interaction(DOOR_HALL_STAIR_SECOND, interaction_name["door_hall_stair_second"],
 	function()
 		local px, py = util.player_center()
-		return px >= 770 and px <= 790 and py == 96
+		return px >= 640 and px <= 660 and py == 109
 	end,
 	function()
-		rfr.set_position(PLAYER, 770, 144)
+		rfr.set_position(PLAYER, 654, 144)
 	end)
 
-rfr.set_position(METAL_GATE_OUTSIDE, 536, 124)
+rfr.set_position(METAL_GATE_OUTSIDE, 424, 134)
 rfr.set_location(METAL_GATE_OUTSIDE, "Map.Outside")
 rfr.set_interaction(METAL_GATE_OUTSIDE, interaction_name["metal_gate"],
 	function()
 		local px,_ = util.player_center()
-		return px >= 510 and px <= 556
+		return px >= 403 and px <= 446
 	end,
 	function()
 		if rfr.get_flag("metal_gate_first_time") then rfr.set_dialogue(PLAYER, {content = interaction_details["metal_gate_first_time"]})
 		else
-			rfr.set_current_map("hall")
 			rfr.set_location(PLAYER, "Map.Hall")
+			rfr.set_layer_visible("outside", "Map.Outside.Bg.house_wall", false)
 			rfr.set_cam_zoom(3)
-			rfr.set_position(PLAYER, 530,144)
-			rfr.set_cam_target(PLAYER, 16, 0)
+			rfr.set_position(PLAYER, 408,144)
+			rfr.set_cam_target(PLAYER, 16, -5)
 			rfr.fade_in(2)
 		end
 	end)
-rfr.set_position(METAL_GATE_INSIDE, 536, 124)
+rfr.set_position(METAL_GATE_INSIDE, 424, 134)
 rfr.set_location(METAL_GATE_INSIDE, "Map.Hall")
 rfr.set_interaction(METAL_GATE_INSIDE, interaction_name["metal_gate"],
 	function()
-		local px,py = util.player_center()
-		return px >= 512 and px <= 560 and py == 160
+		local px, py = util.player_center()
+		return px >= 403 and px <= 446 and py == 160
 	end,
 	function()
-		rfr.set_current_map("outside")
 		rfr.set_location(PLAYER, "Map.Outside")
+			rfr.set_layer_visible("outside", "Map.Outside.Bg.house_wall", true)
 		rfr.set_cam_zoom(2)
-		rfr.set_position(PLAYER, 530,144)
-		rfr.set_cam_target(PLAYER, 16, -20)
+		rfr.set_position(PLAYER, 408,144)
+		rfr.set_cam_target(PLAYER, 16, -30)
 		rfr.fade_in(2)
 	end)

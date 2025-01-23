@@ -6,18 +6,15 @@ beaver.new_image(rfr.gamepath() .. "assets/images/lights.png", "lights")
 beaver.create_texture_for_drawing("shadow", 1280, 720)
 beaver.set_texture_blend_mode("shadow", "modulate")
 beaver.set_texture_blend_mode("lights", "additive")
-local lightsrc_dimensions = {x = 56, y = 56, w = 190, h = 190}
 local lightsource = {
-	top = {x = lightsrc_dimensions.x, y = lightsrc_dimensions.y, w = lightsrc_dimensions.w, h = lightsrc_dimensions.h / 2},
-	bottom = {x = lightsrc_dimensions.x, y = lightsrc_dimensions.y + lightsrc_dimensions.h / 2, w = lightsrc_dimensions.w, h = lightsrc_dimensions.h / 2},
-	left = {x = lightsrc_dimensions.x, y = lightsrc_dimensions.y, w = lightsrc_dimensions.w / 2, h = lightsrc_dimensions.h},
-	right = {x = lightsrc_dimensions.x + lightsrc_dimensions.w / 2, y = lightsrc_dimensions.w / 2, h = lightsrc_dimensions.h}
+	round = {x = 56, y = 65, w = 190, h = 190},
+	cone = {x = 377, y = 91, w = 146, h = 119}
 }
 
 local flicker_wait_time = 0.1
 lights["room_ceiling"] = {pos = {200, 88},
 					scale = 1,
-					src = lightsrc_dimensions,
+					src = lightsource.round,
 					on = false,
 					flicker_rate = 0.01,
 					flicker_timer = 0,
@@ -27,7 +24,7 @@ lights["room_ceiling"] = {pos = {200, 88},
 
 lights["bathroom_ceiling"] = {pos = {216,218},
 					scale = 1,
-					src = lightsrc_dimensions,
+					src = lightsource.round,
 					on = false,
 					flicker_rate = 0,
 					flicker_timer = 0,
@@ -70,7 +67,7 @@ lights["bathroom_ceiling"] = {pos = {216,218},
 --
 lights["room_sunlight_back"] = {pos = {56, 90},
 						scale = 1.5,
-						src = lightsrc_dimensions,
+						src = lightsource.round,
 						on = true,
 						flicker_rate = 0,
 						flicker_timer = 0,
@@ -80,13 +77,31 @@ lights["room_sunlight_back"] = {pos = {56, 90},
 					}
 lights["room_sunlight_front"] = {pos = {355, 90},
 						scale = 1.5,
-						src = lightsrc_dimensions,
+						src = lightsource.round,
 						on = true,
 						flicker_rate = 0,
 						flicker_timer = 0,
 						flickering = false,
 						tint = {240,240,240,255},
 						location = "Map.Mainroom"
+					}
+lights["outside_pole_round"] = {pos = {318,86},
+						scale = 1,
+						src = lightsource.round,
+						flicker_rate = 0,
+						flicker_timer = 0,
+						flickering = false,
+						tint = {255,180,63,200},
+						location = "Map.Outside"
+					}
+lights["outside_pole_cone"] = {pos = {318,128},
+						scale = 1,
+						src = lightsource.cone,
+						flicker_rate = 0,
+						flicker_timer = 0,
+						flickering = false,
+						tint = {255,180,63,255},
+						location = "Map.Outside"
 					}
 
 --
@@ -116,14 +131,18 @@ function lighting.update(dt)
 	if tod == 1 then
 		lights["room_sunlight_back"].on = true
 		lights["room_sunlight_front"].on = true
-		color = {200,200,200,255}
+		lights["outside_pole_round"].on = false
+		lights["outside_pole_cone"].on = false
+		color = {240,240,240,255}
 		if location == "Map.Mainroom" or location == "Map.Bathroom" then
-			color = {100,100,100,255}
+			color = {140,140,140,255}
 		end
 	else
-		color = {40,40,80, 255}
+		color = {30,30,50, 255}
 		lights["room_sunlight_back"].on = false
 		lights["room_sunlight_front"].on = false
+		lights["outside_pole_round"].on = true
+		lights["outside_pole_cone"].on = true
 	end
 
 	bg_color = color

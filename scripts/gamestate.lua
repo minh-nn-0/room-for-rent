@@ -10,7 +10,9 @@ require "phone.main"
 require "helper"
 require "audios"
 
-local ghost = require "ghost"
+--local ghost = require "ghost"
+local outside = require "outside"
+
 local gamestate = {
 	current_state = "ingame"
 }
@@ -31,7 +33,7 @@ state["ingame"] = {
 	update = function(dt)
 		config.text_scale = 1/rfr.get_cam_zoom()
 		player.update(dt)
-		ghost.update(dt)
+		--ghost.update(dt)
 		lighting.update(dt)
 		rfr.update_camera(dt)
 		rfr.update_phone(dt)
@@ -49,6 +51,7 @@ state["ingame"] = {
 		if rfr.update_homework then rfr.update_homework() end
 		if rfr.update_bed then rfr.update_bed() end
 
+		outside.update(dt)
 		rfr.update_audios()
 		rfr.set_only_player_location_visible()
 		rfr.cleanup_entities()
@@ -56,17 +59,25 @@ state["ingame"] = {
 		return true
 	end,
 	draw = function()
-		beaver.set_draw_color(10,10,10,255)
+		beaver.set_draw_color(0,0,0,255)
 		beaver.clear()
+		local plocation = rfr.get_location(PLAYER)
 		local ppos = rfr.get_position(PLAYER)
-		rfr.draw_map_by_layer(rfr.get_current_map(), rfr.get_location(PLAYER) .. ".Bg", 0, 0)
+		if plocation == "Map.Outside" or plocation == "Map.Hall" then
+			beaver.set_draw_color(115,190,211,255)
+		else
+			beaver.set_draw_color(10,10,10,255)
+		end
+		beaver.draw_rectangle(0,0,0,0,true)
+		if plocation == "Map.Outside" or plocation == "Map.Hall" then outside.draw() end
+		rfr.draw_map_by_layer(rfr.get_current_map(), (plocation == "Map.Hall" and "Map.Outside" or plocation) .. ".Bg", 0, 0)
 		for _, eid in ipairs(rfr.get_active_entities()) do
-			if rfr.get_location(eid) == rfr.get_location(PLAYER) and not rfr.has_tag(eid, "ui") then
+			if rfr.get_location(eid) == plocation and not rfr.has_tag(eid, "ui") then
 				rfr.draw_particles(eid)
 				rfr.draw_entities(eid)
 			end
 		end
-		rfr.draw_map_by_layer(rfr.get_current_map(), rfr.get_location(PLAYER) .. ".Fg", 0, 0)
+		rfr.draw_map_by_layer(rfr.get_current_map(), (plocation == "Map.Hall" and "Map.Outside" or plocation) .. ".Fg", 0, 0)
 		lighting.draw()
 		if rfr.get_flag("player_can_interact") and rfr.get_first_interaction() ~= -1 then
 			beaver.set_draw_color(255,255,255,255)
@@ -75,7 +86,7 @@ state["ingame"] = {
 		end
 
 		for _, eid in ipairs(rfr.get_active_entities()) do
-			if rfr.get_location(eid) == rfr.get_location(PLAYER) then
+			if rfr.get_location(eid) == plocation then
 				if rfr.has_active_dialogue(eid) then
 					beaver.set_draw_color(10,10,10,255)
 					rfr.draw_dialogue(eid)

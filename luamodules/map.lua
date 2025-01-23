@@ -16,6 +16,7 @@ function rfr.get_map_boundaries(map)
 end
 function rfr.set_only_player_location_visible()
 	local player_location = rfr.get_location(PLAYER)
+	player_location = player_location == "Map.Hall" and "Map.Outside" or player_location
 	for _, group in ipairs(rfr.get_group_layers(current_map, "Map")) do
 		rfr.set_layer_visible(current_map, group, false)
 	end

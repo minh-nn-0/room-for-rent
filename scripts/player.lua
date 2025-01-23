@@ -47,7 +47,7 @@ require "activities.homework"
 require "activities.shower"
 require "room_items"
 
-local ghost = require "ghost"
+--local ghost = require "ghost"
 rfr.set_particle_emitter_auto(PLAYER, true)
 --rfr.set_particle_emitter_config(PLAYER, {
 --	emitting_position = {x = 200, y = 100},
@@ -81,7 +81,7 @@ function player.update(dt)
 
 		if beaver.get_input("LSHIFT") > 0 then
 			rfr.set_properties(PLAYER, "walkspeed", 0.8)
-			pstate = "move_fast"
+			if pstate == "move" then pstate = "move_fast" end
 		else
 			rfr.set_properties(PLAYER, "walkspeed", 0.6)
 			if pstate == "move_fast" then pstate = "move" end
@@ -133,7 +133,7 @@ function player.update(dt)
 			if beaver.get_input(config.button.interaction) == 1 then rfr.select_dialogue_options_selection() end
 		end
 	end
-	ghost.set_target(ppos.x + 16, ppos.y + 16)
+	--ghost.set_target(ppos.x + 16, ppos.y + 16)
 end
 
 return player
