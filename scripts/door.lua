@@ -1,6 +1,7 @@
 local util = require "luamodules.utilities"
 local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
+local map = require "luamodules.map"
 DOOR_ROOM_TO_BATHROOM = rfr.add_entity()
 DOOR_ROOM_TO_HALL = rfr.add_entity()
 DOOR_ROOM_TO_BALCONY = rfr.add_entity()
@@ -56,7 +57,7 @@ rfr.set_interaction(DOOR_ROOM_TO_HALL, interaction_name["door_room_to_hall"],
 			beaver.play_sound("dooropen2")
 			rfr.set_cam_zoom(3)
 			rfr.set_cam_center(432, 96)
-			rfr.set_current_map("outside")
+			map.set_current_map("outside")
 			rfr.set_location(PLAYER, "Map.Hall")
 			rfr.set_position(PLAYER, 416,80)
 			rfr.fade_in(2)
@@ -71,7 +72,7 @@ rfr.set_interaction(DOOR_ROOM_TO_BALCONY, interaction_name["door_room_to_balcony
 	end,
 	function()
 		rfr.set_cam_zoom(3)
-		rfr.set_current_map("balcony")
+		map.set_current_map("balcony")
 		rfr.set_location(PLAYER, "Map.Balcony")
 		rfr.set_position(PLAYER, 128, 96)
 		rfr.fade_in(1)
@@ -87,7 +88,7 @@ rfr.set_interaction(DOOR_BALCONY_TO_ROOM, interaction_name["door_balcony_to_room
 	function()
 		rfr.set_cam_zoom(config.cam_zoom)
 		rfr.set_cam_center(80, 128)
-		rfr.set_current_map("room")
+		map.set_current_map("room")
 		rfr.set_location(PLAYER, "Map.Mainroom")
 		rfr.set_position(PLAYER, 64,112)
 		rfr.fade_in(1)
@@ -104,7 +105,7 @@ rfr.set_interaction(DOOR_HALL_TO_ROOM, interaction_name["door_hall_to_room"],
 		beaver.play_sound("dooropen2")
 		rfr.set_cam_zoom(config.cam_zoom)
 		rfr.set_cam_center(316, 112)
-		rfr.set_current_map("room")
+		map.set_current_map("room")
 		rfr.set_location(PLAYER, "Map.Mainroom")
 		rfr.set_position(PLAYER, 290,112)
 		rfr.fade_in(2)

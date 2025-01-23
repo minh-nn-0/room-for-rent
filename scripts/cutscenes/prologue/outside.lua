@@ -1,4 +1,5 @@
 local character = require "luamodules.character"
+local map = require "luamodules.map"
 local util = require "luamodules.utilities"
 local dialogues
 local timer = rfr.add_entity()
@@ -16,7 +17,7 @@ CS_PROLOGUE_ARRIVE = rfr.add_cutscene({
 		rfr.fade_in(5)
 		rfr.set_cam_zoom(2)
 		rfr.set_cam_target(PLAYER, 16, -20)
-		rfr.set_current_map("outside")
+		map.set_current_map("outside")
 		rfr.set_location(PLAYER, "Map.Outside")
 		rfr.set_position(PLAYER, 30, 144)
 		rfr.set_properties(PLAYER, "walkspeed", 0.8)

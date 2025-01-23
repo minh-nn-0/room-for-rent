@@ -1,4 +1,5 @@
 local util = require "luamodules.utilities"
+local map = require "luamodules.map"
 local dialogues
 local interaction_names
 local narrative = util.load_json(rfr.gamepath() .. "data/narratives/" .. config.language .. ".json")
@@ -44,7 +45,7 @@ local cs_prologue_after_broom = rfr.add_cutscene({
 		function(dt)
 			if rfr.narrative_text_active() then return false end
 			rfr.unset_flag("screen_fill")
-			rfr.set_current_map("room")
+			map.set_current_map("room")
 			rfr.fade_in(2)
 			rfr.set_active(broom, false)
 			return true

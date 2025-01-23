@@ -1,5 +1,6 @@
 local util = require "luamodules.utilities"
 local dialogues
+local map = require "luamodules.map"
 local cam_target1 = rfr.add_entity()
 rfr.set_position(cam_target1, 80, 112)
 local start_talking_timer = rfr.add_entity()
@@ -11,7 +12,7 @@ CS_PROLOGUE_ROOM = rfr.add_cutscene({
 		rfr.set_flag("prologue_room")
 		rfr.set_properties(DOOR_ROOM_TO_HALL, "disable", true)
 		rfr.fade_in(1.5)
-		rfr.set_current_map("room_before")
+		map.set_current_map("room_before")
 		rfr.set_position(PLAYER, 290, 112)
 		rfr.set_flipflag(PLAYER, beaver.FLIP_H)
 		rfr.unset_flag("player_can_move")

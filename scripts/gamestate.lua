@@ -51,9 +51,9 @@ state["ingame"] = {
 		if rfr.update_homework then rfr.update_homework() end
 		if rfr.update_bed then rfr.update_bed() end
 
-		outside.update(dt)
+		map.set_only_player_location_visible()
+		map.update(dt)
 		rfr.update_audios()
-		rfr.set_only_player_location_visible()
 		rfr.cleanup_entities()
 
 		return true
@@ -77,7 +77,6 @@ state["ingame"] = {
 			end
 		end
 		map.draw_fg()
-		rfr.draw_map_by_layer(rfr.get_current_map(), (plocation == "Map.Hall" and "Map.Outside" or plocation) .. ".Fg", 0, 0)
 		lighting.draw()
 		if rfr.get_flag("player_can_interact") and rfr.get_first_interaction() ~= -1 then
 			beaver.set_draw_color(255,255,255,255)

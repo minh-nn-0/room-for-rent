@@ -46,6 +46,7 @@ require "activities.sleep"
 require "activities.homework"
 require "activities.shower"
 require "room_items"
+local map = require "luamodules.map"
 
 --local ghost = require "ghost"
 rfr.set_particle_emitter_auto(PLAYER, true)
@@ -93,7 +94,7 @@ function player.update(dt)
 		rfr.set_image(PLAYER, "girl")
 	end
 	if beaver.get_input("D") == 1 then
-		rfr.set_current_map("outside")
+		map.set_current_map("outside")
 		ppos.x = 400
 		ppos.y = 144
 		rfr.set_cam_zoom(2)

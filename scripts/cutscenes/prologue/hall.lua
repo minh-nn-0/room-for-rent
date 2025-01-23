@@ -1,5 +1,6 @@
 local util = require "luamodules.utilities"
 local dialogues
+local map = require "luamodules.map"
 local timer = rfr.add_entity()
 local function on_second_floor()
 	local ppos = rfr.get_position(PLAYER)
@@ -25,7 +26,7 @@ CS_PROLOGUE_HALL = rfr.add_cutscene({
 		dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
 		rfr.fade_in(1)
 		rfr.set_flag("prologue_hall")
-		rfr.set_current_map("hall")
+		map.set_current_map("hall")
 		rfr.set_location(PLAYER, "Map.Hall")
 		rfr.set_location(OWNER, "Map.Hall")
 		rfr.set_position(PLAYER, 530,144)

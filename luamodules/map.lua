@@ -37,6 +37,9 @@ function map.set_only_player_location_visible()
 end
 
 local outside = require "outside"
+function map.update(dt)
+	outside.update(dt)
+end
 function map.draw_bg()
 	local plocation = rfr.get_location(PLAYER)
 	if plocation == "Map.Outside" or plocation == "Map.Hall" then outside.draw() end
@@ -45,6 +48,6 @@ end
 
 function map.draw_fg()
 	local plocation = rfr.get_location(PLAYER)
-	rfr.draw_map_by_layer(rfr.get_current_map(), (plocation == "Map.Hall" and "Map.Outside" or plocation) .. ".Fg", 0, 0)
+	rfr.draw_map_by_layer(current_map, (plocation == "Map.Hall" and "Map.Outside" or plocation) .. ".Fg", 0, 0)
 end
 return map
