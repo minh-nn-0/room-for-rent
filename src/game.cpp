@@ -6,6 +6,16 @@
 #include "note_drawing.hpp"
 #include "textbox_drawing.hpp"
 #include <thread>
+
+#ifndef NDEBUG
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+
+constexpr bool debug = true;
+#else
+constexpr bool debug = false;
+#endif
 #ifdef __EMSCRIPTEN__
 #include "/home/minhmacg/.cache/emscripten/sysroot/include/emscripten.h"
 #endif
@@ -21,27 +31,30 @@ constexpr std::string game_path()
 };
 #endif
 
+#ifndef NDEBUG
 std::mutex LUAREPL_MUTEX;
 std::atomic<bool> RUNNING {true};
+
 void run_lua_repl(sol::state& lua)
 {
 	std::string input;
 	while (RUNNING)
 	{
-		std::cout << "> ";
-		std::getline(std::cin, input);
-		if (input.empty()) continue;
+		char* input = readline("> ");
+		if (!input) continue;
 		try
 		{
 			std::lock_guard<std::mutex> lock (LUAREPL_MUTEX);
 			lua.safe_script(input);
+			add_history(input);
+			free(input);
 		} catch (const sol::error& e)
 		{
 			std::cout << "error: " << e.what() << std::endl;
 		};
 	};
 }
-
+#endif
 
 rfr::game::game(): _beaver("RFR", 1280, 720)
 {
@@ -274,19 +287,27 @@ void rfr::game::draw()
 
 void rfr::game::run()
 {
+#ifndef NDEBUG
 	std::thread lua_repl_thread {run_lua_repl, std::ref(_lua)};
+#endif
 	beaver::run_game(_beaver, 
 			[&](float dt)
 			{
+#ifndef NDEBUG
 				std::lock_guard<std::mutex> lock (LUAREPL_MUTEX);
+#endif
 				return update(dt); 
 			},
 			[&]()
 			{
+#ifndef NDEBUG
 				std::lock_guard<std::mutex> lock (LUAREPL_MUTEX);
+#endif
 				draw();
 			});
+#ifndef NDEBUG
 	RUNNING = false;
 	if (lua_repl_thread.joinable())
 		lua_repl_thread.join();
+#endif
 };

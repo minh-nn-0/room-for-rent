@@ -15,3 +15,4 @@ target_compile_definitions(rfr PRIVATE
 	GAMEPATH="${CMAKE_CURRENT_SOURCE_DIR}"
 )
 target_link_libraries(rfr PRIVATE beaver)
+target_link_options(rfr PRIVATE "-lreadline")
