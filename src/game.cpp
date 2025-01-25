@@ -29,7 +29,11 @@ void run_lua_repl(sol::state& lua)
 	std::cout << "> ";
 	while (RUNNING)
 	{
-		if (!std::getline(std::cin, input)) break;
+		if (!std::getline(std::cin, input))
+		{
+			RUNNING = false;
+			break;
+		};
 		try
 		{
 			std::lock_guard<std::mutex> lock (LUAREPL_MUTEX);
@@ -38,7 +42,6 @@ void run_lua_repl(sol::state& lua)
 		{
 			std::cout << "error: " << e.what() << std::endl;
 		};
-
 		std::cout << "> ";
 	};
 }
