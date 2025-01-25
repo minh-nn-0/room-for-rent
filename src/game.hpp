@@ -8,6 +8,7 @@
 #include <beaver/scripting/scripting_tile.hpp>
 #include <beaver/scripting/scripting_camera.hpp>
 #include "binding.hpp"
+#include <thread>
 namespace rfr
 {
 	// Things need to be done

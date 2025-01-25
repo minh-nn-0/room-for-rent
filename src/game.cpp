@@ -5,6 +5,7 @@
 #include <beaver/ecs/systems/render_entity.hpp>
 #include "note_drawing.hpp"
 #include "textbox_drawing.hpp"
+#include <thread>
 #ifdef __EMSCRIPTEN__
 #include "/home/minhmacg/.cache/emscripten/sysroot/include/emscripten.h"
 #endif
@@ -20,6 +21,27 @@ constexpr std::string game_path()
 };
 #endif
 
+std::mutex LUAREPL_MUTEX;
+std::atomic<bool> RUNNING {true};
+void run_lua_repl(sol::state& lua)
+{
+	std::string input;
+	std::cout << "> ";
+	while (RUNNING)
+	{
+		if (!std::getline(std::cin, input)) break;
+		try
+		{
+			std::lock_guard<std::mutex> lock (LUAREPL_MUTEX);
+			lua.safe_script(input);
+		} catch (const sol::error& e)
+		{
+			std::cout << "error: " << e.what() << std::endl;
+		};
+
+		std::cout << "> ";
+	};
+}
 
 
 rfr::game::game(): _beaver("RFR", 1280, 720)
@@ -31,8 +53,6 @@ rfr::game::game(): _beaver("RFR", 1280, 720)
 	auto load_result = load();
 	if (!load_result.valid()) 
 		throw std::runtime_error(std::format("runtime error: {}", sol::error{load_result}.what()));
-
-	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
 };
 
 rfr::dialogue_options DIALOGUE_OPTIONS;
@@ -216,7 +236,6 @@ void rfr::game::setup_binding()
         return result
     end
 	)");
-
 };
 
 
@@ -227,7 +246,6 @@ bool rfr::game::update(float dt)
 	auto update_result = lua_update(dt);
 	if (!update_result.valid())
 		throw std::runtime_error(std::format("runtime error: {}", sol::error{update_result}.what()));
-
 	return update_result;
 };
 
@@ -257,7 +275,19 @@ void rfr::game::draw()
 
 void rfr::game::run()
 {
+	std::thread lua_repl_thread {run_lua_repl, std::ref(_lua)};
 	beaver::run_game(_beaver, 
-			[&](float dt){return update(dt);},
-			[&](){draw();});
+			[&](float dt)
+			{
+				std::lock_guard<std::mutex> lock (LUAREPL_MUTEX);
+				return update(dt); 
+			},
+			[&]()
+			{
+				std::lock_guard<std::mutex> lock (LUAREPL_MUTEX);
+				draw();
+			});
+	RUNNING = false;
+	if (lua_repl_thread.joinable())
+		lua_repl_thread.join();
 };
