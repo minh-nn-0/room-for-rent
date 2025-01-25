@@ -12,6 +12,7 @@ require "audios"
 
 --local ghost = require "ghost"
 
+local test = require "test"
 local map = require "luamodules.map"
 local gamestate = {
 	current_state = "ingame"
@@ -32,6 +33,8 @@ state["ingame"] = {
 	end,
 	update = function(dt)
 		config.text_scale = 1/rfr.get_cam_zoom()
+
+		test.update(dt)
 		player.update(dt)
 		--ghost.update(dt)
 		lighting.update(dt)
@@ -50,7 +53,6 @@ state["ingame"] = {
 		rfr.update_particle_emitter(dt)
 		if rfr.update_homework then rfr.update_homework() end
 		if rfr.update_bed then rfr.update_bed() end
-
 		map.set_only_player_location_visible()
 		map.update(dt)
 		rfr.update_audios()
@@ -63,12 +65,6 @@ state["ingame"] = {
 		beaver.clear()
 		local plocation = rfr.get_location(PLAYER)
 		local ppos = rfr.get_position(PLAYER)
-		if plocation == "Map.Outside" or plocation == "Map.Hall" then
-			beaver.set_draw_color(115,190,211,255)
-		else
-			beaver.set_draw_color(10,10,10,255)
-		end
-		beaver.draw_rectangle(0,0,0,0,true)
 		map.draw_bg()
 		for _, eid in ipairs(rfr.get_active_entities()) do
 			if rfr.get_location(eid) == plocation and not rfr.has_tag(eid, "ui") then
@@ -77,6 +73,9 @@ state["ingame"] = {
 			end
 		end
 		map.draw_fg()
+
+		test.draw()
+
 		lighting.draw()
 		if rfr.get_flag("player_can_interact") and rfr.get_first_interaction() ~= -1 then
 			beaver.set_draw_color(255,255,255,255)
