@@ -138,7 +138,7 @@ function lighting.update(dt)
 			color = {140,140,140,255}
 		end
 	else
-		color = {30,30,50, 255}
+		color = {10,10,30, 255}
 		lights["room_sunlight_back"].on = false
 		lights["room_sunlight_front"].on = false
 		lights["outside_pole_round"].on = true
@@ -147,7 +147,7 @@ function lighting.update(dt)
 
 	bg_color = color
 	for _,light in pairs(lights) do
-		if light.on and light.location == rfr.get_location(PLAYER) then
+		if light.on and light.location == location then
 			light.flicker_timer = light.flicker_timer + 1
 			if not light.flickering and math.random() < light.flicker_rate then
 				light.flickering = true

@@ -43,6 +43,7 @@ rfr.set_interaction(LIGHT_SWITCH_MAINROOM, interaction_name["light_switch"],
 		return px >= 128 and px < 144
 	end,
 	function()
+		beaver.play_sound("lightswitch")
 		lighting.toggle_light("room_ceiling")
 	end)
 
@@ -54,5 +55,6 @@ rfr.set_interaction(LIGHT_SWITCH_BATHROOM, interaction_name["light_switch"],
 		return px >= 272 and px < 287
 	end,
 	function()
+		beaver.play_sound("lightswitch")
 		lighting.toggle_light("bathroom_ceiling")
 	end)

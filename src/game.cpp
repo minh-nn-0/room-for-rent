@@ -26,14 +26,11 @@ std::atomic<bool> RUNNING {true};
 void run_lua_repl(sol::state& lua)
 {
 	std::string input;
-	std::cout << "> ";
 	while (RUNNING)
 	{
-		if (!std::getline(std::cin, input))
-		{
-			RUNNING = false;
-			break;
-		};
+		std::cout << "> ";
+		std::getline(std::cin, input);
+		if (input.empty()) continue;
 		try
 		{
 			std::lock_guard<std::mutex> lock (LUAREPL_MUTEX);
@@ -42,7 +39,6 @@ void run_lua_repl(sol::state& lua)
 		{
 			std::cout << "error: " << e.what() << std::endl;
 		};
-		std::cout << "> ";
 	};
 }
 

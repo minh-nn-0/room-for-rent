@@ -1,7 +1,9 @@
 local util = require "luamodules.utilities"
 local interaction_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
-
+local shower = {}
+local on = false
+local running_water_channel = 30
 SHOWER = rfr.add_entity()
 
 rfr.set_particle_emitter_config(SHOWER, {
@@ -19,6 +21,18 @@ rfr.set_particle_emitter_config(SHOWER, {
 	lifetime = 0.7,
 	rate = 100
 })
+
+function shower.toggle()
+	if on then
+		rfr.set_particle_emitter_auto(SHOWER, false)
+		beaver.halt_channel(running_water_channel)
+		on = false
+	else
+		rfr.set_particle_emitter_auto(SHOWER, true)
+		beaver.play_sound("running_water", running_water_channel)
+		on = true
+	end
+end
 rfr.set_state_entry(PLAYER, "shower",
 	function()
 		rfr.set_tileanimation(PLAYER, {
@@ -36,14 +50,14 @@ local cs_shower = rfr.add_cutscene({
 	end,
 	exit = function()
 		local d,_ = rfr.current_time()
-		rfr.set_particle_emitter_auto(SHOWER, false)
+		shower.toggle()
 		rfr.set_day_flag(d,"showered")
 	end,
 	scripts = {
 		function(dt)
 			if rfr.is_transition_active() then return false end
+			shower.toggle()
 			rfr.set_state(PLAYER, "shower")
-			rfr.set_particle_emitter_auto(SHOWER, true)
 			rfr.unset_flag("player_can_move")
 			rfr.unset_flag("player_can_interact")
 			rfr.set_position(PLAYER, 176, 240)

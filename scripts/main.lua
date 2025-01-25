@@ -40,6 +40,8 @@ function LOAD()
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/doorknock.wav", "doorknock")
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/doorknock_panright.wav", "doorknock_panright")
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/phonering.wav", "phonering")
+	beaver.new_sound(rfr.gamepath() .. "assets/audios/lightswitch.wav", "lightswitch")
+	beaver.new_sound(rfr.gamepath() .. "assets/audios/running_water.wav", "running_water")
 
 	beaver.set_volume_sound("dialogue1", 40)
 
