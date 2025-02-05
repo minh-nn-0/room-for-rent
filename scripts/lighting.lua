@@ -13,7 +13,7 @@ local lightsource = {
 
 local flicker_wait_time = 0.1
 lights["room_ceiling"] = {pos = {200, 88},
-					scale = 1,
+					scale = 1.5,
 					src = lightsource.round,
 					on = false,
 					flicker_rate = 0.01,

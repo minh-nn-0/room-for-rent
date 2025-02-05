@@ -6,3 +6,4 @@ require "cutscenes.prologue.refuse_room"
 require "cutscenes.prologue.clean_room"
 --require "cutscenes.prologue.reconsidered"
 
+DEBUG_PROLOGUE = CS_PROLOGUE_ARRIVE

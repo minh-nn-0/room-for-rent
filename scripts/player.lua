@@ -104,7 +104,7 @@ function player.update(dt)
 
 	rfr.set_position(PLAYER, ppos.x, ppos.y)
 	if beaver.get_input("E") == 1 then
-		rfr.play_cutscene(CS_PROLOGUE_CLEAN_ROOM)
+		rfr.play_cutscene(DEBUG_PROLOGUE)
 	end
 
 	if beaver.get_input("ESCAPE") == 1 and rfr.get_flag("player_can_open_phone") then
