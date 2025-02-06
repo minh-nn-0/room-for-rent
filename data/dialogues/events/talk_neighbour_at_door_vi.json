@@ -1,0 +1,44 @@
+{
+  "dialogues": [
+    {
+      "greet": "Em chào chị!",
+      "reply": "Chào!",
+      "introduce": "Ừm… Em là Sáng/Mây. Em mới chuyển tới, ở phòng 202 ạ. Mong chị giúp đỡ.",
+      "acknowledge": "Ừ.",
+      "thought": "Ừm, có vẻ hàng xóm này không thân thiện lắm.",
+      "hesitate": "Mình có nên nói chuyện tiếp không nhỉ, không chị ấy lại cáu lên."
+    },
+    {
+      "ask_name": "Chị tên gì vậy ạ?",
+      "name_reveal": "Trà.",
+      "ask_duration": "Chị ở đây lâu chưa ạ?",
+      "duration_reply": "2 năm. Nhưng phòng 202 thì không ở đây được lâu đâu.",
+      "confused": "Ơ… là sao nhỉ."
+    },
+    {
+      "follow_up": "Chào chị. Hôm qua chị có bảo em là không ở được lâu, là sao vậy?",
+      "warning": "Những người từng ở phòng trọ đấy không được quá 1 tuần.",
+      "ask_reason": "Tại sao ạ?",
+      "mystery": "Đoán xem.",
+      "puzzled": "Ơ… sao mình biết được nhỉ?"
+    },
+    {
+      "greet": "Em chào chị! Nay lại gặp nhau rồi. Dãy trọ này vắng vẻ quá, chắc mọi người về quê hết rồi nhỉ?",
+      "reply": "Ở đây toàn sinh viên nên mọi người hay về sớm.",
+      "ask": "Thế chị cũng sinh viên ạ?",
+      "answer": "Ừ, học trường X.",
+      "remark": "Ơ, cùng trường với em này. Em năm hai ạ. Chị năm mấy vậy?",
+      "response": "Năm tư. Vậy là người quen rồi.",
+      "mention": "Vậy chị quen chị Thơ không, em thấy thẻ sinh viên của chị ấy ở trong phòng. Cùng khóa chị này.",
+      "reaction": "Không, không quen. Cái con bé xấu xí đó bị tẩy chay cả khóa đều ghét.",
+      "mutter": "Ơ chị ấy xinh mà."
+    },
+	{
+      "greet": "Chưa về quê ăn Tết à?",
+      "reply": "Chắc năm nay em không về chị ạ. Hoàn cảnh nhà em cũng hơi khó khăn, em muốn ở lại làm việc để kiếm thêm chút ít phụ gia đình.",
+      "acknowledge": "Cũng chịu khó đấy. Chiều chị cũng về quê rồi. Tối ở một mình thì nhớ cẩn thận, không yên đâu. Cả dãy trọ này về quê hết rồi. Có lòng tốt nhắc nhở tí thôi.",
+      "worry": "Không yên là sao ạ? Căn phòng em đang ở có vấn đề gì đúng không chị?",
+      "warn": "Hỏi bà chủ nhà là biết. Với ông chủ nhà này biến thái lắm, từng sàm sỡ con gái đấy, mày phải cẩn thận."
+    }
+  ]
+}

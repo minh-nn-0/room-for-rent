@@ -106,6 +106,16 @@ lights["outside_pole_cone"] = {pos = {318,128},
 
 --
 --for _,light in pairs(lights) do rfr.set_timer(light.flicker_timer, flicker_wait_time) end
+
+lights["room_dream_ceiling"] = {pos = {200, 88},
+					scale = 1,
+					src = lightsource.round,
+					on = false,
+					flicker_rate = 0.002,
+					flicker_timer = 0,
+					flickering = false,
+					tint = {60,50,20,255},
+					location = "Map.Dream"}
 function lighting.set_background_color(r,g,b,a)
 	bg_color = {r,g,b,a}
 end
@@ -127,25 +137,27 @@ end
 function lighting.update(dt)
 	local _,tod = rfr.current_time()
 	local location = rfr.get_location(PLAYER)
-	local color = {}
-	if tod == 1 then
-		lights["room_sunlight_back"].on = true
-		lights["room_sunlight_front"].on = true
-		lights["outside_pole_round"].on = false
-		lights["outside_pole_cone"].on = false
-		color = {240,240,240,255}
-		if location == "Map.Mainroom" or location == "Map.Bathroom" then
-			color = {140,140,140,255}
+	if not rfr.get_flag("dreaming") then
+		local color = {}
+		if tod == 1 then
+			lights["room_sunlight_back"].on = true
+			lights["room_sunlight_front"].on = true
+			lights["outside_pole_round"].on = false
+			lights["outside_pole_cone"].on = false
+			color = {240,240,240,255}
+			if location == "Map.Mainroom" or location == "Map.Bathroom" then
+				color = {140,140,140,255}
+			end
+		else
+			color = {10,10,30, 255}
+			lights["room_sunlight_back"].on = false
+			lights["room_sunlight_front"].on = false
+			lights["outside_pole_round"].on = true
+			lights["outside_pole_cone"].on = true
 		end
-	else
-		color = {10,10,30, 255}
-		lights["room_sunlight_back"].on = false
-		lights["room_sunlight_front"].on = false
-		lights["outside_pole_round"].on = true
-		lights["outside_pole_cone"].on = true
-	end
 
-	bg_color = color
+		bg_color = color
+	end
 	for _,light in pairs(lights) do
 		if light.on and light.location == location then
 			light.flicker_timer = light.flicker_timer + 1

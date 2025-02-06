@@ -42,6 +42,7 @@ function outside.update(dt)
 end
 
 function outside.draw()
+	local plocation = rfr.get_location(PLAYER)
 	if plocation == "Map.Outside" or plocation == "Map.Hall" then
 		beaver.set_draw_color(115,190,211,255)
 	else

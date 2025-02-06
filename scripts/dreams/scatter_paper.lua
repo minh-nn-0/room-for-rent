@@ -8,7 +8,7 @@ local max_time = 5
 
 local paper_srcxs = {464,480,496}
 local function new_paper()
-	return {pos = {math.random(70,300), math.random(86, 143)},
+	return {pos = {math.random(90,270), math.random(86, 143)},
 			scale = math.random(),
 			rotation = math.random(0,360),
 			timer = math.random() * 3,
@@ -40,8 +40,5 @@ function scatter_paper.draw()
 									})
 	end
 end
-
-function SET_SCATTER_SCALE_SPEED(s) scale_speed = s end
-function SET_SCATTER_ROTATION_SPEED(s) rotation_speed = s end
 
 return scatter_paper

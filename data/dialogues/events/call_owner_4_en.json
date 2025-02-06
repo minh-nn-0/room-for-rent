@@ -1,0 +1,12 @@
+{
+  "call": "Hello, is this Ms. {name}?",
+  "response": "Yes, that's me.",
+  "introduce": "I'm {name} from room 202. I wanted to ask you something about this room.",
+  "inquire": "Is there a problem?",
+  "ask_rumor": "Is it true that someone passed away in this room before, which is why the rent is cheap? I feel like something is off about this place.",
+  "deny": "Nonsense. No one has ever passed away in this room. The rent is low because it hasn't been renovated. If you think it's too cheap, I can raise the rent.",
+  "panic": "Oh no, that's not what I meant. I was just curious why people say no one can stay here for more than a week or two.",
+  "suspect": "Who told you that? Was it Trà? At this point, it must be her.",
+  "explain": "Her friend used to live in that room but had a conflict with my husband. After that, her friend moved out. She probably holds a grudge against me because of that. Everyone who stayed in that room probably got scared off by her rumors. Since then, no one has lasted more than a week.",
+  "shock": "Oh… is that really the case? Alright, never mind then."
+}

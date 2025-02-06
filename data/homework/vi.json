@@ -1,24 +1,64 @@
 {
-	"questions" : [
-		{
-			"topic": "Chọn từ đúng chính tả",
-			"answers": ["Ngành học", "Nghành học"],
-			"correct" : 1
-		},
-		{
-			"topic": "Chọn từ đúng chính tả",
-			"answers": ["Đều như vắt chanh", "Đều như vắt tranh"],
-			"correct" : 2
-		},
-		{
-			"topic": "Chọn từ đúng chính tả",
-			"answers": ["Vô hình chung", "Vô hình trung"],
-			"correct": 2
-		},
-		{
-			"topic": "Triều đại nào dài nhất trong lịch sử Việt Nam",
-			"answers": ["Nguyễn", "Hậu Lê", "Trần"],
-			"correct" : 2
-		}
-	]
+  "questions" : [
+    {
+      "topic": "Chọn từ đúng chính tả",
+      "answers": ["Ngành học", "Nghành học"],
+      "correct" : 1
+    },
+    {
+      "topic": "Chọn từ đúng chính tả",
+      "answers": ["Đều như vắt chanh", "Đều như vắt tranh"],
+      "correct" : 2
+    },
+    {
+      "topic": "Chọn từ đúng chính tả",
+      "answers": ["Vô hình chung", "Vô hình trung"],
+      "correct": 2
+    },
+    {
+      "topic": "Việt Nam có bao nhiêu tỉnh thành?",
+      "answers": ["63", "64", "65"],
+      "correct": 1
+    },
+    {
+      "topic": "Thành phố nào lớn nhất cả nước về diện tích?",
+      "answers": ["Hồ Chí Minh", "Hà Nội" , "Hải Phòng"],
+      "correct": 2
+    },
+    {
+      "topic": "Việt Nam nằm trong đới khí hậu nào?",
+      "answers": ["Cận nhiệt", "Hàn đới","Nhiệt đới"],
+      "correct": 3
+    },
+    {
+      "topic": "Triều đại nào dài nhất trong lịch sử Việt Nam?",
+      "answers": ["Nguyễn", "Hậu Lê", "Trần"],
+      "correct" : 2
+    },
+    {
+      "topic": "Tên gọi 'Việt Nam' lần đầu tiên xuất hiện dưới triều đại nào?",
+      "answers": ["Nhà Nguyễn", "Nhà Tây Sơn", "Hồ"],
+      "correct": 1
+    },
+    {
+      "topic": "Chủ tịch Hồ Chí Minh đã đọc Tuyên ngôn độc lập vào ngày nào?",
+      "answers": ["30/4/1945", "2/9/1945", "3/2/1945"],
+      "correct": 2
+    },
+    {
+      "topic": "Từ đúng chính tả cho từ chỉ thái độ?",
+      "answers": ["Bàng quan", "Bàng quang"],
+      "correct": 1
+    },
+    {
+      "topic": "Từ đúng chính tả thể hiện hành động đến nơi nào đó để xem, tìm hiểu?",
+      "answers": ["Tham quan", "Thăm quan"],
+      "correct": 1
+    },
+    {
+      "topic": "Từ nào có thể dùng để mô tả tương lai",
+      "answers": ["Sáng lạng","Xán lạn"],
+      "correct": 2
+    }
+  ]
 }

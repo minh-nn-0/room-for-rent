@@ -79,6 +79,7 @@ function notebook.update()
 
 	if rfr.get_flag("notebook_opening") then
 		if beaver.get_input(config.button.back) == 1 then notebook.toggle() end
+
 		local current_day,_ = rfr.current_time()
 		local current_questions = homework_per_day[current_day]
 		local max_questionid = current_questions[#current_questions]
@@ -101,7 +102,6 @@ function notebook.update()
 			end
 		end
 	end
-	-- Back with Z
 end
 
 function notebook.draw()

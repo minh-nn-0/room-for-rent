@@ -103,7 +103,7 @@ rfr.set_interaction(BED, interaction_name["bed"],
 function rfr.update_bed()
 	if rfr.get_flag("inbed") then
 		bed.animate_bed_sleep()
-		if not rfr.get_flag("speeping") and beaver.get_input(config.button.back) == 1
+		if not rfr.get_flag("speeping") and not rfr.get_flag("dreaming") and beaver.get_input(config.button.back) == 1
 			then bed.wake_up()
 		end
 	end

@@ -14,6 +14,7 @@ require "audios"
 
 local test = require "test"
 local map = require "luamodules.map"
+local dream = require "dreams.dream"
 local gamestate = {
 	current_state = "ingame"
 }
@@ -53,6 +54,8 @@ state["ingame"] = {
 		rfr.update_particle_emitter(dt)
 		if rfr.update_homework then rfr.update_homework() end
 		if rfr.update_bed then rfr.update_bed() end
+
+		if rfr.get_flag("dreaming") then dream.update(dt) end
 		map.set_only_player_location_visible()
 		map.update(dt)
 		rfr.update_audios()
@@ -74,6 +77,7 @@ state["ingame"] = {
 		end
 		map.draw_fg()
 
+		if rfr.get_flag("dreaming") then dream.draw() end
 		test.draw()
 
 		lighting.draw()

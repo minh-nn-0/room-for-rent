@@ -1,0 +1,12 @@
+{
+  "call": "Alo, cô {name} ạ?",
+  "response": "Ừ đúng rồi.",
+  "introduce": "Cháu là {name} ở phòng 202 muốn hỏi cô một chút về căn phòng này ạ.",
+  "inquire": "Có vấn đề gì không?",
+  "ask_rumor": "Có phải phòng này trước đây từng có người mất nên giá mới rẻ vậy đúng không ạ? Cháu cảm thấy căn phòng này không được bình thường.",
+  "deny": "Vớ vẩn. Căn phòng này trước đó làm gì có ai mất ở đây? Phòng chưa sửa sang nên mới giá rẻ vậy thôi. Nếu cháu cảm thấy giá rẻ thì để cô tăng giá phòng.",
+  "panic": "Ơ ơ không phải vậy ạ. Cháu chỉ tò mò sao mọi người bảo người ở đây không được quá một, hai tuần.",
+  "suspect": "Mọi người là ai bảo vậy? Cái Trà đúng không? Tầm này thì chắc là nó rồi.",
+  "explain": "Trước bạn nó ở phòng này có nảy sinh mâu thuẫn với chồng cô. Sau đó bạn nó chuyển đi rồi. Nó có lẽ ghét cô từ vụ đấy. Mấy người từng ở căn phòng đó chắc đều bị nó đặt điều chuyển đi hết. Sau đợt đó không ai ở được quá 1 tuần cả.",
+  "shock": "Ơ… thật vậy sao? Vâng, vậy không có gì đâu cô."
+}

@@ -1,0 +1,44 @@
+{
+  "dialogues": [
+    {
+      "greet": "Hello, sister!",
+      "reply": "Hello!",
+      "introduce": "Um… I'm Sáng/Mây. I just moved in, staying in room 202. I hope you can help me.",
+      "acknowledge": "Uh-huh.",
+      "thought": "Hmm, this neighbor doesn’t seem very friendly.",
+      "hesitate": "Should I keep talking? I don't want to make her mad."
+    },
+    {
+      "ask_name": "What's your name?",
+      "name_reveal": "Trà.",
+      "ask_duration": "Have you lived here long?",
+      "duration_reply": "Two years. But people in room 202 never stay long.",
+      "confused": "Huh… what does that mean?"
+    },
+    {
+      "follow_up": "Hello, sister. Yesterday, you said people don't stay long here. What did you mean?",
+      "warning": "No one who lived in that room stayed for more than a week.",
+      "ask_reason": "Why?",
+      "mystery": "Take a guess.",
+      "puzzled": "Huh… how would I know?"
+    },
+    {
+      "greet": "Hello, sister! We meet again. This place is so quiet. Has everyone gone home?",
+      "reply": "Most people here are students, so they leave early.",
+      "ask": "So, you're a student too?",
+      "answer": "Yeah, I study at X University.",
+      "remark": "Oh, same school as me! I'm a second-year student. What year are you?",
+      "response": "Fourth year. Guess that makes us acquaintances now.",
+      "mention": "Do you know Thơ? I found her student ID in my room. She’s from your batch.",
+      "reaction": "No, I don’t know her. That ugly girl was hated by the whole batch.",
+      "mutter": "But she was pretty..."
+    },
+	{
+      "greet": "Not going home for Tet?",
+      "reply": "I don’t think I’ll go home this year. My family’s situation is a bit difficult, so I want to stay and work to earn some extra money for them.",
+      "acknowledge": "That’s quite hardworking of you. I’m heading home this afternoon. Be careful staying here alone at night—it’s not safe. Everyone in this boarding house is going home. Just giving you a heads-up.",
+      "worry": "Not safe? Is there something wrong with my room?",
+      "warn": "Ask the landlady and you'll know. Also, the landlord is a pervert—he's harassed girls before, so you better be careful."
+    }
+  ]
+}
