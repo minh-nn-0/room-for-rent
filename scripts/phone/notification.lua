@@ -10,17 +10,27 @@ function phone_noti.clear(app)
 end
 
 function phone_noti.get_notifying_apps()
-	local rs = {}
-	for app,nt in pairs(notifying_app) do
-		if nt then table.insert(rs,app) end
-	end
-	return rs
+	--local rs = {}
+	--for app,nt in pairs(notifying_app) do
+	--	if nt then table.insert(rs,app) end
+	--end
+	--return rs
+
+	return notifying_app
 end
 
 
 local util = require("luamodules.utilities")
 function rfr.draw_phone_notification()
-	if #phone_noti.get_notifying_apps() == 0 or rfr.get_flag("phone_opening") then return end
+	local should_draw = false
+	for _,app in pairs(notifying_app) do
+		if app == true then
+			should_draw = true
+			break
+		end
+	end
+
+	if not should_draw or rfr.get_flag("phone_opening") then return end
 	local text = util.load_json(rfr.gamepath() .. "data/ui/" .. config.language .. ".json")["phone_noti"]
 
 	beaver.set_draw_color(20,20,20,200)

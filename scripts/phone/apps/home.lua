@@ -20,6 +20,7 @@ local function update(dt)
 	selection.update()
 	if beaver.get_input(config.button.interaction) == 1 then
 		rfr.set_state(PHONE, phone_apps[selection.get()])
+		noti.clear(phone_apps[selection.get()])
 		selection.set(1)
 	end
 	if beaver.get_input(config.button.back) == 1 then

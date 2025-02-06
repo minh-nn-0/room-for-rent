@@ -7,6 +7,9 @@ local map_boundaries = {
 }
 local current_map = "room"
 function map.set_current_map(m)
+	if rfr.get_flag("prologue_room") and m == "room" then
+		m = "room_before"
+	end
 	current_map = m
 end
 function map.get_current_map()

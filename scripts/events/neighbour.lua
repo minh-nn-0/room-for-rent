@@ -3,8 +3,11 @@ local dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/events/talk_n
 local interaction_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local meet_neighbour_scenes = {}
 
+local neighbour_posx = 576
+local door_posx = 553
+
 function meet_neighbour_scenes.setup_neighbour()
-	rfr.set_position(NEIGHBOUR, 624, 144)
+	rfr.set_position(NEIGHBOUR, neighbour_posx, 144)
 	rfr.set_properties(NEIGHBOUR, "facing_direction", "right")
 	rfr.set_location(NEIGHBOUR, "Map.Hall")
 	rfr.set_flag("neighbour_chilling")
@@ -86,7 +89,7 @@ meet_neighbour_scenes[2] = rfr.add_cutscene({
 			return true
 		end,
 		function(dt)
-			if rfr.get_position(NEIGHBOUR).x > 596 then return false end
+			if rfr.get_position(NEIGHBOUR).x > door_posx then return false end
 			rfr.set_location(NEIGHBOUR, "Map")
 			rfr.set_state(NEIGHBOUR, "idle")
 			return true
@@ -131,7 +134,7 @@ meet_neighbour_scenes[3] = rfr.add_cutscene({
 			return true
 		end,
 		function(dt)
-			if rfr.get_position(NEIGHBOUR).x > 596 then return false end
+			if rfr.get_position(NEIGHBOUR).x > door_posx then return false end
 			rfr.set_location(NEIGHBOUR, "Map")
 			rfr.set_state(NEIGHBOUR, "idle")
 			return true
@@ -146,13 +149,13 @@ meet_neighbour_scenes[3] = rfr.add_cutscene({
 
 local count = 1
 local neighbour_interaction = rfr.add_entity()
-rfr.set_position(neighbour_interaction, 640,140)
+rfr.set_position(neighbour_interaction, neighbour_posx + 16,140)
 rfr.set_location(neighbour_interaction, "Map.Hall")
 
 rfr.set_interaction(neighbour_interaction, interaction_names["neighbour"],
 	function()
 		local px,py = util.player_center()
-		return px >= 630 and px <= 656 and py == 160 and rfr.get_flag("neighbour_chilling") and not rfr.is_cutscene_playing()
+		return px >= neighbour_posx + 6 and px <= neighbour_posx + 26 and py == 160 and rfr.get_flag("neighbour_chilling") and not rfr.is_cutscene_playing()
 	end,
 	function()
 		rfr.play_cutscene(meet_neighbour_scenes[count])

@@ -10,7 +10,7 @@ CS_PROLOGUE_ROOM = rfr.add_cutscene({
 		dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
 		local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 		rfr.set_flag("prologue_room")
-		rfr.set_properties(DOOR_ROOM_TO_HALL, "disable", true)
+		rfr.set_properties(DOOR_ROOM_HALL, "disable", true)
 		rfr.fade_in(1.5)
 		map.set_current_map("room_before")
 		rfr.set_position(PLAYER, 290, 112)

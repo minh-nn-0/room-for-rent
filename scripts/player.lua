@@ -41,15 +41,9 @@ rfr.set_state_entry(PLAYER, "move_fast",
 		})
 	end)
 rfr.set_state(PLAYER, "idle")
-require "events.sleep_1"
-require "activities.sleep"
-require "activities.homework"
-require "activities.shower"
-require "room_items"
 local map = require "luamodules.map"
 
 --local ghost = require "ghost"
-rfr.set_particle_emitter_auto(PLAYER, true)
 --rfr.set_particle_emitter_config(PLAYER, {
 --	emitting_position = {x = 200, y = 100},
 --	linear_acceleration = {x = 0, y = 0},
@@ -104,7 +98,7 @@ function player.update(dt)
 
 	rfr.set_position(PLAYER, ppos.x, ppos.y)
 	if beaver.get_input("E") == 1 then
-		rfr.play_cutscene(DEBUG_PROLOGUE)
+		rfr.play_cutscene(CS_PROLOGUE_CLEAN_ROOM)
 	end
 
 	if beaver.get_input("ESCAPE") == 1 and rfr.get_flag("player_can_open_phone") then

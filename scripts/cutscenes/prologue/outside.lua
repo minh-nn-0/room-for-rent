@@ -1,18 +1,19 @@
 local character = require "luamodules.character"
 local map = require "luamodules.map"
 local util = require "luamodules.utilities"
-local dialogues
+local dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
 local timer = rfr.add_entity()
 local owner_interaction = rfr.add_entity()
 local call = require "phone.apps.call"
+
+local gate_posx = 424
 local function player_near_gate()
-	return math.abs(rfr.get_position(PLAYER).x - 533) <= 80
+	return math.abs(rfr.get_position(PLAYER).x - gate_posx) <= 80
 end
 
 
 CS_PROLOGUE_ARRIVE = rfr.add_cutscene({
 	init = function()
-		dialogues =util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
 		rfr.set_flag("prologue_outside")
 		rfr.fade_in(5)
 		rfr.set_cam_zoom(2)
@@ -95,11 +96,11 @@ local cs_prologue_owner_pickup = rfr.add_cutscene({
 		local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 		rfr.set_timer(timer, 5)
 		rfr.set_location(owner_interaction, "Map.Outside")
-		rfr.set_position(owner_interaction, 533, 128)
+		rfr.set_position(owner_interaction, gate_posx, 128)
 		rfr.set_interaction(owner_interaction, interaction_name["owner"],
 			function()
 				local px,_ = util.player_center()
-				return px >= 520 and px <= 540
+				return px >= gate_posx - 10 and px <= gate_posx + 10
 			end,
 			function()
 				rfr.play_cutscene(cs_prologue_talk_at_gate)
@@ -112,7 +113,7 @@ local cs_prologue_owner_pickup = rfr.add_cutscene({
 		function(dt)
 			if rfr.get_timer(timer).running or not player_near_gate() then return false end
 			rfr.set_properties(METAL_GATE_OUTSIDE, "disable", true)
-			rfr.set_position(OWNER, 524,144)
+			rfr.set_position(OWNER, gate_posx - 16,144)
 			rfr.set_location(OWNER, "Map.Outside")
 			rfr.set_state(OWNER, "idle")
 			return true
@@ -128,6 +129,7 @@ local cs_prologue_owner_pickup = rfr.add_cutscene({
 
 local cs_prologue_call_owner = rfr.add_cutscene({
 	init = function()
+		print("call_owner")
 	end,
 	exit = function()
 		print("end prologue_call_owner")

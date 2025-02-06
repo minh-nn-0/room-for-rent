@@ -10,7 +10,6 @@ local cs_prologue_after_broom = rfr.add_cutscene({
 		rfr.fade_out(2)
 	end,
 	exit = function()
-		rfr.unset_flag("prologue_room")
 		rfr.set_layer_visible("balcony", "Map.Balcony.Bg.Garbage", false)
 		print("exit broom")
 		local note = require "phone.apps.note"
@@ -45,6 +44,7 @@ local cs_prologue_after_broom = rfr.add_cutscene({
 		function(dt)
 			if rfr.narrative_text_active() then return false end
 			rfr.unset_flag("screen_fill")
+			rfr.unset_flag("prologue_room")
 			map.set_current_map("room")
 			rfr.fade_in(2)
 			rfr.set_active(broom, false)

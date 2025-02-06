@@ -36,7 +36,7 @@ local cs_sleep_1 = rfr.add_cutscene({
 		function(dt)
 			if rfr.has_active_dialogue(BED) then return false end
 			if count == 2 then
-				if rfr.get_last_interaction() == DOOR_ROOM_TO_HALL then
+				if rfr.get_last_interaction() == DOOR_ROOM_HALL then
 					shadow_appeared = true
 					rfr.set_position(shadow, 400, 80)
 					rfr.set_location(shadow, "Map.Hall")
@@ -52,7 +52,7 @@ local cs_sleep_1 = rfr.add_cutscene({
 		end,
 		function(dt)
 			if count == 2 then
-				if rfr.get_last_interaction() == DOOR_HALL_TO_ROOM then
+				if rfr.get_last_interaction() == DOOR_HALL_ROOM then
 					rfr.set_dialogue(PLAYER, {content = dialogues["confused"]})
 					return true
 				else return false

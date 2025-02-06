@@ -1,11 +1,11 @@
 local util = require "luamodules.utilities"
-local dialogues
+local dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
 local map = require "luamodules.map"
 local timer = rfr.add_entity()
 local function on_second_floor()
 	local ppos = rfr.get_position(PLAYER)
 	local opos = rfr.get_position(OWNER)
-	return ppos.y == 80 and opos.y == 80
+	return ppos.y == 96 and opos.y == 96
 end
 
 local function player_behind()
@@ -21,21 +21,22 @@ end
 local function owner_ready_to_talk()
 	return not rfr.has_active_dialogue(OWNER) and not player_behind()
 end
+
+local start_posx = 410
+local door_posx = 458
+local stair_posx = 660
 CS_PROLOGUE_HALL = rfr.add_cutscene({
 	init = function()
-		dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
 		rfr.fade_in(1)
 		rfr.set_flag("prologue_hall")
-		map.set_current_map("hall")
-		rfr.set_location(PLAYER, "Map.Hall")
 		rfr.set_location(OWNER, "Map.Hall")
-		rfr.set_position(PLAYER, 530,144)
-		rfr.set_position(OWNER, 550,144)
+		rfr.set_position(PLAYER, start_posx,144)
+		rfr.set_position(OWNER, start_posx + 10,144)
 
 		rfr.set_properties(PLAYER, "walkspeed", 0.7)
 		rfr.set_properties(OWNER, "walkspeed", 0.5)
 
-		rfr.set_properties(DOOR_HALL_TO_ROOM, "disable", true)
+		rfr.set_properties(DOOR_HALL_ROOM, "disable", true)
 		rfr.set_state(OWNER, "move")
 		rfr.set_properties(OWNER, "facing_direction", "right")
 	end,
@@ -152,17 +153,17 @@ CS_PROLOGUE_HALL = rfr.add_cutscene({
 				rfr.set_flag("prologue_owner_go_in_room")
 				rfr.set_properties(OWNER, "facing_direction", "left")
 				rfr.set_state(OWNER, "move")
-				if rfr.get_position(OWNER).x <= 420 then
+				if rfr.get_position(OWNER).x <= door_posx + 10 then
 					rfr.set_location(OWNER, "Map.Mainroom")
 					rfr.set_state(OWNER, "idle")
-					rfr.set_properties(DOOR_HALL_TO_ROOM, "disable", false)
+					rfr.set_properties(DOOR_HALL_ROOM, "disable", false)
 					return true
 				end
 			end
 			return false
 		end,
 		function(dt)
-			if rfr.get_last_interaction() == DOOR_HALL_TO_ROOM then return true end
+			if rfr.get_last_interaction() == DOOR_HALL_ROOM then return true end
 			return false
 		end
 	},
@@ -176,20 +177,20 @@ CS_PROLOGUE_HALL = rfr.add_cutscene({
 			if owner_pos.y == 144 then
 				rfr.set_properties(OWNER, "facing_direction", "right")
 			end
-			if owner_pos.y == 80 then
+			if owner_pos.y == 96 then
 				rfr.set_properties(OWNER, "facing_direction", "left")
 			end
-			if owner_pos.x >= 770 and owner_pos.y == 144 then
-				rfr.set_position(OWNER, 770, 1000)
+			if owner_pos.x >= stair_posx - 10 and owner_pos.y == 144 then
+				rfr.set_position(OWNER, 1000, 1000)
 				rfr.set_timer(timer, 2)
 			end
 			if owner_pos.y == 1000 then
 				if not rfr.get_timer(timer).running then
-					rfr.set_position(OWNER, 770, 80)
+					rfr.set_position(OWNER, stair_posx - 10, 96)
 				end
 			end
 			if not rfr.get_flag("prologue_owner_go_in_room") then
-				if owner_pos.x <= 448 and owner_pos.y == 80 then
+				if owner_pos.x <= door_posx + 15 and owner_pos.y == 96 then
 					rfr.set_state(OWNER, "idle")
 					rfr.set_properties(OWNER, "facing_direction", "right")
 				else

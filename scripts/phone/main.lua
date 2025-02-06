@@ -1,5 +1,6 @@
 local util = require "luamodules.utilities"
 local phone_states = require "phone.states"
+local noti = require "phone.notification"
 
 local phone_texts = util.load_json(rfr.gamepath() .. "data/ui/" .. config.language .. ".json")
 local phone_tex_width = 48
@@ -82,6 +83,7 @@ end
 
 function rfr.update_phone(dt)
 	local phone_position = rfr.get_position(PHONE)
+	local phone_state = rfr.get_state(PHONE)
 	if not phone_at_position() then
 		local t = rfr.get_timer(phone_lerp_timer).elapsed
 		if rfr.get_flag("phone_opening") then
@@ -93,7 +95,7 @@ function rfr.update_phone(dt)
 		rfr.set_position(PHONE, phone_position.x, phone_position.y)
 	end
 	if rfr.get_flag("phone_opening") then
-		phone_states[rfr.get_state(PHONE)].update(dt)
+		phone_states[phone_state].update(dt)
 	elseif phone_position.y >= config.render_size[2] then
 		rfr.set_state(PHONE, "home")
 		for _,app in ipairs(apps) do
