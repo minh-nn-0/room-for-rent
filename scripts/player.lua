@@ -55,6 +55,13 @@ local map = require "luamodules.map"
 --	rate = 20
 --})
 --rfr.set_particle_emitter_auto(PLAYER, true)
+
+require "room_items"
+require "activities.work"
+require "activities.sleep"
+require "activities.homework"
+require "events.sleep.day1"
+require "events.sleep.day2"
 function player.update(dt)
 	local ppos = rfr.get_position(PLAYER)
 	local pstate = rfr.get_state(PLAYER)
