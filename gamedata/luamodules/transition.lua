@@ -1,3 +1,4 @@
+local util = require "luamodules.utilities"
 local opacity = 0
 local target_opacity = 255
 local fade_in = true
@@ -27,9 +28,9 @@ end
 function rfr.update_transition(dt)
 	if not active then return end
 	if fade_in then
-		opacity = math.floor(math.max(0, 255 - (255 * elapsed/time)))
+		opacity = math.floor(math.max(0, 255 - (255 * util.ease_in_out(elapsed/time))))
 	else
-		opacity = math.floor(math.min(255, 255 * elapsed/time))
+		opacity = math.floor(math.min(255, 255 * util.ease_in_out(elapsed/time)))
 	end
 	elapsed = elapsed + dt
 	if elapsed >= time then

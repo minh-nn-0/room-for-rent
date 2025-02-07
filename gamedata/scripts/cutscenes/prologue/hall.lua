@@ -24,7 +24,7 @@ end
 
 local start_posx = 410
 local door_posx = 458
-local stair_posx = 660
+local stair_posx = 650
 CS_PROLOGUE_HALL = rfr.add_cutscene({
 	init = function()
 		rfr.fade_in(1)
@@ -153,7 +153,7 @@ CS_PROLOGUE_HALL = rfr.add_cutscene({
 				rfr.set_flag("prologue_owner_go_in_room")
 				rfr.set_properties(OWNER, "facing_direction", "left")
 				rfr.set_state(OWNER, "move")
-				if rfr.get_position(OWNER).x <= door_posx + 10 then
+				if rfr.get_position(OWNER).x <= door_posx - 16 then
 					rfr.set_location(OWNER, "Map.Mainroom")
 					rfr.set_state(OWNER, "idle")
 					rfr.set_properties(DOOR_HALL_ROOM, "disable", false)

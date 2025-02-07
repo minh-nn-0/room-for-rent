@@ -36,21 +36,23 @@ local cs_pickup_card = rfr.add_cutscene({
 			if rfr.has_active_dialogue(PLAYER) then return false end
 			showing = true
 			rfr.set_flag("screen_fill")
-			rfr.set_properties(GAME, "screen_fill_color", {20,20,20,150})
+			rfr.set_properties(GAME, "screen_fill_color", {20,20,20,180})
 			rfr.set_timer(lerp_timer, lerp_time)
 			return true
 		end,
 		function(dt)
 			if not card_at_position() then return false end
+			rfr.set_flag("helper_back")
 			if beaver.get_input(config.button.back) == 1 then
 				showing = false
+				rfr.unset_flag("helper_back")
 				rfr.set_timer(lerp_timer, lerp_time)
 				return true
 			end
 			return false
 		end,
 		function(dt)
-			if rfr.has_active_dialogue(PLAYER) or not card_at_position() then return false end
+			if not card_at_position() then return false end
 			rfr.unset_flag("screen_fill")
 			rfr.set_dialogue(PLAYER, {content = dialogues["familiar"]})
 			return true

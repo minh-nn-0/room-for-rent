@@ -5,12 +5,12 @@
 #include <beaver/ecs/systems/render_entity.hpp>
 #include "note_drawing.hpp"
 #include "textbox_drawing.hpp"
-#include <thread>
 
 #ifndef NDEBUG
 #include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include <thread>
+//#include <readline/readline.h>
+//#include <readline/history.h>
 
 constexpr bool debug = true;
 #else
@@ -18,43 +18,41 @@ constexpr bool debug = false;
 #endif
 #ifdef __EMSCRIPTEN__
 #include "/home/minhmacg/.cache/emscripten/sysroot/include/emscripten.h"
-#endif
-#ifdef __EMSCRIPTEN__
 constexpr std::string game_path()
 {
-	return "";
+	return "gamedata/";
 };
 #else
 constexpr std::string game_path()
 {
-	return {std::string(GAMEPATH) + "/"};
+	return {std::string(GAMEPATH) + "/gamedata/"}; 
 };
 #endif
 
-#ifndef NDEBUG
-std::mutex LUAREPL_MUTEX;
-std::atomic<bool> RUNNING {true};
-
-void run_lua_repl(sol::state& lua)
-{
-	std::string input;
-	while (RUNNING)
-	{
-		char* input = readline("> ");
-		if (!input) continue;
-		try
-		{
-			std::lock_guard<std::mutex> lock (LUAREPL_MUTEX);
-			lua.safe_script(input);
-			add_history(input);
-			free(input);
-		} catch (const sol::error& e)
-		{
-			std::cout << "error: " << e.what() << std::endl;
-		};
-	};
-}
-#endif
+//#ifndef NDEBUG
+//std::mutex LUAREPL_MUTEX;
+//std::atomic<bool> RUNNING {true};
+//
+//void run_lua_repl(sol::state& lua)
+//{
+//	std::string input;
+//	while (RUNNING)
+//	{
+//		char* input = readline("> ");
+//		if (!input) continue;
+//		try
+//		{
+//			std::lock_guard<std::mutex> lock (LUAREPL_MUTEX);
+//			lua.safe_script(input);
+//			add_history(input);
+//			free(input);
+//		} catch (const sol::error& e)
+//		{
+//			std::cout << "error: " << e.what() << std::endl;
+//		};
+//	};
+//}
+//#endif
 
 rfr::game::game(): _beaver("RFR", 1280, 720)
 {
@@ -284,30 +282,57 @@ void rfr::game::draw()
 
 	//SDL_RenderCopy(_beaver._graphics._rdr, shadow, nullptr, nullptr); /* shadow */
 }
+#ifdef __EMSCRIPTEN__
+void rungame(void* arg)
+{
+	rfr::game* game = static_cast<rfr::game*>(arg);
+	SDL_Event sdlevent;
+	game->_beaver._gametime += 1.f/60;
+	while (SDL_PollEvent(&sdlevent))
+	{
+		game->_beaver._ctl.update(sdlevent);
+		if (sdlevent.type == SDL_QUIT) 
+		{
+		};
+	};
+
+	game->update(1.f/60);
+	
+	game->draw();
+	SDL_RenderPresent(game->_beaver._graphics._rdr);
+	for (auto& [_,v]: game->_beaver._ctl._keystate)
+		if (v > 0) v++;
+};
+#endif
 
 void rfr::game::run()
 {
-#ifndef NDEBUG
-	std::thread lua_repl_thread {run_lua_repl, std::ref(_lua)};
-#endif
+#ifdef __EMSCRIPTEN__
+	emscripten_set_main_loop_arg(rungame, this, 60, 1);
+#else
+//#ifndef NDEBUG
+//	std::thread lua_repl_thread {run_lua_repl, std::ref(_lua)};
+//#endif
 	beaver::run_game(_beaver, 
 			[&](float dt)
 			{
-#ifndef NDEBUG
-				std::lock_guard<std::mutex> lock (LUAREPL_MUTEX);
-#endif
+//#ifndef NDEBUG
+//				std::lock_guard<std::mutex> lock (LUAREPL_MUTEX);
+//#endif
 				return update(dt); 
 			},
 			[&]()
 			{
-#ifndef NDEBUG
-				std::lock_guard<std::mutex> lock (LUAREPL_MUTEX);
-#endif
+//#ifndef NDEBUG
+//				std::lock_guard<std::mutex> lock (LUAREPL_MUTEX);
+//#endif
 				draw();
 			});
-#ifndef NDEBUG
-	RUNNING = false;
-	if (lua_repl_thread.joinable())
-		lua_repl_thread.join();
+//#ifndef NDEBUG
+//	RUNNING = false;
+//	if (lua_repl_thread.joinable())
+//		lua_repl_thread.join();
+//#endif
+
 #endif
 };

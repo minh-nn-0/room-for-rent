@@ -43,11 +43,7 @@ end
 
 function outside.draw()
 	local plocation = rfr.get_location(PLAYER)
-	if plocation == "Map.Outside" or plocation == "Map.Hall" then
-		beaver.set_draw_color(115,190,211,255)
-	else
-		beaver.set_draw_color(10,10,10,255)
-	end
+	beaver.set_draw_color(115,190,211,255)
 	beaver.draw_rectangle(0,0,0,0,true)
 	clouds.draw()
 end

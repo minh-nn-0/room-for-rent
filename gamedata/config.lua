@@ -23,9 +23,9 @@ config = {
 	current_main_character = 'male'
 }
 
-package.path = package.path .. ";" .. rfr.gamepath() .. "/?.lua"
-package.path = package.path .. ";" .. rfr.gamepath() .. "/luamodules/?.lua"
-package.path = package.path .. ";" .. rfr.gamepath() .. "/scripts/?.lua"
+package.path = package.path .. ";" .. rfr.gamepath() .. "?.lua"
+package.path = package.path .. ";" .. rfr.gamepath() .. "luamodules/?.lua"
+package.path = package.path .. ";" .. rfr.gamepath() .. "scripts/?.lua"
 
 beaver = require "beaver"
 rfr = rfr or {}

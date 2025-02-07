@@ -105,12 +105,13 @@ state["ingame"] = {
 
 		rfr.draw_helper()
 
-		config.text_scale = 1
 		if rfr.get_flag("screen_fill") then
 			local fill_color = rfr.get_properties(GAME, "screen_fill_color") or {0,0,0,255}
 			beaver.set_draw_color(fill_color[1], fill_color[2], fill_color[3], fill_color[4])
 			beaver.draw_rectangle(0,0,1000,1000,true)
 		end
+		rfr.draw_helper_fg()
+		config.text_scale = 1
 		for _, eid in ipairs(rfr.get_entities_with_tags({"ui"})) do
 			rfr.draw_entities(eid)
 		end

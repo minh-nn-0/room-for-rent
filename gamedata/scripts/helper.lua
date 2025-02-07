@@ -8,3 +8,14 @@ function rfr.draw_helper()
 		beaver.draw_text(170, 320, config.ui_font, 1, texts["sleep_helper"], 0, true)
 	end
 end
+
+function rfr.draw_helper_fg()
+	if rfr.get_flag("helper_back") then
+		local button_posx = config.render_size[1]/2 - 60
+		local text_posx = button_posx + 40
+		beaver.draw_texture("UI", {dst = {x = button_posx , y = 310, w = 8 * config.cam_zoom, h = 8 * config.cam_zoom},
+									src = {x = 54, y = 34, w = 10, h = 10}})
+		beaver.set_draw_color(255,255,255,255)
+		beaver.draw_text(text_posx, 320, config.ui_font, 1, texts["back"], 0, true)
+	end
+end

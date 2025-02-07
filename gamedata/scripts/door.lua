@@ -123,7 +123,7 @@ rfr.set_interaction(DOOR_HALL_ROOM, interaction_name["door_hall_to_room"],
 		beaver.play_sound("dooropen2")
 		rfr.set_cam_zoom(config.cam_zoom)
 		rfr.fade_in(2)
-		rfr.set_cam_center(PLAYER, 16,16)
+		rfr.set_cam_center(PLAYER, 16,0)
 		move_player_to_destination("hall_room", true)
 	end)
 
@@ -134,6 +134,7 @@ rfr.set_interaction(DOOR_HALL_STAIR_FIRST, interaction_name["door_hall_stair_fir
 	end,
 	function()
 		rfr.fade_in(1)
+		rfr.set_cam_target(PLAYER, 16, 0)
 		move_player_to_destination("hallstair_1")
 	end)
 rfr.set_interaction(DOOR_HALL_STAIR_SECOND, interaction_name["door_hall_stair_second"],
@@ -155,8 +156,8 @@ rfr.set_interaction(METAL_GATE_OUTSIDE, interaction_name["metal_gate"],
 		else
 			map.prepare_hall()
 			rfr.set_cam_zoom(3)
-			rfr.set_cam_target(PLAYER, 16, -5)
-			rfr.fade_in(2)
+			rfr.set_cam_target(PLAYER, 16, -16)
+			rfr.fade_in(3)
 			move_player_to_destination("gate_out", true)
 		end
 	end)
@@ -168,6 +169,7 @@ rfr.set_interaction(METAL_GATE_INSIDE, interaction_name["metal_gate"],
 	function()
 		map.prepare_outside()
 		rfr.set_cam_zoom(2)
-		rfr.fade_in(2)
+		rfr.fade_in(3)
+		rfr.set_cam_target(PLAYER, 16, -43)
 		move_player_to_destination("gate_in", true)
 	end)
