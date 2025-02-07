@@ -58,9 +58,10 @@ local function clamp_player()
 		plocation = ppos.y == 96 and "Map.Hall2" or "Map.Hall1"
 	end
 	local boundary = map_move_boundaries[plocation]
-	if ppos.x <= boundary[1] - player_width - clamp_distance_l then ppos.x = boundary[1] - player_width - clamp_distance_l end
-	if ppos.x >= boundary[2] - player_width - clamp_distance_r then ppos.x = boundary[2] - player_width - clamp_distance_r end
-
+	if boundary then
+		if ppos.x <= boundary[1] - player_width - clamp_distance_l then ppos.x = boundary[1] - player_width - clamp_distance_l end
+		if ppos.x >= boundary[2] - player_width - clamp_distance_r then ppos.x = boundary[2] - player_width - clamp_distance_r end
+	end
 	rfr.set_position(PLAYER, ppos.x, ppos.y)
 end
 local outside = require "outside"

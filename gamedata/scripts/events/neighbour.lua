@@ -1,7 +1,7 @@
 local util = require "luamodules.utilities"
 local dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/events/talk_neighbour_at_door_" .. config.language .. ".json")["dialogues"]
 local interaction_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
-local count = 4
+local count = 1
 local neighbour_posx = 576
 local door_posx = 553
 local current_dialogues = {}

@@ -15,7 +15,7 @@ local water_drip = rfr.add_cutscene({
 	scripts = {
 		function(dt)
 			if rfr.is_transition_active() then return false end
-			water_track = beaver.play_sound("running_water")
+			water_track = beaver.play_sound("running_water",-1,-1)
 			rfr.set_timer(timer, 2)
 			return true
 		end,

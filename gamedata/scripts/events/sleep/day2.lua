@@ -14,7 +14,7 @@ local cs_sleep_1 = rfr.add_cutscene({
 		rfr.set_properties(GAME, "screen_fill_color", {0,0,0,255})
 	end,
 	exit = function()
-		rfr.set_active(shadow, false)
+		if count == 2 then rfr.set_active(shadow, false) end
 	end,
 	scripts = {
 		function(dt)
@@ -34,11 +34,12 @@ local cs_sleep_1 = rfr.add_cutscene({
 			if rfr.has_active_dialogue(BED) then return false end
 			if count == 2 then
 				if rfr.get_last_interaction() == DOOR_ROOM_HALL then
+					print("hihihi")
 					shadow_appeared = true
-					rfr.set_position(shadow, 400, 80)
+					rfr.set_position(shadow, 420, 96)
 					rfr.set_location(shadow, "Map.Hall")
 					rfr.set_image(shadow, "tileset")
-					rfr.set_image_source(shadow, 320,304,16,32)
+					rfr.set_image_source(shadow, 320,304,32,32)
 					return true
 				else
 					return false
@@ -60,7 +61,6 @@ local cs_sleep_1 = rfr.add_cutscene({
 		end
 	},
 	update = function(dt)
-		print(count)
 		if shadow_appeared then
 			shadow_timer = shadow_timer + dt
 			if shadow_timer > 1 then

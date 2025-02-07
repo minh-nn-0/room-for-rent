@@ -6,7 +6,9 @@ local questions = util.load_json(rfr.gamepath() .. "data/homework/" .. config.la
 local answered = {}
 local homework_per_day = {
 	{1,2,3},
-	{4}
+	{4,5,6},
+	{7,8,9},
+	{10,11,12},
 }
 local current_selection = 1
 local current_questionid = 1

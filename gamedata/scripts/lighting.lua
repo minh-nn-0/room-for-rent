@@ -104,9 +104,61 @@ lights["outside_pole_cone"] = {pos = {318,128},
 						location = "Map.Outside"
 					}
 
---
---for _,light in pairs(lights) do rfr.set_timer(light.flicker_timer, flicker_wait_time) end
-
+local hall_light_color = {230,180,160, 200}
+lights["hall_first_left"] = {pos = {480,159},
+						scale = 0.7,
+						src = {x = lightsource.round.x , y = lightsource.round.y + lightsource.round.h / 2, w = lightsource.round.w, h = lightsource.round.h / 2},
+						flicker_rate = 0,
+						flicker_timer = 0,
+						flickering = false,
+						tint = hall_light_color,
+						location = "Map.Hall"
+					}
+lights["hall_first_right"] = {pos = {592,159},
+						scale = 0.7,
+						src = {x = lightsource.round.x , y = lightsource.round.y + lightsource.round.h / 2, w = lightsource.round.w, h = lightsource.round.h / 2},
+						flicker_rate = 0,
+						flicker_timer = 0,
+						flickering = false,
+						tint = hall_light_color,
+						location = "Map.Hall"
+					}
+lights["hall_second_left"] = {pos = {480,111},
+						scale = 0.7,
+						src = {x = lightsource.round.x , y = lightsource.round.y + lightsource.round.h / 2, w = lightsource.round.w, h = lightsource.round.h / 2},
+						flicker_rate = 0,
+						flicker_timer = 0,
+						flickering = false,
+						tint = hall_light_color,
+						location = "Map.Hall"
+					}
+lights["hall_second_right"] = {pos = {592,111},
+						scale = 0.7,
+						src = {x = lightsource.round.x , y = lightsource.round.y + lightsource.round.h / 2, w = lightsource.round.w, h = lightsource.round.h / 2},
+						flicker_rate = 0,
+						flicker_timer = 0,
+						flickering = false,
+						tint = hall_light_color,
+						location = "Map.Hall"
+					}
+lights["hall_second_left_outside"] = {pos = {480,111},
+						scale = 0.7,
+						src = {x = lightsource.round.x , y = lightsource.round.y + lightsource.round.h / 2, w = lightsource.round.w, h = lightsource.round.h / 2},
+						flicker_rate = 0,
+						flicker_timer = 0,
+						flickering = false,
+						tint = hall_light_color,
+						location = "Map.Outside"
+					}
+lights["hall_second_right_outside"] = {pos = {592,111},
+						scale = 0.7,
+						src = {x = lightsource.round.x , y = lightsource.round.y + lightsource.round.h / 2, w = lightsource.round.w, h = lightsource.round.h / 2},
+						flicker_rate = 0,
+						flicker_timer = 0,
+						flickering = false,
+						tint = hall_light_color,
+						location = "Map.Outside"
+					}
 lights["room_dream_ceiling"] = {pos = {200, 88},
 					scale = 1,
 					src = lightsource.round,
@@ -144,6 +196,12 @@ function lighting.update(dt)
 			lights["room_sunlight_front"].on = true
 			lights["outside_pole_round"].on = false
 			lights["outside_pole_cone"].on = false
+			lights["hall_first_left"].on = false
+			lights["hall_first_right"].on = false
+			lights["hall_second_left"].on = false
+			lights["hall_second_right"].on = false
+			lights["hall_second_left_outside"].on = false
+			lights["hall_second_right_outside"].on = false
 			color = {240,240,240,255}
 			if location == "Map.Mainroom" or location == "Map.Bathroom" then
 				color = {140,140,140,255}
@@ -154,6 +212,20 @@ function lighting.update(dt)
 			lights["room_sunlight_front"].on = false
 			lights["outside_pole_round"].on = true
 			lights["outside_pole_cone"].on = true
+			lights["hall_first_left"].on = true
+			lights["hall_first_right"].on = true
+			if location == "Map.Outside" then
+				lights["hall_second_left"].on = false
+				lights["hall_second_right"].on = false
+				lights["hall_second_left_outside"].on = true
+				lights["hall_second_right_outside"].on = true
+			end
+			if location == "Map.Hall" then
+				lights["hall_second_left"].on = true
+				lights["hall_second_right"].on = true
+				lights["hall_second_left_outside"].on = false
+				lights["hall_second_right_outside"].on = false
+			end
 		end
 
 		bg_color = color
