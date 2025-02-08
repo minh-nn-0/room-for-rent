@@ -14,6 +14,7 @@ local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/d
 --		rfr.set_dialogue(PLAYER, {content = interaction_details["power_box"]})
 --	end)
 local house_number = rfr.add_entity()
+local cs_work = require "activities.work"
 rfr.set_position(house_number, 386, 128)
 rfr.set_location(house_number, "Map.Outside")
 rfr.set_interaction(house_number, interaction_names["house_number"],
@@ -24,4 +25,26 @@ rfr.set_interaction(house_number, interaction_names["house_number"],
 	function()
 		rfr.set_flag("read_house_number")
 		rfr.set_dialogue(PLAYER, {content = interaction_details["house_number"]})
+	end)
+
+local bus_stop = rfr.add_entity()
+local cs_bus_work, cs_bus_nonwork = require "cutscenes.busstop"
+rfr.set_position(bus_stop, 256, 121)
+rfr.set_location(bus_stop, "Map.Outside")
+rfr.set_interaction(bus_stop, interaction_names["bus_stop"],
+	function()
+		local px,_ = util.player_center()
+		return px >= 246 and px <= 266
+	end,
+	function()
+		local _,tod = rfr.current_time()
+		if rfr.get_flag("prologue") then
+			rfr.set_dialogue(PLAYER, {content = interaction_details["not_use_bus"]})
+		else
+			if tod == 2 then
+				rfr.play_cutscene(cs_bus_nonwork)
+			else
+				rfr.play_cutscene(cs_bus_work)
+			end
+		end
 	end)

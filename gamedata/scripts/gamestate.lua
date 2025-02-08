@@ -100,12 +100,10 @@ state["ingame"] = {
 		local cx,_,cw,_ = rfr.get_cam_view()
 		local player_near_right_edge = ppos.x >= cx + (cw / config.cam_zoom) - 70
 		rfr.draw_dialogue_options(player_near_right_edge and ppos.x or ppos.x + 30, ppos.y + 5, not player_near_right_edge)
-
 		beaver.set_draw_color(10,10,10,255)
+
 		beaver.set_using_cam(false)
-
 		rfr.draw_helper()
-
 		if rfr.get_flag("screen_fill") then
 			local fill_color = rfr.get_properties(GAME, "screen_fill_color") or {0,0,0,255}
 			beaver.set_draw_color(fill_color[1], fill_color[2], fill_color[3], fill_color[4])

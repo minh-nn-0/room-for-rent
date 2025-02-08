@@ -1,6 +1,9 @@
 {
 	"power_box" : "Một hộp điện trông không có gì bất thường",
 	"house_number" : "3xx Lệ Chi",
+	"not_use_bus" : "Mình không cần phải đi đâu bây giờ.",
+	"bus_choice_nonwork" : "Về nhà|...",
+	"bus_choice_work" : "Đi làm|Về nhà|...",
 	"metal_gate_first_time" : "Mình không thể tự vào nhà",
 	"door_room_to_hall_not_clean" : "Mình cần phải dọn phòng đã",
 	"altar" : "Bàn thờ treo tường",

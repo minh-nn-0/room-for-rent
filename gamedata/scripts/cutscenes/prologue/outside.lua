@@ -14,6 +14,7 @@ end
 
 CS_PROLOGUE_ARRIVE = rfr.add_cutscene({
 	init = function()
+		rfr.set_flag("prologue")
 		rfr.set_flag("prologue_outside")
 		rfr.fade_in(5)
 		rfr.set_cam_zoom(2)

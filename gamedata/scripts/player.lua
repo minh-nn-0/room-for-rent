@@ -63,6 +63,8 @@ local map = require "luamodules.map"
 --require "events.sleep.day1"
 --require "events.sleep.day2"
 --require "events.pickup_card"
+local util = require "luamodules.utilities"
+local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
 local eat = require "activities.eat"
 function player.update(dt)
 	local ppos = rfr.get_position(PLAYER)
@@ -101,7 +103,7 @@ function player.update(dt)
 		ppos.x = 400
 		ppos.y = 144
 		rfr.set_cam_zoom(2)
-		rfr.set_cam_target(PLAYER, 16, -30)
+		rfr.set_cam_target(PLAYER, 16, -43)
 		rfr.set_location(PLAYER, "Map.Outside")
 	end
 
@@ -110,7 +112,7 @@ function player.update(dt)
 		rfr.play_cutscene(CS_PROLOGUE_ARRIVE)
 	end
 	if beaver.get_input("T") == 1 then
-		rfr.play_cutscene(eat)
+		rfr.set_dialogue_options(rfr.get_dialogue_options_from_json(interaction_details, "bus_choice_work"))
 	end
 	if beaver.get_input("ESCAPE") == 1 and rfr.get_flag("player_can_open_phone") then
 		rfr.toggle_phone()
