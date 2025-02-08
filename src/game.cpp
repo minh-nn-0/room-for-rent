@@ -192,15 +192,17 @@ void rfr::game::setup_binding()
 			{
 				float scale = _lua["config"]["text_scale"];
 				float padding = _lua["config"]["interaction_box_padding"];
+				float currenty = y;
 				for (int i = 0; i != DIALOGUE_OPTIONS._options.size(); i++)
 				{
 					const std::string& opts = DIALOGUE_OPTIONS._options[i];
 					sdl::texture* UI_tex = _beaver._assets.get<sdl::texture>("UI");		
 					sdl::font* font = _beaver._assets.get<sdl::font>(_lua["config"]["dialogue_font"]);
 					sdl::texture text = beaver::make_text_blended(_beaver._graphics._rdr, *font, opts, _beaver._graphics._draw_color);
-
+					
+					// Still want to figure out the oneline formula here
 					mmath::frect text_dst = {align_left ? x : x - text._width * scale,
-											y + 10 * i,
+											currenty,
 											text._width * scale,
 											text._height * scale};
 					mmath::frect text_box {text_dst._pos.x - padding, 
@@ -213,6 +215,7 @@ void rfr::game::setup_binding()
 										4,
 										*UI_tex, _beaver._graphics);
 					_beaver._graphics.texture(text, text_dst);
+					currenty += text_box._size.y + 5/_camera._zoom;
 				};
 			});
 	rfr.set_function("draw_note", [&](float posx, float posy, const std::string& text, const std::string& header)
