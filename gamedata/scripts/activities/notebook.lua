@@ -57,7 +57,7 @@ function notebook.toggle()
 			frameheight = 32,
 			["repeat"] = false
 		})
-		rfr.set_position(PLAYER, 169, 112)
+		rfr.set_position(PLAYER, 168, 112)
 	else
 		rfr.set_flag("player_can_move")
 		rfr.set_flag("player_can_interact")

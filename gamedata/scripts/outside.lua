@@ -42,8 +42,12 @@ function outside.update(dt)
 end
 
 function outside.draw()
-	local plocation = rfr.get_location(PLAYER)
-	beaver.set_draw_color(115,190,211,255)
+	local _,tod = rfr.current_time()
+	if tod == 1 then
+		beaver.set_draw_color(115,190,211,255)
+	else
+		beaver.set_draw_color(40,40,70,255)
+	end
 	beaver.draw_rectangle(0,0,0,0,true)
 	clouds.draw()
 end

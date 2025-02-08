@@ -56,13 +56,14 @@ local map = require "luamodules.map"
 --})
 --rfr.set_particle_emitter_auto(PLAYER, true)
 
-require "room_items"
-require "activities.work"
-require "activities.sleep"
-require "activities.homework"
-require "events.sleep.day1"
-require "events.sleep.day2"
-require "events.pickup_card"
+--require "room_items"
+--require "activities.work"
+--require "activities.sleep"
+--require "activities.homework"
+--require "events.sleep.day1"
+--require "events.sleep.day2"
+--require "events.pickup_card"
+local eat = require "activities.eat"
 function player.update(dt)
 	local ppos = rfr.get_position(PLAYER)
 	local pstate = rfr.get_state(PLAYER)
@@ -108,7 +109,9 @@ function player.update(dt)
 	if beaver.get_input("E") == 1 then
 		rfr.play_cutscene(CS_PROLOGUE_ARRIVE)
 	end
-
+	if beaver.get_input("T") == 1 then
+		rfr.play_cutscene(eat)
+	end
 	if beaver.get_input("ESCAPE") == 1 and rfr.get_flag("player_can_open_phone") then
 		rfr.toggle_phone()
 	end

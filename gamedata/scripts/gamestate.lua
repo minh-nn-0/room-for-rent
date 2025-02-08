@@ -14,6 +14,7 @@ require "audios"
 
 local test = require "test"
 local map = require "luamodules.map"
+local narrative = require "luamodules.narrative"
 local dream = require "dreams.dream"
 local gamestate = {
 	current_state = "ingame"
@@ -49,7 +50,6 @@ state["ingame"] = {
 		rfr.update_countdown(dt)
 		rfr.update_cutscene(dt)
 		rfr.update_interaction()
-		rfr.update_narrative(dt)
 		rfr.update_transition(dt)
 		rfr.update_particle_emitter(dt)
 		if rfr.update_homework then rfr.update_homework() end
@@ -58,6 +58,7 @@ state["ingame"] = {
 		if rfr.get_flag("dreaming") then dream.update(dt) end
 		map.set_only_player_location_visible()
 		map.update(dt)
+		narrative.update(dt)
 		rfr.update_audios()
 		rfr.cleanup_entities()
 
@@ -120,7 +121,7 @@ state["ingame"] = {
 		if rfr.draw_homework then rfr.draw_homework() end
 
 		beaver.set_draw_color(255,255,255,255)
-		rfr.draw_narrative_text()
+		narrative.draw_text()
 		rfr.draw_transition()
 		beaver.set_using_cam(true)
 	end

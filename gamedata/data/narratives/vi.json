@@ -1,4 +1,10 @@
 {
+	"introduction": [
+		"Hôm nay là ngày thứ n kể từ lúc tôi bắt đầu đi tìm phòng trọ.",
+		"Sau nhiều lần đọc thông tin mà không ưng vì giá quá đắt, hoặc căn rẻ thì cũng đã có người cọc rồi,",
+		"Tôi cuối cùng cũng tim thấy một căn phòng vừa rẻ lại chưa có ai chốt cả.",
+		"Lần này tôi quyết định phải nhanh chóng cọc luôn sau khi xem phòng mới được."
+	],
 	"clean_room" : "Sau 30 phút",
 	"work" : "6 giờ tối"
 }

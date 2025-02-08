@@ -1,6 +1,8 @@
 local util = require "luamodules.utilities"
+local narrative = require "luamodules.narrative"
 local interaction_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
-local narratives = util.load_json(rfr.gamepath() .. "data/narratives/" .. config.language .. ".json")
+local narrative_text = util.load_json(rfr.gamepath() .. "data/narratives/" .. config.language .. ".json")
+
 
 local cs_gotowork = rfr.add_cutscene({
 	init = function()
@@ -19,13 +21,13 @@ local cs_gotowork = rfr.add_cutscene({
 		end,
 		function(dt)
 			if rfr.is_transition_active() then return false end
-			rfr.set_narrative_text(narratives["work"])
-			rfr.set_narrative_position(config.render_size[1] / 2, config.render_size[2] / 2)
-			rfr.set_narrative_scale(2)
+			narrative.set_text(narrative_text["work"])
+			narrative.set_position(config.render_size[1] / 2, config.render_size[2] / 2)
+			narrative.set_scale(2)
 			return true
 		end,
 		function(dt)
-			if rfr.narrative_text_active() then return false end
+			if narrative.text_active() then return false end
 			rfr.unset_flag("screen_fill")
 			rfr.fade_in(2)
 			return true

@@ -1,3 +1,4 @@
+local narrative = {}
 local text_posx = 0
 local text_posy = 0
 local text_time = 0
@@ -6,25 +7,25 @@ local text_index = 1
 
 local scale = 1
 local wraplength = 0
-function rfr.set_narrative_scale(s)
+function narrative.set_scale(s)
 	scale = s
 end
-function rfr.set_narrative_wraplength(w)
+function narrative.set_wraplength(w)
 	wraplength = w
 end
-function rfr.set_narrative_text(content)
+function narrative.set_text(content)
 	text_content = content
 	text_index = 1
 	text_time = 0
 end
 
 -- Determine center of text
-function rfr.set_narrative_position(posx, posy)
+function narrative.set_position(posx, posy)
 	text_posx = posx
 	text_posy = posy
 end
 
-function rfr.update_narrative(dt)
+function narrative.update(dt)
 	if text_index < #text_content then
 		text_time = text_time + config.narrative_cpf * dt
 		if text_time >= 1 then
@@ -38,12 +39,17 @@ function rfr.update_narrative(dt)
 	end
 end
 
-function rfr.narrative_text_active()
+function narrative.text_active()
 	return text_index < #text_content or text_time <= config.narrative_wait_time
 end
-function rfr.draw_narrative_text()
-	if rfr.narrative_text_active() then
+
+function narrative.text_appearing()
+	return text_index < #text_content
+end
+function narrative.draw_text()
+	if narrative.text_active() then
 		beaver.draw_text_centered(text_posx, text_posy, config.ui_font, scale, string.sub(text_content, 1, text_index), wraplength)
 	end
 end
 
+return narrative

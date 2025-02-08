@@ -1,4 +1,6 @@
-
+local narrative = require "luamodules.narrative"
+local narrative_sound_timer = rfr.add_entity()
+rfr.set_timer(narrative_sound_timer,0)
 function rfr.update_audios()
 	for _, eid in ipairs(rfr.get_active_entities()) do
 		if rfr.get_location(eid) == rfr.get_location(PLAYER) then
@@ -34,6 +36,15 @@ function rfr.update_audios()
 						end
 					else
 						rfr.set_properties(eid, "footstep", false)
+					end
+				end
+			end
+
+			if rfr.get_flag("narrative_sound") then
+				if narrative.text_appearing() then
+					if not rfr.get_timer(narrative_sound_timer).running then
+						beaver.play_sound("dialogue1")
+						rfr.set_timer(narrative_sound_timer, 6/config.narrative_cpf)
 					end
 				end
 			end

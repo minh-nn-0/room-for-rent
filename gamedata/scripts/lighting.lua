@@ -91,7 +91,7 @@ lights["outside_pole_round"] = {pos = {318,86},
 						flicker_rate = 0,
 						flicker_timer = 0,
 						flickering = false,
-						tint = {255,180,63,200},
+						tint = {255,235,63,120},
 						location = "Map.Outside"
 					}
 lights["outside_pole_cone"] = {pos = {318,128},
@@ -100,7 +100,7 @@ lights["outside_pole_cone"] = {pos = {318,128},
 						flicker_rate = 0,
 						flicker_timer = 0,
 						flickering = false,
-						tint = {255,180,63,255},
+						tint = {255,235,63,255},
 						location = "Map.Outside"
 					}
 
@@ -207,7 +207,7 @@ function lighting.update(dt)
 				color = {140,140,140,255}
 			end
 		else
-			color = {10,10,30, 255}
+			color = {20,20,40, 255}
 			lights["room_sunlight_back"].on = false
 			lights["room_sunlight_front"].on = false
 			lights["outside_pole_round"].on = true
