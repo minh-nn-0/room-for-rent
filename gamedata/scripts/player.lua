@@ -124,7 +124,7 @@ function player.update(dt)
 
 	if rfr.having_dialogue_options() or rfr.has_active_dialogue(PLAYER) then
 		rfr.unset_flag("player_can_interact")
-	elseif not (rfr.get_flag("phone_opening") or rfr.get_flag("notebook_opening") or rfr.get_flag("inbed")) then
+	elseif not (rfr.has_tag(PLAYER, "npc") or rfr.get_flag("phone_opening") or rfr.get_flag("notebook_opening") or rfr.get_flag("inbed")) then
 		rfr.set_flag("player_can_interact")
 	end
 

@@ -94,13 +94,13 @@ rfr.set_properties(BED, "normal", true)
 rfr.set_interaction(BED, interaction_name["bed"],
 	function()
 		local px,_ = util.player_center()
-		return px >= 90 and px <= 120
+		return px >= 90 and px <= 120 and not rfr.get_flag("prologue")
 	end,
 	function()
 		rfr.play_cutscene(cs_sleep)
 	end)
 
-function rfr.update_bed()
+function bed.update()
 	if rfr.get_flag("inbed") then
 		bed.animate_bed_sleep()
 		if not rfr.get_flag("speeping") and not rfr.get_flag("dreaming") and beaver.get_input(config.button.back) == 1

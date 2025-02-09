@@ -5,6 +5,12 @@
 		"Tôi cuối cùng cũng tim thấy một căn phòng vừa rẻ lại chưa có ai chốt cả.",
 		"Lần này tôi quyết định phải nhanh chóng cọc luôn sau khi xem phòng mới được."
 	],
+	"gohome_prologue": [
+		"Tôi không chịu nổi căn phòng vừa cũ kĩ ẩm mốc vừa chật chội như vậy.",
+		"B: Được rồi. Của cháu đã xong. /n Nhớ đóng tiền đầy đủ vào đầu mỗi tháng nhé. /n Có vấn đề gì thì cứ gọi cô!",
+		"B: Tại gần đây cô cũng chưa có kinh phí để sửa sang lại. Với nghe cháu bảo hoàn cảnh khó khăn nên cô cũng để rẻ hơn 1 chút. Bt cũng phải tầm 1 triệu.",
+		"Bà chỉ gật đầu, không tỏ ra ngạc nhiên hay níu kéo. Tôi nhanh chóng bước ra ngoài, cảm giác nhẹ nhõm nhưng cũng hơi chán nản. Lại phải tiếp tục tìm thôi."
+	],
 	"clean_room" : "Sau 30 phút",
 	"work" : "6 giờ tối"
 }

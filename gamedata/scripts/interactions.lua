@@ -28,7 +28,7 @@ rfr.set_interaction(house_number, interaction_names["house_number"],
 	end)
 
 local bus_stop = rfr.add_entity()
-local cs_bus_work, cs_bus_nonwork = require "cutscenes.busstop"
+local cs_bus_work, cs_bus_nonwork = table.unpack((require "cutscenes.busstop"))
 rfr.set_position(bus_stop, 256, 121)
 rfr.set_location(bus_stop, "Map.Outside")
 rfr.set_interaction(bus_stop, interaction_names["bus_stop"],

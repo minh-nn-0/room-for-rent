@@ -2,11 +2,12 @@ local util = require "luamodules.utilities"
 local notebook = require "activities.notebook"
 local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local UI_name = util.load_json(rfr.gamepath() .. "data/ui/" .. config.language .. ".json")
-function rfr.update_homework()
+local homework = {}
+function homework.update()
 	notebook.update()
 end
 
-function rfr.draw_homework()
+function homework.draw()
 	notebook.draw()
 	if rfr.get_flag("notebook_opening") then
 		beaver.set_draw_color(255,255,255,255)
@@ -41,8 +42,10 @@ rfr.set_location(DESK, "Map.Mainroom")
 rfr.set_interaction(DESK, interaction_name["desk"],
 	function()
 		local px,_ = util.player_center()
-		return px >= 176 and px <= 190
+		return px >= 176 and px <= 190 and not rfr.get_flag("prologue")
 	end,
 	function()
 		notebook.toggle()
 	end)
+
+return homework

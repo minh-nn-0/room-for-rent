@@ -12,6 +12,9 @@ require "audios"
 
 --local ghost = require "ghost"
 
+local homework = require "activities.homework"
+local bed = require "activities.sleep"
+local bus = require "misc.bus"
 local test = require "test"
 local map = require "luamodules.map"
 local narrative = require "luamodules.narrative"
@@ -52,8 +55,9 @@ state["ingame"] = {
 		rfr.update_interaction()
 		rfr.update_transition(dt)
 		rfr.update_particle_emitter(dt)
-		if rfr.update_homework then rfr.update_homework() end
-		if rfr.update_bed then rfr.update_bed() end
+		homework.update()
+		bed.update()
+		bus.update(dt)
 
 		if rfr.get_flag("dreaming") then dream.update(dt) end
 		map.set_only_player_location_visible()
@@ -116,7 +120,7 @@ state["ingame"] = {
 		end
 		rfr.draw_phone_notification()
 		rfr.draw_phone()
-		if rfr.draw_homework then rfr.draw_homework() end
+		homework.draw()
 
 		beaver.set_draw_color(255,255,255,255)
 		narrative.draw_text()
