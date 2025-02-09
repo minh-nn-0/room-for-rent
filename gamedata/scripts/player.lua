@@ -56,16 +56,16 @@ local map = require "luamodules.map"
 --})
 --rfr.set_particle_emitter_auto(PLAYER, true)
 
---require "room_items"
+require "room_items"
+require "activities.shower"
 --require "activities.work"
 --require "activities.sleep"
 --require "activities.homework"
 --require "events.sleep.day1"
 --require "events.sleep.day2"
 --require "events.pickup_card"
-local util = require "luamodules.utilities"
-local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
-local eat = require "activities.eat"
+
+local blur = require "misc.blur"
 function player.update(dt)
 	local ppos = rfr.get_position(PLAYER)
 	local pstate = rfr.get_state(PLAYER)
@@ -112,7 +112,7 @@ function player.update(dt)
 		rfr.play_cutscene(CS_PROLOGUE_ARRIVE)
 	end
 	if beaver.get_input("T") == 1 then
-		rfr.set_dialogue_options(rfr.get_dialogue_options_from_json(interaction_details, "bus_choice_work"))
+		blur.attach_to_player()
 	end
 	if beaver.get_input("ESCAPE") == 1 and rfr.get_flag("player_can_open_phone") then
 		rfr.toggle_phone()

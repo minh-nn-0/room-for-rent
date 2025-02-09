@@ -97,7 +97,11 @@ rfr.set_interaction(BED, interaction_name["bed"],
 		return px >= 90 and px <= 120 and not rfr.get_flag("prologue")
 	end,
 	function()
-		rfr.play_cutscene(cs_sleep)
+		if rfr.get_flag("naked") then
+			rfr.set_dialogue(PLAYER, {content = interaction_details["not_done_shower"]})
+		else
+			rfr.play_cutscene(cs_sleep)
+		end
 	end)
 
 function bed.update()

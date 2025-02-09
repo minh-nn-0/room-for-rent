@@ -16,6 +16,7 @@ local homework = require "activities.homework"
 local bed = require "activities.sleep"
 local bus = require "misc.bus"
 local test = require "test"
+local blur = require "misc.blur"
 local map = require "luamodules.map"
 local narrative = require "luamodules.narrative"
 local dream = require "dreams.dream"
@@ -59,6 +60,7 @@ state["ingame"] = {
 		bed.update()
 		bus.update(dt)
 
+		blur.update()
 		if rfr.get_flag("dreaming") then dream.update(dt) end
 		map.set_only_player_location_visible()
 		map.update(dt)

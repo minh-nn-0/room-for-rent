@@ -6,6 +6,7 @@ local on = false
 local running_water_channel = 30
 SHOWER = rfr.add_entity()
 
+local blur = require "misc.blur"
 rfr.set_particle_emitter_config(SHOWER, {
 	emitting_position = {x = 198, y = 224},
 	linear_acceleration = {x = 0, y = 0},
@@ -29,7 +30,7 @@ function shower.toggle()
 		on = false
 	else
 		rfr.set_particle_emitter_auto(SHOWER, true)
-		beaver.play_sound("running_water", running_water_channel)
+		beaver.play_sound("running_water", running_water_channel, -1)
 		on = true
 	end
 end
@@ -44,46 +45,68 @@ rfr.set_state_entry(PLAYER, "shower",
 
 local shower_timer = rfr.add_entity()
 
+local stopped = false
 local cs_shower = rfr.add_cutscene({
 	init = function()
 		rfr.fade_out(2)
+		stopped = false
 	end,
 	exit = function()
-		local d,_ = rfr.current_time()
-		shower.toggle()
-		rfr.set_day_flag(d,"showered")
+		if not stopped then
+			local d,_ = rfr.current_time()
+			shower.toggle()
+			rfr.set_day_flag(d,"showered")
+			rfr.fade_in(2)
+			rfr.unset_flag("naked")
+		else
+			rfr.set_flag("naked")
+			rfr.set_image(PLAYER, "male_naked")
+			blur.attach()
+		end
+		rfr.set_state(PLAYER, "idle")
+		rfr.set_flag("player_can_move")
+		rfr.set_flag("player_can_interact")
+		rfr.unset_flag("showering")
 	end,
 	scripts = {
 		function(dt)
 			if rfr.is_transition_active() then return false end
 			shower.toggle()
+			rfr.set_image(PLAYER, "male_shirt")
 			rfr.set_state(PLAYER, "shower")
 			rfr.unset_flag("player_can_move")
 			rfr.unset_flag("player_can_interact")
 			rfr.set_position(PLAYER, 176, 240)
+			blur.deattach()
 			rfr.fade_in(2)
+
+			rfr.set_flag("showering")
 			return true
 		end,
 		function(dt)
+			if stopped then return true end
 			if rfr.is_transition_active() then return false end
-			rfr.set_timer(shower_timer, 1)
+			rfr.set_timer(shower_timer, 2)
 			return true
 		end,
 		function(dt)
+			if stopped then return true end
 			if rfr.get_timer(shower_timer).running then return false end
 			rfr.fade_out(2)
 			return true
 		end,
 		function(dt)
+			if stopped then return true end
 			if rfr.is_transition_active() then return false end
-			rfr.fade_in(2)
-			rfr.set_state(PLAYER, "idle")
-			rfr.set_flag("player_can_move")
-			rfr.set_flag("player_can_interact")
 			return true
 		end
 	},
-	update = function(dt) end
+	update = function(dt)
+		if rfr.get_flag("showering") and beaver.get_input(config.button.back) == 1 then
+			stopped = true
+			shower.toggle()
+		end
+	end
 })
 
 

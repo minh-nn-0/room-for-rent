@@ -87,7 +87,9 @@ rfr.set_interaction(DOOR_ROOM_HALL, interaction_name["door_room_to_hall"],
 		return player_in_range("room_hall", 10)
 	end,
 	function()
-		if rfr.get_flag("prologue_room") then rfr.set_dialogue(PLAYER, {content = interaction_details["door_room_to_hall_not_clean"]})
+		if rfr.get_flag("naked") then
+			rfr.set_dialogue(PLAYER, {content = interaction_details["not_done_shower"]})
+		elseif rfr.get_flag("prologue_room") then rfr.set_dialogue(PLAYER, {content = interaction_details["door_room_to_hall_not_clean"]})
 		else
 			beaver.play_sound("dooropen2")
 			rfr.set_cam_zoom(3)
@@ -100,9 +102,13 @@ rfr.set_interaction(DOOR_ROOM_BALCONY, interaction_name["door_room_to_balcony"],
 		return player_in_range("room_balcony", 10)
 	end,
 	function()
-		rfr.set_cam_zoom(3)
-		rfr.fade_in(1)
-		move_player_to_destination("room_balcony", true)
+		if rfr.get_flag("naked") then
+			rfr.set_dialogue(PLAYER, {content = interaction_details["not_done_shower"]})
+		else
+			rfr.set_cam_zoom(3)
+			rfr.fade_in(1)
+			move_player_to_destination("room_balcony", true)
+		end
 	end)
 
 rfr.set_interaction(DOOR_BALCONY_ROOM, interaction_name["door_balcony_to_room"],
