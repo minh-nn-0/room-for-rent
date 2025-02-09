@@ -3,16 +3,17 @@ local narrative = require "luamodules.narrative"
 local narrative_text = util.load_json(rfr.gamepath() .. "data/narratives/" .. config.language .. ".json")
 local particle = require "luamodules.particle"
 local bus = require "misc.bus"
-local dummy_target = rfr.add_entity()
 local cs_gotowork = rfr.add_cutscene({
 	init = function()
 		bus.appear()
+		beaver.fade_in_channel("busengine", 2, 0, 1000)
 	end,
 	exit = function() end,
 	scripts = {
 		function(dt)
 			if rfr.get_position(bus.eid).x >= 180 then return false end
 			bus.stop()
+			beaver.play_sound("busdoor", -1, 0)
 			rfr.set_timer(bus.eid, 3)
 			rfr.set_cam_target(nil, 0, 0)
 			rfr.set_position(PLAYER, 1000, 1000)
@@ -21,6 +22,7 @@ local cs_gotowork = rfr.add_cutscene({
 		function(dt)
 			if rfr.get_timer(bus.eid).running then return false end
 			bus.start()
+			beaver.fade_out_channel(2, 7000)
 			local bpos = rfr.get_position(bus.eid)
 			rfr.manual_emit_particles(bus.eid, 60, bpos.x + 125, bpos.y + 40, {})
 			return true
@@ -49,12 +51,14 @@ local cs_gotowork = rfr.add_cutscene({
 			rfr.set_position(bus.eid, 300, 136)
 			rfr.unset_flag("screen_fill")
 			rfr.fade_in(2)
+			beaver.fade_in_channel("busengine", 2, 0, 4000)
 			rfr.set_cam_target(bus.eid, 50, -36)
 			return true
 		end,
 		function(dt)
 			if rfr.get_position(bus.eid).x >= 180 then return false end
 			bus.stop()
+			beaver.play_sound("busdoor", -1, 0)
 			rfr.set_timer(bus.eid, 3)
 			return true
 		end,
@@ -66,6 +70,7 @@ local cs_gotowork = rfr.add_cutscene({
 			rfr.set_position(PLAYER, 239, 144)
 			rfr.set_cam_target(PLAYER, 16, -43)
 			rfr.set_flag("player_can_move")
+			beaver.fade_out_channel(2, 7000)
 			return true
 		end,
 		function(dt)

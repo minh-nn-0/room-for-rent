@@ -176,6 +176,15 @@ end
 function beaver.fade_in_music(music, loops, ms)
 	FADE_IN_MUSIC(music, loops, ms)
 end
+function beaver.fade_out_music(ms)
+	FADE_OUT_MUSIC(ms)
+end
+function beaver.fade_in_channel(name, channel, loop, ms)
+	FADE_IN_CHANNEL(name, channel, loop, ms)
+end
+function beaver.fade_out_channel(channel, ms)
+	FADE_OUT_CHANNEL(channel, ms)
+end
 function beaver.pause_music()
 	PAUSE_MUSIC()
 end

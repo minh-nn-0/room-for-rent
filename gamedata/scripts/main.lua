@@ -43,6 +43,8 @@ function LOAD()
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/lightswitch.wav", "lightswitch")
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/running_water.wav", "running_water")
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/eatnoddle.mp3", "eatnoddle")
+	beaver.new_sound(rfr.gamepath() .. "assets/audios/busdoor.mp3", "busdoor")
+	beaver.new_sound(rfr.gamepath() .. "assets/audios/busengine.wav", "busengine")
 
 	beaver.set_volume_sound("eatnoddle", 30)
 
