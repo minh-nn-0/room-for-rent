@@ -3,7 +3,7 @@ local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/name
 local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
 local bed = {}
 BED = rfr.add_entity()
-rfr.set_position(BED, 104,100)
+rfr.set_position(BED, 104,110)
 
 
 local anim_frames = {
@@ -35,7 +35,7 @@ function bed.animate_bed_sleep()
 end
 
 function bed.go_to_sleep_normally()
-	rfr.set_cam_target(BED,0,12)
+	rfr.set_cam_target(BED,0,2)
 	rfr.set_position(PLAYER, 1000,1000)
 	rfr.set_state(PLAYER, "idle")
 	rfr.unset_flag("player_can_move")

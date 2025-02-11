@@ -19,7 +19,7 @@ lights["room_ceiling"] = {pos = {200, 88},
 					flicker_rate = 0,
 					flicker_timer = 0,
 					flickering = false,
-					tint = {220,150,120,255},
+					tint = {220,150,120,220},
 					location = "Map.Mainroom"}
 
 lights["bathroom_ceiling"] = {pos = {216,218},
@@ -168,6 +168,16 @@ lights["room_dream_ceiling"] = {pos = {200, 88},
 					flickering = false,
 					tint = {60,50,20,255},
 					location = "Map.Dream"}
+
+lights["darkview"] = {pos =  {0,0},
+					scale = 0.6,
+					src = lightsource.round,
+					on = false,
+					flicker_rate = 0.0,
+					flicker_timer = 0,
+					flickering = false,
+					tint = {40,40,40,180},
+					location = "Map.Mainroom"}
 function lighting.set_background_color(r,g,b,a)
 	bg_color = {r,g,b,a}
 end
@@ -180,6 +190,12 @@ function lighting.toggle_light(name)
 	lights[name].on = not lights[name].on
 end
 
+function lighting.set_light_on(name, on)
+	lights[name].on = on
+end
+function lighting.light_is_on(name)
+	return lights[name].on
+end
 function lighting.set_flicker(name, rate)
 	lights[name].flicker_rate = rate
 end
@@ -206,8 +222,10 @@ function lighting.update(dt)
 			if location == "Map.Mainroom" or location == "Map.Bathroom" then
 				color = {140,140,140,255}
 			end
+
+			lights["darkview"].on = false
 		else
-			color = {20,20,40, 255}
+			color = {0,0,10, 255}
 			lights["room_sunlight_back"].on = false
 			lights["room_sunlight_front"].on = false
 			lights["outside_pole_round"].on = true
@@ -226,6 +244,11 @@ function lighting.update(dt)
 				lights["hall_second_left_outside"].on = false
 				lights["hall_second_right_outside"].on = false
 			end
+
+			local ppos = rfr.get_position(PLAYER)
+			lights["darkview"].on = true
+			lights["darkview"].location = location
+			lights["darkview"].pos = {ppos.x + 16, ppos.y + 8}
 		end
 
 		bg_color = color

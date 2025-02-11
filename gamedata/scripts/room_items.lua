@@ -35,7 +35,7 @@ rfr.set_interaction(CABINET, interaction_name["cabinet"],
 	end)
 
 local lighting = require "lighting"
-rfr.set_position(LIGHT_SWITCH_MAINROOM, 135,94)
+rfr.set_position(LIGHT_SWITCH_MAINROOM, 135,110)
 rfr.set_location(LIGHT_SWITCH_MAINROOM, "Map.Mainroom")
 rfr.set_interaction(LIGHT_SWITCH_MAINROOM, interaction_name["light_switch"],
 	function()

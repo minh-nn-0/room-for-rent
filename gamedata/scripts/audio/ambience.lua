@@ -1,13 +1,14 @@
 local ambience = {}
 local current_sound_channels = {}
 local current_location = nil
+local current_tod = 1
 local sounds_per_location = {
 	["Map.Outside"] = {
 		{
-			ambience = {"ambience_wind", "ambience_bird"},
+			ambience = {"ambience_wind"},
 			random_sound = {
-				{"carpassing",10,0.3},
-				{"dog",15,0.3}
+				{"carpassing",60,0.4},
+				{"dog",60,0.2}
 			}
 		},
 		{
@@ -16,7 +17,10 @@ local sounds_per_location = {
 	},
 	["Map.Mainroom"] = {
 		{
-			ambience = {"ambience_bird"}
+			ambience = {},
+			random_sound = {
+				{"bird", 40, 0.3}
+			}
 		},
 		{
 			ambience = {"ambience_cricket"},
@@ -60,8 +64,9 @@ function ambience.update()
 	local plocation = rfr.get_location(PLAYER)
 	local _,tod = rfr.current_time()
 	if sounds_per_location[plocation] ~= nil then
-		if current_location ~= plocation then
+		if current_location ~= plocation or current_tod ~= tod then
 			current_location = plocation
+			current_tod = tod
 			fade_out_ambience()
 			fade_in_ambience(current_location, tod)
 		else
