@@ -180,13 +180,19 @@ function beaver.fade_out_music(ms)
 	FADE_OUT_MUSIC(ms)
 end
 function beaver.fade_in_channel(name, channel, loop, ms)
-	FADE_IN_CHANNEL(name, channel, loop, ms)
+	return FADE_IN_CHANNEL(name, channel, loop, ms)
 end
 function beaver.fade_out_channel(channel, ms)
 	FADE_OUT_CHANNEL(channel, ms)
 end
 function beaver.pause_music()
 	PAUSE_MUSIC()
+end
+function beaver.music_playing()
+	return MUSIC_PLAYING()
+end
+function beaver.channel_playing(channel)
+	return CHANNEL_PLAYING(channel)
 end
 function beaver.set_volume_master(volume)
 	SET_VOLUME_MASTER(volume)

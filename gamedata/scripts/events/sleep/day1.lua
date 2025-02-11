@@ -1,5 +1,5 @@
 local util = require "luamodules.utilities"
-local dialogues =util.load_json(rfr.gamepath() .. "data/dialogues/events/sleep_1_" .. config.language .. ".json")
+local dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/events/sleep_1_" .. config.language .. ".json")
 local bed = require "activities.sleep"
 local timer = rfr.add_entity()
 
@@ -11,6 +11,7 @@ local water_drip = rfr.add_cutscene({
 		rfr.set_properties(GAME, "screen_fill_color", {0,0,0,255})
 	end,
 	exit = function()
+		rfr.set_active(timer, false)
 	end,
 	scripts = {
 		function(dt)

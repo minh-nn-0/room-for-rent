@@ -2,6 +2,7 @@ local player = {}
 PLAYER = rfr.add_entity()
 rfr.set_properties(PLAYER, "walkspeed", 0.6)
 rfr.set_properties(PLAYER, "footstep_sound", "footstep_tile_heavy")
+rfr.add_tag(PLAYER, "footstep_sound")
 rfr.set_flag("player_can_move")
 rfr.set_flag("player_can_interact")
 rfr.set_flag("player_can_open_phone")
@@ -65,7 +66,10 @@ require "activities.shower"
 --require "events.sleep.day2"
 --require "events.pickup_card"
 
+require "events.sleep"
 local blur = require "misc.blur"
+
+local ghost = require "ghost"
 function player.update(dt)
 	local ppos = rfr.get_position(PLAYER)
 	local pstate = rfr.get_state(PLAYER)
@@ -112,7 +116,10 @@ function player.update(dt)
 		rfr.play_cutscene(CS_PROLOGUE_ARRIVE)
 	end
 	if beaver.get_input("T") == 1 then
-		blur.attach_to_player()
+		rfr.set_state(ghost.eid, "hanging")
+	end
+	if beaver.get_input("R") == 1 then
+		rfr.set_state(ghost.eid, "crawling")
 	end
 	if beaver.get_input("ESCAPE") == 1 and rfr.get_flag("player_can_open_phone") then
 		rfr.toggle_phone()

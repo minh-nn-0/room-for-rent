@@ -8,7 +8,6 @@ require "interactions"
 require "cutscenes.prologue.prologue"
 require "phone.main"
 require "helper"
-require "audios"
 
 --local ghost = require "ghost"
 
@@ -20,6 +19,8 @@ local blur = require "misc.blur"
 local map = require "luamodules.map"
 local narrative = require "luamodules.narrative"
 local dream = require "dreams.dream"
+local ghost = require "ghost"
+local audio = require "audio.audios"
 local gamestate = {
 	current_state = "ingame"
 }
@@ -60,12 +61,14 @@ state["ingame"] = {
 		bed.update()
 		bus.update(dt)
 
+		ghost.update(dt)
+
 		blur.update()
 		if rfr.get_flag("dreaming") then dream.update(dt) end
 		map.set_only_player_location_visible()
 		map.update(dt)
 		narrative.update(dt)
-		rfr.update_audios()
+		audio.update()
 		rfr.cleanup_entities()
 
 		return true
