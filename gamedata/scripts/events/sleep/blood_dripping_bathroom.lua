@@ -1,73 +1,84 @@
 local bloods_dripping_bathroom = {}
 
-local onceiling = rfr.add_entity()
-local ceiling_pos = {190, 208}
-rfr.set_image(onceiling, "bloods_bathroom_ceiling")
-rfr.set_tileanimation(onceiling, {
-	frames = {{1,150},{2,150},{3,150},{4,150},{5,150},{6,150},{7,150},{8,150},{9,150},{0,150}},
-	framewidth = 64,
-	frameheight = 32,
-	["repeat"] = false
-})
-rfr.set_position(onceiling, ceiling_pos[1], ceiling_pos[2])
-rfr.set_location(onceiling, "Map.Bathroom")
+local blood_drips = {
+	{
+		posx = 190,
+		period = 5,
+		type = 1,
+	},
+	{
+		posx = 210,
+		period = 7,
+		type = 2,
+	}
+}
+for _,b in ipairs(blood_drips) do
+	b.eid = rfr.add_entity()
+	rfr.set_position(b.eid, b.posx, 208)
+	rfr.set_image(b.eid, "bloods_ceiling_" .. b.type)
+	rfr.set_tileanimation(b.eid, {
+		frames = {{1,150},{2,150},{3,150},{4,150},{5,150},{6,150},{7,150},{8,150},{0,150}},
+		framewidth = 32,
+		frameheight = 32,
+		["repeat"] = false
+	})
 
-local floor = {rfr.add_entity(),rfr.add_entity()}
+	b.floor = rfr.add_entity()
+	rfr.set_image(b.floor, "bloods_floor")
+	rfr.set_tileanimation(b.floor, {
+		frames = {{0,150},{1,150},{2,150},{3,150},{4,150},{5,150},{6,150}},
+		framewidth = 32,
+		frameheight = 20,
+		["repeat"] = false
+	})
+	rfr.set_position(b.floor, b.posx, 253)
+end
+local appeared = false
+function bloods_dripping_bathroom.init()
+	rfr.set_layer_visible("room", "Map.Bathroom.Bg.splatter", true)
+	for _,b in ipairs(blood_drips) do
+		rfr.set_location(b.eid, "Map.Bathroom")
+		rfr.set_location(b.floor, "Map.Bathroom")
+	end
+	appeared = true
+end
 
-rfr.set_image(floor[1], "bloods_bathroom_floor")
-rfr.set_image(floor[2], "bloods_bathroom_floor")
-
-rfr.set_tileanimation(floor[1], {
-	frames = {{0,150},{1,150},{2,150},{3,150},{4,150},{5,150},{6,150}},
-	framewidth = 32,
-	frameheight = 20,
-	["repeat"] = false
-})
-rfr.set_tileanimation(floor[2], {
-	frames = {{0,150},{1,150},{2,150},{3,150},{4,150},{5,150},{6,150}},
-	framewidth = 32,
-	frameheight = 20,
-	["repeat"] = false
-})
-
-rfr.set_position(floor[1], 191, 252)
-rfr.set_position(floor[2], 209, 252)
-rfr.set_location(floor[1], "Map.Bathroom")
-rfr.set_location(floor[2], "Map.Bathroom")
+function bloods_dripping_bathroom.appear(yes)
+	appeared = yes
+end
 local bloods = {}
-local period = 5
 function bloods_dripping_bathroom.update(dt)
-	local ceiling_animation = rfr.get_tileanimation(onceiling)
-	if math.floor(beaver.get_elapsed_time() % period) == 1 and not ceiling_animation.playing then
-		print("hihi")
-		rfr.reset_tileanimation(onceiling)
+	if not appeared then return end
+	for _,b in ipairs(blood_drips) do
+		local anim = rfr.get_tileanimation(b.eid)
+		if math.floor(beaver.get_elapsed_time() % b.period) == 1 and not anim.playing then
+			rfr.reset_tileanimation(b.eid)
+		end
+		if anim.playing then
+			if anim.currentid == 6 and bloods[b.floor] == nil then bloods[b.floor] = 5 end
+		end
 	end
-	if ceiling_animation.playing then
-		if ceiling_animation.currentid == 6 and bloods[1] == nil then bloods[1] = 6 end
-		if ceiling_animation.currentid == 7 and bloods[2] == nil then bloods[2] = 3 end
-	end
-
 	for i,b in pairs(bloods) do
 		if b then
-			if b >= 62 then
+			if b >= 60 then
 				beaver.play_sound("waterdrops")
-				rfr.reset_tileanimation(floor[i])
+				rfr.reset_tileanimation(i)
 				bloods[i] = nil
 			else
 				bloods[i] = b * 64 * dt
 			end
 		end
-		print(i, b)
 	end
 
 end
 
 function bloods_dripping_bathroom.draw()
+	if not appeared then return end
 	for i,b in pairs(bloods) do
 		if b then
-			local blood_posx = i == 1 and ceiling_pos[1] + 13 or ceiling_pos[1] + 32
+			local blood_pos = rfr.get_position(i)
 			beaver.set_draw_color(115,23,45,255)
-			beaver.draw_rectangle(blood_posx, ceiling_pos[2] + b, 2,2,true)
+			beaver.draw_rectangle(blood_pos.x + 15, 208 + b, 2,2,true)
 		end
 	end
 end

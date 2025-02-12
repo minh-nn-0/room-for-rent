@@ -83,7 +83,7 @@
                                  "offsety":208,
                                  "opacity":1,
                                  "type":"imagelayer",
-                                 "visible":true,
+                                 "visible":false,
                                  "x":0,
                                  "y":0
                                 }, 
@@ -386,7 +386,7 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":57,
+ "nextlayerid":58,
  "nextobjectid":20,
  "orientation":"orthogonal",
  "renderorder":"right-down",

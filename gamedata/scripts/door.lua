@@ -60,8 +60,6 @@ DOOR_HALL_STAIR_FIRST = make_door("hallstair_1")
 DOOR_HALL_STAIR_SECOND = make_door("hallstair_2")
 METAL_GATE_OUTSIDE = make_door("gate_out")
 METAL_GATE_INSIDE = make_door("gate_in")
-local locked_doors
-
 rfr.set_interaction(DOOR_ROOM_BATHROOM, interaction_name["door_room_to_bathroom"],
 	function()
 		return player_in_range("room_bathroom", 10)
@@ -77,9 +75,13 @@ rfr.set_interaction(DOOR_BATHROOM_ROOM, interaction_name["door_bathroom_to_room"
 		return player_in_range("bathroom_room", 10)
 	end,
 	function()
-		beaver.play_sound("dooropen")
-		rfr.fade_in(2)
-		move_player_to_destination("bathroom_room", true)
+		if rfr.get_properties(DOOR_BATHROOM_ROOM, "locked") then
+			beaver.play_sound("lockeddoor")
+		else
+			beaver.play_sound("dooropen")
+			rfr.fade_in(2)
+			move_player_to_destination("bathroom_room", true)
+		end
 	end)
 
 rfr.set_interaction(DOOR_ROOM_HALL, interaction_name["door_room_to_hall"],
