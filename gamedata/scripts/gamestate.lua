@@ -21,6 +21,8 @@ local narrative = require "luamodules.narrative"
 local dream = require "dreams.dream"
 local ghost = require "ghost"
 local audio = require "audio.audios"
+
+local bloods_drip = require "events.sleep.blood_dripping_bathroom"
 local gamestate = {
 	current_state = "ingame"
 }
@@ -62,6 +64,7 @@ state["ingame"] = {
 		bus.update(dt)
 
 		ghost.update(dt)
+		bloods_drip.update(dt)
 
 		blur.update()
 		if rfr.get_flag("dreaming") then dream.update(dt) end
@@ -89,6 +92,7 @@ state["ingame"] = {
 
 		if rfr.get_flag("dreaming") then dream.draw() end
 		test.draw()
+		if plocation == "Map.Bathroom" then bloods_drip.draw() end
 
 		lighting.draw()
 		if rfr.get_flag("player_can_interact") and rfr.get_first_interaction() ~= -1 then

@@ -29,7 +29,8 @@ lights["bathroom_ceiling"] = {pos = {216,218},
 					flicker_rate = 0,
 					flicker_timer = 0,
 					flickering = false,
-					tint = {200,216,200,255},
+					--tint = {200,216,200,255},
+					tint = {180,50,40,255},
 					location = "Map.Bathroom"
 }
 --lights["hall_secondfloor_left"] = {draw_properties = {dst = {x = 364, y = 64, w = 272, h = 48},

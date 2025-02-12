@@ -74,6 +74,20 @@
                                  "y":0
                                 }, 
                                 {
+                                 "id":56,
+                                 "image":"..\/..\/assets\/images\/bloods_bathroom_splatter.png",
+                                 "imageheight":64,
+                                 "imagewidth":140,
+                                 "name":"splatter",
+                                 "offsetx":114,
+                                 "offsety":208,
+                                 "opacity":1,
+                                 "type":"imagelayer",
+                                 "visible":true,
+                                 "x":0,
+                                 "y":0
+                                }, 
+                                {
                                  "id":53,
                                  "layers":[
                                         {
@@ -372,7 +386,7 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":56,
+ "nextlayerid":57,
  "nextobjectid":20,
  "orientation":"orthogonal",
  "renderorder":"right-down",

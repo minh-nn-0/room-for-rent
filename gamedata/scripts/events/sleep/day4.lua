@@ -37,6 +37,11 @@ local ghost_chase = rfr.add_cutscene({
 		end
 	end
 })
+
+require "events.sleep.blood_dripping_bathroom"
+
+
+
 local shadow_move_in = false
 local shadow_speed = 0
 local door_squeak_wakeup = rfr.add_cutscene({

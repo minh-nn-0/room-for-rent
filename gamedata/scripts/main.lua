@@ -31,6 +31,9 @@ function LOAD()
 	beaver.new_image(rfr.gamepath() .. "assets/images/notebook.png", "notebook")
 	beaver.new_image(rfr.gamepath() .. "assets/images/student_card.png", "student_card")
 	beaver.new_image(rfr.gamepath() .. "assets/images/blur.png", "blur")
+	beaver.new_image(rfr.gamepath() .. "assets/images/bloods_bathroom_ceiling.png", "bloods_bathroom_ceiling")
+	beaver.new_image(rfr.gamepath() .. "assets/images/bloods_bathroom_splatter.png", "bloods_bathroom_splatter")
+	beaver.new_image(rfr.gamepath() .. "assets/images/bloods_bathroom_floor.png", "bloods_bathroom_floor")
 	beaver.new_image(rfr.gamepath() .. "assets/images/ghost_crawl_room.png", "ghost_crawl")
 
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/dialogue1.wav", "dialogue1")
@@ -58,6 +61,7 @@ function LOAD()
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/horror_01_stinger_piano_02.ogg", "stinger_piano02")
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/thrillsuspend.wav", "thrillsuspend")
 	beaver.new_sound(rfr.gamepath() .. "assets/audios/dogbark.wav", "dog")
+	beaver.new_sound(rfr.gamepath() .. "assets/audios/waterdrops.wav", "waterdrops")
 
 	beaver.set_volume_sound("eatnoddle", 30)
 
