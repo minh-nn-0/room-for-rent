@@ -1,6 +1,6 @@
 GAME = rfr.add_entity()
 
-
+require "events.sleep.hands_bathroom_door"
 local player = require "player"
 local lighting = require "lighting"
 require "door"
