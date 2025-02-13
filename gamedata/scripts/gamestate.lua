@@ -23,6 +23,8 @@ local ghost = require "ghost"
 local audio = require "audio.audios"
 
 local bloods_drip = require "events.sleep.blood_dripping_bathroom"
+
+local camera_shake = require "misc.camera_shake"
 local gamestate = {
 	current_state = "ingame"
 }
@@ -48,6 +50,7 @@ state["ingame"] = {
 		--ghost.update(dt)
 		lighting.update(dt)
 		rfr.update_camera(dt)
+		camera_shake.update(dt)
 		rfr.update_phone(dt)
 		rfr.update_event_listener()
 		rfr.update_character(dt)

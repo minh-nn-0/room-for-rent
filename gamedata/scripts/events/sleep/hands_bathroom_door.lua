@@ -24,6 +24,8 @@ end
 function hands_bathroom_door.ended()
 	return not rfr.get_tileanimation(hands).playing
 end
+
+local camera_shake = require "misc.camera_shake"
 function hands_bathroom_door.update(dt)
 	if not appeared then return end
 	local anim = rfr.get_tileanimation(hands)
@@ -31,6 +33,7 @@ function hands_bathroom_door.update(dt)
 		if anim.currentid == 0 or anim.currentid == 3 or anim.currentid == 6 or anim.currentid == 9 then
 			if not played_sounds[anim.currentid] then
 				beaver.play_sound("doorslam")
+				camera_shake.active(2, 5)
 				played_sounds[anim.currentid] = true
 			end
 		end
