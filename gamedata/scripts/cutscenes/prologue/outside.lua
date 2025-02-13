@@ -1,4 +1,4 @@
-local character = require "luamodules.character"
+local character = require "character"
 local map = require "luamodules.map"
 local util = require "luamodules.utilities"
 local dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")

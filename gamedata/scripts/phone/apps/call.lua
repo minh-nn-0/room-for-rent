@@ -35,7 +35,7 @@ local states = {
 				rfr.set_timer(call_timer, 10)
 				app_state = "calling"
 				status = "Calling"
-				beaver.play_sound("phonering",audio_channel)
+				beaver.play_sound(ASSETS.audios.phonering,audio_channel)
 			end
 		end,
 		draw = function()
@@ -49,7 +49,7 @@ local states = {
 				local char_head_src = character_icon[char]
 				local char_name = character_name[char]
 
-				beaver.draw_texture("character_heads", {dst = {x = posx, y = posy, w = 8 * config.cam_zoom, h = 8 * config.cam_zoom},
+				beaver.draw_texture(ASSETS.images.character_heads, {dst = {x = posx, y = posy, w = 8 * config.cam_zoom, h = 8 * config.cam_zoom},
 														src = char_head_src})
 				if i == selection.get() then beaver.set_draw_color(230,230,230,255)
 				else beaver.set_draw_color(40,40,40,255)
@@ -96,7 +96,7 @@ local states = {
 			beaver.draw_circle(posx + 8 * config.cam_zoom, posy + 8 * config.cam_zoom,math.max(45, math.min(55 * math.sin(rfr.get_stopwatch(circle_sw) * 0.8 * 2 * math.pi),55)), true)
 			beaver.set_draw_color(30,64,68,255)
 			beaver.draw_circle(posx + 8 * config.cam_zoom, posy + 8 * config.cam_zoom,math.max(40, math.min(45 * math.sin(rfr.get_stopwatch(circle_sw) * 0.5 * 2 * math.pi),45)), true)
-			beaver.draw_texture("character_heads", {dst = {x = posx, y = posy, w = 16 * config.cam_zoom, h = 16 * config.cam_zoom},
+			beaver.draw_texture(ASSETS.images.character_heads, {dst = {x = posx, y = posy, w = 16 * config.cam_zoom, h = 16 * config.cam_zoom},
 													src = character_icon[callee]})
 			beaver.set_draw_color(40,40,40,255)
 			beaver.draw_text_centered(posx + 8 * config.cam_zoom, posy + 20 * config.cam_zoom, config.ui_font, 1, phone_label["phone"][status], 0, true)

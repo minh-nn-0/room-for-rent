@@ -37,10 +37,10 @@ local function draw()
 		local app_posy = start_app_posy + i * 10 * config.cam_zoom
 		local app_src = phone_apps_info[app].src
 		local app_text = phone_apps_info[app].text
-		beaver.draw_texture("UI", {dst = {x = app_posx, y = app_posy, w = 8 * config.cam_zoom, h = 8 * config.cam_zoom},
+		beaver.draw_texture(ASSETS.images.UI, {dst = {x = app_posx, y = app_posy, w = 8 * config.cam_zoom, h = 8 * config.cam_zoom},
 									src = app_src})
 		if noti.get_notifying_apps()[app] then
-			beaver.draw_texture("UI", {dst = {x = app_posx + 5 * config.cam_zoom, y = app_posy - 1 * config.cam_zoom, w = 5 * config.cam_zoom, h = 7 * config.cam_zoom},
+			beaver.draw_texture(ASSETS.images.UI, {dst = {x = app_posx + 5 * config.cam_zoom, y = app_posy - 1 * config.cam_zoom, w = 5 * config.cam_zoom, h = 7 * config.cam_zoom},
 										src = {x = 8, y = 40, w = 5, h = 7}})
 		end
 		if i == selection.get() then beaver.set_draw_color(230,230,230,255)

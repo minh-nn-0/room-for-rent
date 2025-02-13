@@ -1,7 +1,7 @@
 local player = {}
 PLAYER = rfr.add_entity()
 rfr.set_properties(PLAYER, "walkspeed", 0.6)
-rfr.set_properties(PLAYER, "footstep_sound", "footstep_tile_heavy")
+rfr.set_properties(PLAYER, "footstep_sound", ASSETS.audios.footstep_tile_heavy)
 rfr.add_tag(PLAYER, "footstep_sound")
 rfr.set_flag("player_can_move")
 rfr.set_flag("player_can_interact")
@@ -101,7 +101,7 @@ function player.update(dt)
 	end
 	--print(ppos.x + 16, ppos.y + 16)
 	if beaver.get_input("S") == 1 then
-		rfr.set_image(PLAYER, "girl")
+		rfr.set_image(PLAYER, ASSETS.images.girl)
 	end
 	if beaver.get_input("D") == 1 then
 		map.set_current_map("outside")

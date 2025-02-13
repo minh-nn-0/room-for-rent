@@ -5,7 +5,7 @@
 namespace rfr
 {
 	float draw_note(float posx, float posy, const std::string& text, const std::string& header,
-			sdl::texture* UI_tex,
-			sdl::font* font,
+			std::size_t UI_tex,
+			std::size_t font,
 			beaver::sdlgame& game, sol::state& lua);
 };

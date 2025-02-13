@@ -19,7 +19,7 @@ local cs_sleep_1 = rfr.add_cutscene({
 	scripts = {
 		function(dt)
 			if rfr.is_transition_active() then return false end
-			doorknock_track = beaver.play_sound("doorknock_panright")
+			doorknock_track = beaver.play_sound(ASSETS.audios.doorknock_panright)
 			rfr.set_timer(timer,2)
 			return true
 		end,
@@ -38,7 +38,7 @@ local cs_sleep_1 = rfr.add_cutscene({
 					shadow_appeared = true
 					rfr.set_position(shadow, 420, 96)
 					rfr.set_location(shadow, "Map.Hall")
-					rfr.set_image(shadow, "tileset")
+					rfr.set_image(shadow, ASSETS.images.tileset)
 					rfr.set_image_source(shadow, 320,304,32,32)
 					return true
 				else

@@ -35,7 +35,7 @@ function rfr.draw_phone_notification()
 
 	beaver.set_draw_color(20,20,20,200)
 	beaver.draw_rectangle(15, 10, 54 * config.cam_zoom, 12 * config.cam_zoom, true)
-	beaver.draw_texture("UI", {dst = {x = 20, y = 15, w = 6 * config.cam_zoom, h = 10 * config.cam_zoom},
+	beaver.draw_texture(ASSETS.images.UI, {dst = {x = 20, y = 15, w = 6 * config.cam_zoom, h = 10 * config.cam_zoom},
 								src = {x = 0, y = 22, w = 6, h = 10}})
 	beaver.set_draw_color(255,255,255,255)
 	beaver.draw_text(60, 20, config.ui_font, 1, text, 0, true)

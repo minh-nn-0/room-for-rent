@@ -1,6 +1,6 @@
-local gamestate = require "gamestate"
 ASSETS = {images = {}, audios = {}, fonts = {}}
 MAPS = {}
+local gamestate
 function LOAD()
 	beaver.set_render_logical_size(config.render_size[1], config.render_size[2])
 	beaver.set_integer_scale(true)
@@ -73,8 +73,7 @@ function LOAD()
 		doorslam = beaver.new_sound(rfr.gamepath() .. "assets/audios/doorslam.wav"),
 		lockeddoor = beaver.new_sound(rfr.gamepath() .. "assets/audios/lockeddoor.wav"),
 		cry = beaver.new_sound(rfr.gamepath() .. "assets/audios/cry.wav"),
-	},
-	beaver.set_volume_sound(ASSETS.audios.eatnoddle, 30)
+	}
 
 	ASSETS.fonts = {
 		unifontexmono = beaver.new_font(rfr.gamepath() .. "assets/fonts/UnifontExMono.ttf", 16),
@@ -90,10 +89,9 @@ function LOAD()
 		outside = rfr.new_map(rfr.gamepath() .. "data/maps/outside.tmj"),
 		balcony = rfr.new_map(rfr.gamepath() .. "data/maps/behind1.tmj"),
 	}
-
+	gamestate = require "gamestate"
 	gamestate.load()
 end
-
 function UPDATE(dt)
 	return gamestate.update(dt)
 end

@@ -26,7 +26,7 @@ local states = {
 				local posy = start_posy + i * 10 * config.cam_zoom
 				local actor_name = actor_names[actor]
 
-				beaver.draw_texture("character_heads", {dst = {x = posx, y = posy, w = 8 * config.cam_zoom, h = 8 * config.cam_zoom},
+				beaver.draw_texture(ASSETS.images.character_heads, {dst = {x = posx, y = posy, w = 8 * config.cam_zoom, h = 8 * config.cam_zoom},
 														src = {x = 8, y = 16, w = 8, h = 8}})
 				if i == selection.get() then beaver.set_draw_color(230,230,230,255)
 				else beaver.set_draw_color(40,40,40,255)

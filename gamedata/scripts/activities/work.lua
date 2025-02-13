@@ -13,7 +13,7 @@ local cs_gotowork = rfr.add_cutscene({
 		function(dt)
 			if rfr.get_position(bus.eid).x >= 180 then return false end
 			bus.stop()
-			beaver.play_sound("busdoor", -1, 0)
+			beaver.play_sound(ASSETS.audios.busdoor, -1, 0)
 			rfr.set_timer(bus.eid, 3)
 			rfr.set_cam_target(nil, 0, 0)
 			rfr.set_position(PLAYER, 1000, 1000)
@@ -58,7 +58,7 @@ local cs_gotowork = rfr.add_cutscene({
 		function(dt)
 			if rfr.get_position(bus.eid).x >= 180 then return false end
 			bus.stop()
-			beaver.play_sound("busdoor", -1, 0)
+			beaver.play_sound(ASSETS.audios.busdoor, -1, 0)
 			rfr.set_timer(bus.eid, 3)
 			return true
 		end,

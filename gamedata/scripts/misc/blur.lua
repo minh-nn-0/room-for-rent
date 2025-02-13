@@ -2,7 +2,7 @@ local blur = {}
 
 blur.eid = rfr.add_entity()
 
-rfr.set_image(blur.eid, "blur")
+rfr.set_image(blur.eid, ASSETS.images.blur)
 rfr.set_tileanimation(blur.eid, {
 	frames = {{0,150},{1,150},{2,150},{3,150},{4,150},{5,150},{6,150},{7,150}},
 	framewidth = 8,

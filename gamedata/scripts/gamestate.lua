@@ -1,6 +1,7 @@
 GAME = rfr.add_entity()
 
 require "events.sleep.hands_bathroom_door"
+local character = require "character"
 local player = require "player"
 local lighting = require "lighting"
 require "door"
@@ -71,7 +72,7 @@ state["ingame"] = {
 		bloods_drip.update(dt)
 		blur.update()
 		if rfr.get_flag("dreaming") then dream.update(dt) end
-		map.set_only_player_location_visible()
+		--map.set_only_player_location_visible()
 		map.update(dt)
 		narrative.update(dt)
 		audio.update()
@@ -101,21 +102,21 @@ state["ingame"] = {
 		if rfr.get_flag("player_can_interact") and rfr.get_first_interaction() ~= -1 then
 			beaver.set_draw_color(255,255,255,255)
 			local i = rfr.get_first_interaction()
-			rfr.draw_interactions_info(i)
+			rfr.draw_interactions_info(i, ASSETS.images.UI, ASSETS.fonts[config.ui_font])
 		end
 
 		for _, eid in ipairs(rfr.get_active_entities()) do
 			if rfr.get_location(eid) == plocation then
 				if rfr.has_active_dialogue(eid) then
 					beaver.set_draw_color(10,10,10,255)
-					rfr.draw_dialogue(eid)
+					rfr.draw_dialogue(eid, ASSETS.images.UI, ASSETS.fonts[config.ui_font])
 				end
 			end
 		end
 		beaver.set_draw_color(255,255,255,255)
 		local cx,_,cw,_ = rfr.get_cam_view()
 		local player_near_right_edge = ppos.x >= cx + (cw / config.cam_zoom) - 70
-		rfr.draw_dialogue_options(player_near_right_edge and ppos.x or ppos.x + 30, ppos.y + 5, not player_near_right_edge)
+		rfr.draw_dialogue_options(ASSETS.images.UI, ASSETS.fonts[config.ui_font], player_near_right_edge and ppos.x or ppos.x + 30, ppos.y + 5, not player_near_right_edge)
 		beaver.set_draw_color(10,10,10,255)
 
 		beaver.set_using_cam(false)

@@ -5,7 +5,7 @@ ghost.eid = rfr.add_entity()
 -- HANGING
 rfr.set_state_entry(ghost.eid, "hanging",
 	function()
-		rfr.set_image(ghost.eid, "ghost_crawl")
+		rfr.set_image(ghost.eid, ASSETS.images.ghost_crawl)
 		rfr.set_tileanimation(ghost.eid, {
 			frames = {{0,400},{1,400},{2,400},{3,400}},
 			framewidth = 100,
@@ -29,7 +29,7 @@ rfr.set_state_entry(ghost.eid, "crawling",
 	end)
 
 -- NORMAL
-rfr.set_image(ghost.eid, "ghost")
+rfr.set_image(ghost.eid, ASSETS.images.ghost)
 rfr.set_state_entry(ghost.eid,"stand",
 	function()
 		rfr.set_tileanimation(ghost.eid, {

@@ -47,7 +47,7 @@ function audio.update()
 	if rfr.get_flag("narrative_sound") then
 		if narrative.text_appearing() then
 			if not rfr.get_timer(narrative_sound_timer).running then
-				beaver.play_sound("dialogue1")
+				beaver.play_sound(ASSETS.audios.dialogue1)
 				rfr.set_timer(narrative_sound_timer, 6/config.narrative_cpf)
 			end
 		end

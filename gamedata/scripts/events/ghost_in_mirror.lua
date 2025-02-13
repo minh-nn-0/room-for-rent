@@ -13,8 +13,8 @@ local ghost_in_mirror = rfr.add_event(
 
 rfr.set_event_listener(GAME, ghost_in_mirror,
 	function()
-		rfr.set_tile("room", "Map.Bathroom.Bg.Items.1", 14, 14, 835)
-		rfr.set_tile("room", "Map.Bathroom.Bg.Items.1", 14, 15, 873)
+		rfr.set_tile(MAPS.room, "Map.Bathroom.Bg.Items.1", 14, 14, 835)
+		rfr.set_tile(MAPS.room, "Map.Bathroom.Bg.Items.1", 14, 15, 873)
 		rfr.set_flag("ghost_in_mirror")
 	end)
 
@@ -24,7 +24,7 @@ local ghost_disappear_in_mirror = rfr.add_event(
 	end)
 rfr.set_event_listener(GAME, ghost_disappear_in_mirror,
 	function()
-		rfr.set_tile("room", "Map.Bathroom.Bg.Items.1", 14, 14, 871)
-		rfr.set_tile("room", "Map.Bathroom.Bg.Items.1", 14, 15, 909)
+		rfr.set_tile(MAPS.room, "Map.Bathroom.Bg.Items.1", 14, 14, 871)
+		rfr.set_tile(MAPS.room, "Map.Bathroom.Bg.Items.1", 14, 15, 909)
 		rfr.unset_flag("ghost_in_mirror")
 	end)

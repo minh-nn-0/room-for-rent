@@ -29,20 +29,20 @@ function map.get_cam_boundaries(m)
 end
 
 function map.prepare_hall()
-	rfr.set_layer_visible("outside", "Map.Outside.Bg.house_wall", false)
-	rfr.set_layer_visible("outside", "Map.Outside.Bg.fences", false)
-	rfr.set_layer_visible("outside", "Map.Outside.Fg.fences", true)
+	rfr.set_layer_visible(MAPS.outside, "Map.Outside.Bg.house_wall", false)
+	rfr.set_layer_visible(MAPS.outside, "Map.Outside.Bg.fences", false)
+	rfr.set_layer_visible(MAPS.outside, "Map.Outside.Fg.fences", true)
 end
 
 function map.prepare_outside()
-	rfr.set_layer_visible("outside", "Map.Outside.Bg.house_wall", true)
-	rfr.set_layer_visible("outside", "Map.Outside.Bg.fences", true)
-	rfr.set_layer_visible("outside", "Map.Outside.Fg.fences", false)
+	rfr.set_layer_visible(MAPS.outside, "Map.Outside.Bg.house_wall", true)
+	rfr.set_layer_visible(MAPS.outside, "Map.Outside.Bg.fences", true)
+	rfr.set_layer_visible(MAPS.outside, "Map.Outside.Fg.fences", false)
 end
 function map.set_only_player_location_visible()
 	local player_location = rfr.get_location(PLAYER)
 	player_location = player_location == "Map.Hall" and "Map.Outside" or player_location
-	for _, group in ipairs(rfr.get_group_layers(current_map, "Map")) do
+	for _, group in ipairs(rfr.get_group_layers(MAPS[current_map], "Map")) do
 		rfr.set_layer_visible(MAPS[current_map], group, false)
 	end
 	rfr.set_layer_visible(MAPS[current_map], player_location, true)

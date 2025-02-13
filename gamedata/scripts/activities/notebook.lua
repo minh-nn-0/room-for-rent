@@ -109,7 +109,7 @@ end
 function notebook.draw()
 	if not rfr.get_flag("notebook_opening") and notebook.at_position() then return end
 	local book_dst = {x = book_posx, y = book_posy, w = 52 * config.cam_zoom, h = 70 * config.cam_zoom}
-	beaver.draw_texture("notebook", {dst = book_dst})
+	beaver.draw_texture(ASSETS.images.notebook, {dst = book_dst})
 	beaver.set_draw_color(0,0,0,255)
 	beaver.draw_text_centered(book_posx + 26 * config.cam_zoom, book_posy + (70 - 8) * config.cam_zoom,
 								config.ui_font, 1,

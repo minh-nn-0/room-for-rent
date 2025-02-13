@@ -1,15 +1,16 @@
 #include "note_drawing.hpp"
 #include "textbox_drawing.hpp"
 float rfr::draw_note(float posx, float posy, const std::string& text, const std::string& header,
-		sdl::texture* UI_tex,
-		sdl::font* font,
+		std::size_t UI_texid,
+		std::size_t fontid,
 		beaver::sdlgame& game, sol::state& lua)
 {
 	float cam_zoom = lua["config"]["cam_zoom"].get<float>();
-	TTF_SetFontStyle(*font, TTF_STYLE_BOLD);	
-	sdl::texture header_texture = beaver::make_text_blended(game._graphics._rdr, *font, header, {0,0,0,255});
-	TTF_SetFontStyle(*font, TTF_STYLE_NORMAL);	
-	sdl::texture text_texture = beaver::make_text_blended(game._graphics._rdr, *font, text, {40,40,40,255}, 140);
+	auto& font = game._assets.get_vec<sdl::font>().at(fontid);
+	TTF_SetFontStyle(font, TTF_STYLE_BOLD);	
+	sdl::texture header_texture = beaver::make_text_blended(game._graphics._rdr, font, header, {0,0,0,255});
+	TTF_SetFontStyle(font, TTF_STYLE_NORMAL);	
+	sdl::texture text_texture = beaver::make_text_blended(game._graphics._rdr, font, text, {40,40,40,255}, 140);
 	
 	mmath::frect header_dst = {posx + 2 * cam_zoom, posy + 2 * cam_zoom,
 							static_cast<float>(header_texture._width),
@@ -20,7 +21,7 @@ float rfr::draw_note(float posx, float posy, const std::string& text, const std:
 	mmath::frect text_box = {posx, posy,
 							36 * cam_zoom,
 							header_dst._size.y + text_dst._size.y + 4 * cam_zoom};
-	draw_textbox_9parts(text_box, {48,0}, 4, UI_tex, game._graphics);
+	draw_textbox_9parts(text_box, {48,0}, 4, game._assets.get_vec<sdl::texture>().at(UI_texid), game._graphics);
 	game._graphics.texture(header_texture, header_dst);
 	game._graphics.texture(text_texture, text_dst);
 	return text_box._size.y;

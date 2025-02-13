@@ -30,7 +30,7 @@ function shower.toggle()
 		on = false
 	else
 		rfr.set_particle_emitter_auto(SHOWER, true)
-		beaver.play_sound("running_water", running_water_channel, -1)
+		beaver.play_sound(ASSETS.audios.running_water, running_water_channel, -1)
 		on = true
 	end
 end
@@ -60,7 +60,7 @@ local cs_shower = rfr.add_cutscene({
 			rfr.unset_flag("naked")
 		else
 			rfr.set_flag("naked")
-			rfr.set_image(PLAYER, "male_naked")
+			rfr.set_image(PLAYER, ASSETS.images.male_naked)
 			blur.attach()
 		end
 		rfr.set_state(PLAYER, "idle")
@@ -72,7 +72,7 @@ local cs_shower = rfr.add_cutscene({
 		function(dt)
 			if rfr.is_transition_active() then return false end
 			shower.toggle()
-			rfr.set_image(PLAYER, "male_shirt")
+			rfr.set_image(PLAYER, ASSETS.images.male_shirt)
 			rfr.set_state(PLAYER, "shower")
 			rfr.unset_flag("player_can_move")
 			rfr.unset_flag("player_can_interact")

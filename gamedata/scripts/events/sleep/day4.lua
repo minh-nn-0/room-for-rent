@@ -6,7 +6,7 @@ local timer = rfr.add_entity()
 local lighting = require "lighting"
 
 local shadow = rfr.add_entity()
-rfr.set_image(shadow, "tileset")
+rfr.set_image(shadow, ASSETS.images.tileset)
 rfr.set_image_source(shadow, 320,304,16,32)
 rfr.set_location(shadow, "Map.Mainroom")
 rfr.set_rotation(shadow, -30)
@@ -65,7 +65,7 @@ local ghost_chase = rfr.add_cutscene({
 		function(dt)
 			if rfr.get_tileanimation(ghost.eid).playing then return false end
 			rfr.set_state(ghost.eid, "idle")
-			rfr.set_image(ghost.eid, "ghost")
+			rfr.set_image(ghost.eid, ASSETS.images.ghost)
 			rfr.set_position(ghost.eid, 64, 104)
 			ghost.chasing = true
 			return true
@@ -104,8 +104,8 @@ local function hands_wall_update(dt)
 	hands_wall_timer = hands_wall_timer + dt
 	if hands_wall_timer >= period then
 		local tx,ty,tile = table.unpack(hands_wall[hand_index])
-		rfr.set_tile("room", "Map.Mainroom.Bg.hands", tx,ty,tile)
-		beaver.play_sound("footstep_mud_run_04")
+		rfr.set_tile(MAPS.room, "Map.Mainroom.Bg.hands", tx,ty,tile)
+		beaver.play_sound(ASSETS.audios.footstep_mud_run_04)
 		hand_index = hand_index + 1
 		hands_wall_timer = 0
 	end
@@ -149,7 +149,7 @@ local bathroom = rfr.add_cutscene({
 	scripts = {
 		function(dt)
 			if not lighting.light_is_on("bathroom_ceiling") then return false end
-			beaver.play_sound("stinger_piano12")
+			beaver.play_sound(ASSETS.audios.stinger_piano12)
 			return true
 		end,
 		function(dt)
@@ -161,10 +161,10 @@ local bathroom = rfr.add_cutscene({
 			print("hihihihihihi")
 			if rfr.get_timer(GAME).running then return false end
 			hands_on_door.begin()
-			rfr.set_tile("room", "Map.Mainroom.Bg.Items.2", 15, 6, 434)
-			rfr.set_tile("room", "Map.Mainroom.Bg.Items.2", 16, 6, 435)
-			rfr.set_tile("room", "Map.Mainroom.Bg.Items.2", 15, 7, 472)
-			rfr.set_tile("room", "Map.Mainroom.Bg.Items.2", 16, 7, 473)
+			rfr.set_tile(MAPS.room, "Map.Mainroom.Bg.Items.2", 15, 6, 434)
+			rfr.set_tile(MAPS.room, "Map.Mainroom.Bg.Items.2", 16, 6, 435)
+			rfr.set_tile(MAPS.room, "Map.Mainroom.Bg.Items.2", 15, 7, 472)
+			rfr.set_tile(MAPS.room, "Map.Mainroom.Bg.Items.2", 16, 7, 473)
 			return true
 		end,
 		function(dt)
@@ -192,7 +192,7 @@ local door_squeak_wakeup = rfr.add_cutscene({
 		rfr.set_timer(timer, 4)
 		bed.wake_up()
 		rfr.unset_flag("player_can_move")
-		beaver.play_sound("doorsqueak")
+		beaver.play_sound(ASSETS.audios.doorsqueak)
 	end,
 	exit = function()
 		print("hoihi")
@@ -204,7 +204,7 @@ local door_squeak_wakeup = rfr.add_cutscene({
 			rfr.unset_flag("screen_fill")
 			rfr.set_dialogue(PLAYER, {content = dialogues["wakeup"],
 									cpf = 80, color = {120,120,120,255}})
-			beaver.play_sound("ambience_night_2", -1, -1)
+			beaver.play_sound(ASSETS.audios.ambience_night_2, -1, -1)
 			return true
 		end,
 		function(dt)
@@ -223,7 +223,7 @@ local door_squeak_wakeup = rfr.add_cutscene({
 			if rfr.get_position(PLAYER).x >= 240 then
 				shadow_move_in = true
 				shadow_speed = -90
-				beaver.play_sound("stinger_piano02")
+				beaver.play_sound(ASSETS.audios.stinger_piano02)
 			end
 		else
 			local sposx = rfr.get_position(shadow).x

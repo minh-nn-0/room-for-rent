@@ -1,6 +1,6 @@
 local bus = {}
 bus.eid = rfr.add_entity()
-rfr.set_image(bus.eid, "tileset")
+rfr.set_image(bus.eid, ASSETS.images.tileset)
 rfr.set_image_source(bus.eid, 478, 0, 130, 55)
 rfr.set_location(bus.eid, "Map.Outside")
 rfr.set_position(bus.eid, 1000,1000)

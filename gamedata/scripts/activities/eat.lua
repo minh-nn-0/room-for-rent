@@ -38,7 +38,7 @@ local cs_eat = rfr.add_cutscene({
 		rfr.set_cam_target(eat, 16,0)
 		rfr.set_position(PLAYER, 1000,1000)
 		rfr.set_particle_emitter_auto(eat, true)
-		beaver.play_sound("eatnoddle")
+		beaver.play_sound(ASSETS.audios.eatnoddle)
 
 		rfr.set_timer(eat, 5)
 	end,

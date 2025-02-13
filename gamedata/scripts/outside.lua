@@ -33,7 +33,7 @@ end
 function clouds.draw()
 	for _,c in ipairs(clouds_present) do
 		local csrc = clouds_srcs[c.type]
-		beaver.draw_texture("clouds", {dst = {x = c.x, y = c.y, w = csrc.w, h = csrc.h}, src = csrc})
+		beaver.draw_texture(ASSETS.images.clouds, {dst = {x = c.x, y = c.y, w = csrc.w, h = csrc.h}, src = csrc})
 	end
 end
 

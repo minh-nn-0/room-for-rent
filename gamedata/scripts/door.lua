@@ -65,7 +65,7 @@ rfr.set_interaction(DOOR_ROOM_BATHROOM, interaction_name["door_room_to_bathroom"
 		return player_in_range("room_bathroom", 10)
 	end,
 	function()
-		beaver.play_sound("dooropen")
+		beaver.play_sound(ASSETS.audios.dooropen)
 		rfr.fade_in(2)
 		move_player_to_destination("room_bathroom", true)
 	end)
@@ -76,9 +76,9 @@ rfr.set_interaction(DOOR_BATHROOM_ROOM, interaction_name["door_bathroom_to_room"
 	end,
 	function()
 		if rfr.get_properties(DOOR_BATHROOM_ROOM, "locked") then
-			beaver.play_sound("lockeddoor")
+			beaver.play_sound(ASSETS.audios.lockeddoor)
 		else
-			beaver.play_sound("dooropen")
+			beaver.play_sound(ASSETS.audios.dooropen)
 			rfr.fade_in(2)
 			move_player_to_destination("bathroom_room", true)
 		end
@@ -93,7 +93,7 @@ rfr.set_interaction(DOOR_ROOM_HALL, interaction_name["door_room_to_hall"],
 			rfr.set_dialogue(PLAYER, {content = interaction_details["not_done_shower"]})
 		elseif rfr.get_flag("prologue_room") then rfr.set_dialogue(PLAYER, {content = interaction_details["door_room_to_hall_not_clean"]})
 		else
-			beaver.play_sound("dooropen2")
+			beaver.play_sound(ASSETS.audios.dooropen2)
 			rfr.set_cam_zoom(3)
 			rfr.fade_in(2)
 			move_player_to_destination("room_hall", true)
@@ -128,7 +128,7 @@ rfr.set_interaction(DOOR_HALL_ROOM, interaction_name["door_hall_to_room"],
 		return player_in_range("hall_room", 10)
 	end,
 	function()
-		beaver.play_sound("dooropen2")
+		beaver.play_sound(ASSETS.audios.dooropen2)
 		rfr.set_cam_zoom(config.cam_zoom)
 		rfr.fade_in(2)
 		rfr.set_cam_center(PLAYER, 16,0)

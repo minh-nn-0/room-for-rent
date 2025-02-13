@@ -30,7 +30,7 @@ local cs_shadow_appear_behind = rfr.add_cutscene({
 				shadow_appeared = true
 				rfr.set_position(shadow, 160, 112)
 				rfr.set_location(shadow, "Map.Mainroom")
-				rfr.set_image(shadow, "tileset")
+				rfr.set_image(shadow, ASSETS.images.tileset)
 				rfr.set_image_source(shadow, 320,304,16,32)
 			end
 			if shadow_timer > 1.5 then

@@ -1,7 +1,7 @@
 local hands_bathroom_door = {}
 
 local hands = rfr.add_entity()
-rfr.set_image(hands, "hands_on_door")
+rfr.set_image(hands, ASSETS.images.hands_on_door)
 local played_sounds = {}
 local appeared = false
 function hands_bathroom_door.begin()
@@ -32,7 +32,7 @@ function hands_bathroom_door.update(dt)
 	if anim and anim.playing then
 		if anim.currentid == 0 or anim.currentid == 3 or anim.currentid == 6 or anim.currentid == 9 then
 			if not played_sounds[anim.currentid] then
-				beaver.play_sound("doorslam")
+				beaver.play_sound(ASSETS.audios.doorslam)
 				camera_shake.active(2, 5)
 				played_sounds[anim.currentid] = true
 			end

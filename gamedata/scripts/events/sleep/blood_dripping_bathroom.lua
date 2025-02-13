@@ -15,7 +15,7 @@ local blood_drips = {
 for _,b in ipairs(blood_drips) do
 	b.eid = rfr.add_entity()
 	rfr.set_position(b.eid, b.posx, 208)
-	rfr.set_image(b.eid, "bloods_ceiling_" .. b.type)
+	rfr.set_image(b.eid, ASSETS.images["bloods_ceiling_" .. b.type])
 	rfr.set_tileanimation(b.eid, {
 		frames = {{1,150},{2,150},{3,150},{4,150},{5,150},{6,150},{7,150},{8,150},{0,150}},
 		framewidth = 32,
@@ -24,7 +24,7 @@ for _,b in ipairs(blood_drips) do
 	})
 
 	b.floor = rfr.add_entity()
-	rfr.set_image(b.floor, "bloods_floor")
+	rfr.set_image(b.floor, ASSETS.images.bloods_floor)
 	rfr.set_tileanimation(b.floor, {
 		frames = {{0,150},{1,150},{2,150},{3,150},{4,150},{5,150},{6,150}},
 		framewidth = 32,
@@ -35,7 +35,7 @@ for _,b in ipairs(blood_drips) do
 end
 local appeared = false
 function bloods_dripping_bathroom.init()
-	rfr.set_layer_visible("room", "Map.Bathroom.Bg.splatter", true)
+	rfr.set_layer_visible(MAPS.room, "Map.Bathroom.Bg.splatter", true)
 	for _,b in ipairs(blood_drips) do
 		rfr.set_location(b.eid, "Map.Bathroom")
 		rfr.set_location(b.floor, "Map.Bathroom")
@@ -61,7 +61,7 @@ function bloods_dripping_bathroom.update(dt)
 	for i,b in pairs(bloods) do
 		if b then
 			if b >= 60 then
-				beaver.play_sound("waterdrops")
+				beaver.play_sound(ASSETS.audios.waterdrops)
 				rfr.reset_tileanimation(i)
 				bloods[i] = nil
 			else

@@ -39,7 +39,7 @@ namespace rfr
 			const dialogue& dialogue,
 			float scale,
 			int padding, int wraplength,
-			sdl::texture* UI_tex,
-			sdl::font* font,
+			std::size_t UI_tex,
+			std::size_t font,
 			beaver::sdlgame& game);
 };

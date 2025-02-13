@@ -33,7 +33,6 @@ rfr = rfr or {}
 require "luamodules.properties"
 require "luamodules.gameflags"
 require "luamodules.dialogue"
-require "luamodules.character"
 require "luamodules.camera"
 require "luamodules.interaction"
 require "luamodules.transition"

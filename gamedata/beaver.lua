@@ -6,28 +6,24 @@ beaver.FLIP_NONE = FLIP_NONE
 beaver.TILED_FLIP_H = TILED_FLIP_H
 beaver.TILED_FLIP_V = TILED_FLIP_V
 --- @param path string
---- @param custom_name? string
-function beaver.new_image(path, custom_name)
-	NEW_IMAGE(path, custom_name or "")
+function beaver.new_image(path)
+	return NEW_IMAGE(path)
 end
 
 --- @param path string
---- @param custom_name? string
-function beaver.new_sound(path, custom_name)
-	NEW_SOUND(path, custom_name or "")
+function beaver.new_sound(path)
+	return NEW_SOUND(path)
 end
 
 --- @param path string
---- @param custom_name? string
-function beaver.new_music(path, custom_name)
-	NEW_MUSIC(path, custom_name or "")
+function beaver.new_music(path)
+	return NEW_MUSIC(path)
 end
 
 --- @param path string
 --- @param fontsize integer
---- @param custom_name? string
-function beaver.new_font(path, fontsize, custom_name)
-	NEW_FONT(path, fontsize, custom_name or "")
+function beaver.new_font(path, fontsize)
+	return NEW_FONT(path, fontsize)
 end
 
 --- @param keyname string
@@ -72,23 +68,22 @@ function beaver.draw_circle(x,y,r,filled)
 	DRAW_CIRCLE(x,y,r,filled)
 end
 
---- @param texture_name string
 --- @param param? table
-function beaver.draw_texture(texture_name, param)
-	DRAW_TEXTURE(texture_name, param or {})
+function beaver.draw_texture(texture, param)
+	DRAW_TEXTURE(texture, param or {})
 end
 
-function beaver.set_font_size(fontname, size)
-	SET_FONT_SIZE(fontname, size)
+function beaver.set_font_size(font, size)
+	SET_FONT_SIZE(font, size)
 end
-function beaver.draw_text(x, y, fontname, scale, content, wraplength, blended)
-	DRAW_TEXT(x,y,fontname, scale, content, wraplength or 0, blended or false)
+function beaver.draw_text(x, y, font, scale, content, wraplength, blended)
+	DRAW_TEXT(x,y,font, scale, content, wraplength or 0, blended or false)
 end
-function beaver.draw_text_centered(x, y, fontname, scale, content, wraplength, blended)
-	DRAW_TEXT_CENTERED(x,y,fontname, scale, content, wraplength or 0, blended or false)
+function beaver.draw_text_centered(x, y, font, scale, content, wraplength, blended)
+	DRAW_TEXT_CENTERED(x,y,font, scale, content, wraplength or 0, blended or false)
 end
-function beaver.draw_text_right(x, y, fontname,scale, content, wraplength, blended)
-	DRAW_TEXT_RIGHT(x,y,fontname, scale, content, wraplength or 0, blended or false)
+function beaver.draw_text_right(x, y, font,scale, content, wraplength, blended)
+	DRAW_TEXT_RIGHT(x,y,font, scale, content, wraplength or 0, blended or false)
 end
 -- @param r integer
 -- @param g integer
@@ -105,14 +100,14 @@ function beaver.clear()
 	CLS()
 end
 
-function beaver.set_texture_blend_mode(texture_name, blend_mode)
-	SET_TEXTURE_BLEND_MODE(texture_name, blend_mode)
+function beaver.set_texture_blend_mode(texture, blend_mode)
+	SET_TEXTURE_BLEND_MODE(texture, blend_mode)
 end
 function beaver.set_render_blend_mode(blend_mode)
 	SET_RENDER_BLEND_MODE(blend_mode)
 end
-function beaver.set_texture_color_mod(texturename,color)
-	SET_TEXTURE_COLOR_MOD(texturename, color)
+function beaver.set_texture_color_mod(texture,color)
+	SET_TEXTURE_COLOR_MOD(texture, color)
 end
 --- @param x integer
 --- @param y integer
@@ -133,15 +128,15 @@ end
 function beaver.get_render_output_size()
 	return GET_RENDER_OUTPUT_SIZE()
 end
-function beaver.create_texture_for_drawing(texture_name, width, height)
+function beaver.create_texture_for_drawing(width, height)
 	local w,h = GET_RENDER_OUTPUT_SIZE()
 	width = width and width or w
 	height = height and height or h
-	CREATE_TEXTURE_FOR_DRAWING(texture_name, width, height)
+	return CREATE_TEXTURE_FOR_DRAWING(width, height)
 end
 
-function beaver.set_render_target(target_name)
-	SET_RENDER_TARGET(target_name and target_name or "")
+function beaver.set_render_target(target)
+	SET_RENDER_TARGET(target or -1)
 end
 function beaver.set_viewport(x,y,w,h)
 	SET_VIEWPORT(x,y,w,h)
@@ -159,15 +154,15 @@ function beaver.set_fullscreen(fc)
 	SET_FULLSCREEN(fc)
 end
 
-function beaver.get_image_size(name)
-	return IMAGE_SIZE(name)
+function beaver.get_image_size(tex)
+	return IMAGE_SIZE(tex)
 end
 
-function beaver.play_sound(name, channel, loop)
-	return PLAY_SOUND(name, channel or -1, loop or 0)
+function beaver.play_sound(sound, channel, loop)
+	return PLAY_SOUND(sound, channel or -1, loop or 0)
 end
-function beaver.play_music(name, loop)
-	PLAY_MUSIC(name, loop or -1)
+function beaver.play_music(sound, loop)
+	PLAY_MUSIC(sound, loop or -1)
 end
 function beaver.pause_channel(channel)
 	PAUSE_CHANNEL(channel or -1)
@@ -181,8 +176,8 @@ end
 function beaver.fade_out_music(ms)
 	FADE_OUT_MUSIC(ms)
 end
-function beaver.fade_in_channel(name, channel, loop, ms)
-	return FADE_IN_CHANNEL(name, channel, loop, ms)
+function beaver.fade_in_channel(sound, channel, loop, ms)
+	return FADE_IN_CHANNEL(sound, channel, loop, ms)
 end
 function beaver.fade_out_channel(channel, ms)
 	FADE_OUT_CHANNEL(channel, ms)
@@ -202,8 +197,8 @@ end
 function beaver.set_volume_music(volume)
 	SET_VOLUME_MUSIC(volume)
 end
-function beaver.set_volume_sound(name, volume)
-	SET_VOLUME_SOUND(name, volume)
+function beaver.set_volume_sound(sound, volume)
+	SET_VOLUME_SOUND(sound, volume)
 end
 function beaver.set_volume_channel(channel, volume)
 	SET_VOLUME_CHANNEL(channel, volume)

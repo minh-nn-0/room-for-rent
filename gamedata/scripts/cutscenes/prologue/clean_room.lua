@@ -12,7 +12,7 @@ local cs_prologue_after_broom = rfr.add_cutscene({
 	end,
 	exit = function()
 		rfr.unset_flag("prologue")
-		rfr.set_layer_visible("balcony", "Map.Balcony.Bg.Garbage", false)
+		rfr.set_layer_visible(MAPS.balcony, "Map.Balcony.Bg.Garbage", false)
 		print("exit broom")
 		local note = require "phone.apps.note"
 		note.add("guide")

@@ -19,7 +19,7 @@ local phone_apps_info = {
 PHONE = rfr.add_entity()
 --rfr.set_position(PHONE, config.render_size[1] / 2 - phone_tex_width * config.cam_zoom / 2, phone_starty)
 rfr.set_position(PHONE, 30, phone_starty)
-rfr.set_image(PHONE, "phone")
+rfr.set_image(PHONE, ASSETS.images.phone)
 rfr.set_image_source(PHONE, 0,0, phone_tex_width,phone_tex_height)
 rfr.set_scale(PHONE, config.cam_zoom, config.cam_zoom)
 rfr.add_tag(PHONE, "ui")
@@ -37,7 +37,7 @@ local function draw_app_title()
 									config.ui_font, 1,
 									phone_texts["home"], 0, true)
 	else
-		beaver.draw_texture("UI", {dst = { x = phone_position.x + (phone_tex_width / 2 - 4) * config.cam_zoom,
+		beaver.draw_texture(ASSETS.images.UI, {dst = { x = phone_position.x + (phone_tex_width / 2 - 4) * config.cam_zoom,
 										y = phone_position.y + 14 * config.cam_zoom,
 										w = 8 * config.cam_zoom,
 										h = 8 * config.cam_zoom},

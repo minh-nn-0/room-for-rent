@@ -14,12 +14,12 @@ local anim_frames = {
 }
 
 function bed.set_tiles(id)
-	rfr.set_tile("room", "Map.Mainroom.Bg.Items.1", 5, 7, anim_frames[id][1])
-	rfr.set_tile("room", "Map.Mainroom.Bg.Items.1", 6, 7, anim_frames[id][2])
-	rfr.set_tile("room", "Map.Mainroom.Bg.Items.1", 7, 7, anim_frames[id][3])
-	rfr.set_tile("room", "Map.Mainroom.Bg.Items.1", 5, 8, anim_frames[id][4])
-	rfr.set_tile("room", "Map.Mainroom.Bg.Items.1", 6, 8, anim_frames[id][5])
-	rfr.set_tile("room", "Map.Mainroom.Bg.Items.1", 7, 8, anim_frames[id][6])
+	rfr.set_tile(MAPS.room, "Map.Mainroom.Bg.Items.1", 5, 7, anim_frames[id][1])
+	rfr.set_tile(MAPS.room, "Map.Mainroom.Bg.Items.1", 6, 7, anim_frames[id][2])
+	rfr.set_tile(MAPS.room, "Map.Mainroom.Bg.Items.1", 7, 7, anim_frames[id][3])
+	rfr.set_tile(MAPS.room, "Map.Mainroom.Bg.Items.1", 5, 8, anim_frames[id][4])
+	rfr.set_tile(MAPS.room, "Map.Mainroom.Bg.Items.1", 6, 8, anim_frames[id][5])
+	rfr.set_tile(MAPS.room, "Map.Mainroom.Bg.Items.1", 7, 8, anim_frames[id][6])
 end
 local tileframes = 3
 local bed_animation_timer = rfr.add_entity()

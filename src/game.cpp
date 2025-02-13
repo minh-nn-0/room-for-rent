@@ -61,6 +61,9 @@ rfr::game::game(): _beaver("RFR", 1280, 720)
 	auto load_result = load();
 	if (!load_result.valid()) 
 		throw std::runtime_error(std::format("runtime error: {}", sol::error{load_result}.what()));
+
+	for (auto& map: _maps)
+		beaver::tile::load_textures(map, _beaver._assets.get_vec<sdl::texture>());
 };
 
 rfr::dialogue_options DIALOGUE_OPTIONS;
@@ -159,7 +162,7 @@ void rfr::game::setup_binding()
 				if (_entities.has_component<particle_emitter>(eid))
 					_entities.get_component<particle_emitter>(eid)->draw(_beaver._graphics);
 			});
-	rfr.set_function("draw_interactions_info", [&](std::size_t eid, sdl::texture* UI_tex, sdl::font* font)
+	rfr.set_function("draw_interactions_info", [&](std::size_t eid, std::size_t UI_tex, std::size_t font)
 			{
 				auto& interaction = _entities.get_component<rfr::interaction>(eid);
 				if (interaction.has_value() && interaction->_condition())
@@ -172,7 +175,7 @@ void rfr::game::setup_binding()
 							_beaver);
 				}
 			});
-	rfr.set_function("draw_dialogue", [&](std::size_t eid, sdl::texture* UI_tex, sdl::font* font)
+	rfr.set_function("draw_dialogue", [&](std::size_t eid, std::size_t UI_tex, std::size_t font)
 			{
 				auto& dialogue = _entities.get_component<rfr::dialogue>(eid);
 				if (dialogue.has_value() && dialogue->_text_index > 1)
@@ -186,7 +189,7 @@ void rfr::game::setup_binding()
 							_beaver);
 				};
 			});
-	rfr.set_function("draw_dialogue_options", [&](sdl::texture* UI_tex, sdl::font* font, float x, float y, bool align_left)
+	rfr.set_function("draw_dialogue_options", [&](std::size_t UI_tex, std::size_t font, float x, float y, bool align_left)
 			{
 				float scale = _lua["config"]["text_scale"];
 				float padding = _lua["config"]["interaction_box_padding"];
@@ -194,7 +197,7 @@ void rfr::game::setup_binding()
 				for (int i = 0; i != DIALOGUE_OPTIONS._options.size(); i++)
 				{
 					const std::string& opts = DIALOGUE_OPTIONS._options[i];
-					sdl::texture text = beaver::make_text_blended(_beaver._graphics._rdr, *font, opts, _beaver._graphics._draw_color);
+					sdl::texture text = beaver::make_text_blended(_beaver._graphics._rdr, _beaver._assets.get_vec<sdl::font>().at(font), opts, _beaver._graphics._draw_color);
 					
 					// Still want to figure out the oneline formula here
 					mmath::frect text_dst = {align_left ? x : x - text._width * scale,
@@ -209,12 +212,12 @@ void rfr::game::setup_binding()
 					draw_textbox_9parts(text_box,
 										DIALOGUE_OPTIONS._selection == i ? mmath::ivec2{24, 0} : mmath::ivec2{36, 0},
 										4,
-										UI_tex, _beaver._graphics);
+										_beaver._assets.get_vec<sdl::texture>().at(UI_tex), _beaver._graphics);
 					_beaver._graphics.texture(text, text_dst);
 					currenty += text_box._size.y + 5/_camera._zoom;
 				};
 			});
-	rfr.set_function("draw_note", [&](float posx, float posy, const std::string& text, const std::string& header, sdl::texture* UI_tex, sdl::font* font)
+	rfr.set_function("draw_note", [&](float posx, float posy, const std::string& text, const std::string& header, std::size_t UI_tex, std::size_t font)
 			{
 				return rfr::draw_note(posx, posy, text, header, UI_tex, font, _beaver, _lua);
 			});
@@ -222,9 +225,9 @@ void rfr::game::setup_binding()
 			{
 				_beaver._graphics.tilemap(*map, {posx, posy}, _beaver._assets.get_cvec<sdl::texture>());
 			});
-	rfr.set_function("draw_map_by_layer", [&](beaver::tile::tilemap* map, const std::string& layer_name, float posx, float posy)
+	rfr.set_function("draw_map_by_layer", [&](std::size_t mapid, const std::string& layer_name, float posx, float posy)
 			{
-				_beaver._graphics.tilemap_by_layer(*map, layer_name, {posx, posy}, _beaver._assets.get_cvec<sdl::texture>());
+				_beaver._graphics.tilemap_by_layer(_maps.at(mapid), layer_name, {posx, posy}, _beaver._assets.get_cvec<sdl::texture>());
 			});
 
 	try 

@@ -1,7 +1,7 @@
 local candle = {}
 
 candle.eid = rfr.add_entity()
-rfr.set_image(candle.eid, "tileset")
+rfr.set_image(candle.eid, ASSETS.images.tileset)
 rfr.set_image_source(candle.eid, 416, 64, 16,16)
 
 rfr.set_particle_emitter_config(candle.eid, {

@@ -10,7 +10,7 @@ local lerp_time = 1
 local card = rfr.add_entity()
 rfr.add_tag(card, "ui")
 rfr.set_position(card, config.render_size[1]/2 - 32 * config.cam_zoom, card_start_posy)
-rfr.set_image(card, "student_card")
+rfr.set_image(card, ASSETS.images.student_card)
 rfr.set_image_source(card, 0, 0, 64, 40)
 rfr.set_scale(card, config.cam_zoom, config.cam_zoom)
 

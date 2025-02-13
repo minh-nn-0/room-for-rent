@@ -64,7 +64,7 @@ rfr.set_state_entry(NEIGHBOUR, "idle",
 	end)
 rfr.set_state(NEIGHBOUR, "idle")
 
- function character.getTextByCharacter(text, characterType)
+function character.getTextByCharacter(text, characterType)
 	if characterType == 'main' then
 		local nameByType =  characterType .. "_" .. current_main_character
 		local characterName =  CHARACTER_INFO[nameByType]['name']
