@@ -178,6 +178,15 @@ lights["darkview"] = {pos =  {0,0},
 					flickering = false,
 					tint = {40,40,40,180},
 					location = "Map.Mainroom"}
+lights["candle"] = {pos = {0.0},
+				scale = 0.3,
+				src = lightsource.round,
+				on = false,
+				flicker_rate = 0,
+				flicker_timer = 0,
+				flickering = false,
+				tint = {200,130,80,255},
+				location = "Map.Mainroom"}
 function lighting.set_background_color(r,g,b,a)
 	bg_color = {r,g,b,a}
 end
@@ -201,6 +210,15 @@ function lighting.set_flicker(name, rate)
 end
 function lighting.set_tint(name, tint)
 	lights[name].tint = tint
+end
+function lighting.set_scale(name, scale)
+	lights[name].scale = scale
+end
+function lighting.set_position(name, posx, posy)
+	lights[name].pos = {posx, posy}
+end
+function lighting.set_location(name, loc)
+	lights[name].location = loc
 end
 function lighting.light_flickering(name)
 	return lights[name].flickering and lights[name].on

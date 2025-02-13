@@ -70,9 +70,10 @@ require "events.sleep"
 local blur = require "misc.blur"
 
 local ghost = require "ghost"
+local candle = require "misc.candle"
 function player.update(dt)
 	local ppos = rfr.get_position(PLAYER)
-	local pstate = rfr.get_state(PLAYER)
+	local pstate = string.gsub(rfr.get_state(PLAYER), "_candle","")
 	if rfr.get_flag("player_can_move") then
 		local walkspeed = rfr.get_properties(PLAYER, "walkspeed")
 		if beaver.get_input("LEFT") > 0 then
@@ -96,7 +97,7 @@ function player.update(dt)
 			rfr.set_properties(PLAYER, "walkspeed", 0.6)
 			if pstate == "move_fast" then pstate = "move" end
 		end
-		rfr.set_state(PLAYER, pstate)
+		rfr.set_state(PLAYER, candle.picked_up() and pstate .. "_candle" or pstate)
 	end
 	--print(ppos.x + 16, ppos.y + 16)
 	if beaver.get_input("S") == 1 then

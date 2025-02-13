@@ -16,12 +16,12 @@ local bed = require "activities.sleep"
 local bus = require "misc.bus"
 local test = require "test"
 local blur = require "misc.blur"
+local candle = require "misc.candle"
 local map = require "luamodules.map"
 local narrative = require "luamodules.narrative"
 local dream = require "dreams.dream"
 local ghost = require "ghost"
 local audio = require "audio.audios"
-
 local bloods_drip = require "events.sleep.blood_dripping_bathroom"
 
 local camera_shake = require "misc.camera_shake"
@@ -65,10 +65,10 @@ state["ingame"] = {
 		homework.update()
 		bed.update()
 		bus.update(dt)
+		candle.update(dt)
 
 		ghost.update(dt)
 		bloods_drip.update(dt)
-
 		blur.update()
 		if rfr.get_flag("dreaming") then dream.update(dt) end
 		map.set_only_player_location_visible()

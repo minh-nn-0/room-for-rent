@@ -2,9 +2,12 @@ local test = {}
 local bloods_drip = require "events.sleep.blood_dripping_bathroom"
 local hands = require "events.sleep.hands_bathroom_door"
 local camera_shake = require "misc.camera_shake"
+local candle = require "misc.candle"
+rfr.set_position(candle.eid, 160,112)
+rfr.set_location(candle.eid, "Map.Mainroom")
 function test.update(dt)
 --	scatter_paper.update(dt)
-	if beaver.get_input("Q") == 1 then hands.begin() end
+	if beaver.get_input("Q") == 1 then candle.toggle() end
 	hands.update(dt)
 end
 
