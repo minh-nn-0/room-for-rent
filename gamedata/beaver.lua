@@ -3,6 +3,8 @@ local beaver = {}
 beaver.FLIP_H = FLIP_H
 beaver.FLIP_V = FLIP_V
 beaver.FLIP_NONE = FLIP_NONE
+beaver.TILED_FLIP_H = TILED_FLIP_H
+beaver.TILED_FLIP_V = TILED_FLIP_V
 --- @param path string
 --- @param custom_name? string
 function beaver.new_image(path, custom_name)

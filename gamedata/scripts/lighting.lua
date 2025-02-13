@@ -13,13 +13,13 @@ local lightsource = {
 
 local flicker_wait_time = 0.1
 lights["room_ceiling"] = {pos = {200, 88},
-					scale = 1.5,
+					scale = 1.7,
 					src = lightsource.round,
 					on = false,
 					flicker_rate = 0,
 					flicker_timer = 0,
 					flickering = false,
-					tint = {220,150,120,220},
+					tint = {220,150,120,255},
 					location = "Map.Mainroom"}
 
 lights["bathroom_ceiling"] = {pos = {216,218},

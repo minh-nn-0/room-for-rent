@@ -2,20 +2,20 @@ local hands_bathroom_door = {}
 
 local hands = rfr.add_entity()
 rfr.set_image(hands, "hands_on_door")
-rfr.set_tileanimation(hands, {
-	frames = {
-		{0,200}, {1,200}, {2,1000},
-		{3,200}, {4,200}, {5,100},
-		{6,100}, {7,100}, {8,100},
-		{9,100}, {10,100}, {11,200}
-	},
-	framewidth = 32,
-	frameheight = 32,
-	["repeat"] = false
-})
 local played_sounds = {}
 local appeared = false
 function hands_bathroom_door.begin()
+	rfr.set_tileanimation(hands, {
+		frames = {
+			{0,200}, {1,200}, {2,1000},
+			{3,200}, {4,200}, {5,100},
+			{6,100}, {7,100}, {8,100},
+			{9,100}, {10,100}, {11,200}
+		},
+		framewidth = 32,
+		frameheight = 32,
+		["repeat"] = false
+	})
 	rfr.set_location(hands, "Map.Bathroom")
 	rfr.set_position(hands, 240,228)
 	rfr.reset_tileanimation(hands)

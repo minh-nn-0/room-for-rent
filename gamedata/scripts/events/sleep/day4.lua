@@ -13,11 +13,55 @@ rfr.set_rotation(shadow, -30)
 
 local ghost_chase = rfr.add_cutscene({
 	init = function()
-		rfr.set_state(ghost.eid, "crawling")
 	end,
 	exit = function()
 	end,
 	scripts = {
+		function(dt)
+			if rfr.get_location(PLAYER) ~= "Map.Mainroom" then return false end
+			rfr.set_timer(GAME, 3)
+			return true
+		end,
+		function(dt)
+			if rfr.get_timer(GAME).running then return false end
+			lighting.set_flicker("room_ceiling", 0.3)
+			rfr.set_timer(GAME, 2)
+			return true
+		end,
+		function(dt)
+			if rfr.get_timer(GAME).running then return false end
+			if lighting.light_flickering("room_ceiling") then
+				lighting.set_flicker("room_ceiling", 0)
+				lighting.set_light_on("room_ceiling", false)
+				rfr.get_timer(GAME, 1)
+				rfr.set_flag("screen_fill")
+				return true
+			else
+				return false
+			end
+		end,
+		function(dt)
+			if rfr.get_timer(GAME).running then return false end
+			rfr.unset_flag("screen_fill")
+			rfr.fade_in(2)
+			return true
+		end,
+		function(dt)
+			if not lighting.light_is_on("room_ceiling") then return false end
+			rfr.set_state(ghost.eid, "hanging")
+			beaver.fade_in_channel("thrillsuspend", -1, -1, 200)
+			rfr.unset_flag("player_can_move")
+			rfr.unset_flag("player_can_interact")
+			rfr.set_dialogue(PLAYER, {content = "VCC"})
+			return true
+		end,
+		function(dt)
+			if rfr.has_active_dialogue(PLAYER) then return false end
+			rfr.set_flag("player_can_move")
+			rfr.set_flag("player_can_interact")
+			rfr.set_state(ghost.eid, "crawling")
+			return true
+		end,
 		function(dt)
 			if rfr.get_tileanimation(ghost.eid).playing then return false end
 			rfr.set_state(ghost.eid, "idle")
@@ -38,41 +82,61 @@ local ghost_chase = rfr.add_cutscene({
 	end
 })
 
-		--function(dt)
-		--	if rfr.get_timer(GAME).running then return false end
-		--	if lighting.light_flickering("room_ceiling") then
-		--		lighting.set_flicker("room_ceiling", 0)
-		--		lighting.set_light_on("room_ceiling", false)
-		--		rfr.get_timer(GAME, 1)
-		--		rfr.set_flag("screen_fill")
-		--		return true
-		--	else
-		--		return false
-		--	end
-		--end,
-		--function(dt)
-		--	if rfr.get_timer(GAME).running then return false end
-		--	rfr.unset_flag("screen_fill")
-		--	rfr.fade_in(2)
-		--	return true
-		--end,
-		--function(dt)
-		--	if lighting.light_is_on("room_ceiling") then
-		--		rfr.set_state(ghost.eid, "hanging")
-		--		beaver.fade_in_channel("thrillsuspend", -1, -1, 2000)
-		--		return true
-		--	else
-		--		return false
-		--	end
-		--end,
-		--function(dt)
-		--	if rfr.get_position(PLAYER).x >= 110 then return false end
-		--	rfr.play_cutscene(ghost_chase)
-		--	return true
-		--end,
+
+
+local hands_wall = {
+	{15,6,436},
+	{14,6,436 | beaver.TILED_FLIP_H | beaver.TILED_FLIP_V},
+	{12,6, 435 | beaver.TILED_FLIP_H | beaver.TILED_FLIP_V},
+	{10,6, 436},
+	{8,6, 435},
+	{7,6, 473},
+	{6,6, 437 | beaver.TILED_FLIP_V},
+	{5,6, 436},
+	{4,7, 435 | beaver.TILED_FLIP_H | beaver.TILED_FLIP_V},
+}
+
+local hands_wall_timer = 0
+local period = 0.3
+local hand_index = 1
+local function hands_wall_update(dt)
+	if hand_index > #hands_wall then return false end
+	hands_wall_timer = hands_wall_timer + dt
+	if hands_wall_timer >= period then
+		local tx,ty,tile = table.unpack(hands_wall[hand_index])
+		rfr.set_tile("room", "Map.Mainroom.Bg.hands", tx,ty,tile)
+		beaver.play_sound("footstep_mud_run_04")
+		hand_index = hand_index + 1
+		hands_wall_timer = 0
+	end
+end
 local blood_drip = require "events.sleep.blood_dripping_bathroom"
 local hands_on_door = require "events.sleep.hands_bathroom_door"
 
+local out_of_bathroom = rfr.add_cutscene({
+	init = function()
+	end,
+	exit = function()
+		rfr.play_cutscene(ghost_chase)
+	end,
+	scripts = {
+		function(dt)
+			if rfr.get_location(PLAYER) ~= "Map.Mainroom" or rfr.get_position(PLAYER).x >= 225 then return false end
+			return true
+		end,
+		function(dt)
+			hands_wall_update(dt)
+			if hand_index <= #hands_wall then return false end
+			return true
+		end,
+		function(dt)
+			if rfr.get_location(PLAYER) ~= "Map.Balcony" then return false end
+			return true
+		end
+	},
+	update = function(dt)
+	end
+})
 local bathroom = rfr.add_cutscene({
 	init = function()
 		lighting.set_light_on("bathroom_ceiling", false)
@@ -80,6 +144,7 @@ local bathroom = rfr.add_cutscene({
 		rfr.set_properties(DOOR_BATHROOM_ROOM, "locked", true)
 	end,
 	exit = function()
+		rfr.play_cutscene(out_of_bathroom)
 	end,
 	scripts = {
 		function(dt)
@@ -106,6 +171,10 @@ local bathroom = rfr.add_cutscene({
 			if not hands_on_door.ended() then return false end
 			rfr.set_properties(DOOR_BATHROOM_ROOM, "locked", false)
 			return true
+		end,
+		function(dt)
+			if rfr.get_location(PLAYER) ~= "Map.Mainroom" then return false end
+			return true
 		end
 	},
 	update = function(dt)
@@ -126,6 +195,7 @@ local door_squeak_wakeup = rfr.add_cutscene({
 		beaver.play_sound("doorsqueak")
 	end,
 	exit = function()
+		print("hoihi")
 	end,
 	scripts = {
 		function(dt)
@@ -138,29 +208,26 @@ local door_squeak_wakeup = rfr.add_cutscene({
 			return true
 		end,
 		function(dt)
-			if shadow_move_in and rfr.get_position(PLAYER).x <= 210 then
-				blood_drip.init()
-				return true
-			else
-				return false
-			end
+			if not shadow_move_in then return false end
+			blood_drip.init()
+			return true
 		end,
 		function(dt)
-			if not rfr.get_location(PLAYER) == "Map.Bathroom" then return false end
+			if rfr.get_location(PLAYER) ~= "Map.Bathroom" then return false end
 			rfr.play_cutscene(bathroom)
 			return true
 		end
 	},
 	update = function(dt)
 		if not shadow_move_in then
-			if rfr.get_position(PLAYER).x >= 250 then
+			if rfr.get_position(PLAYER).x >= 240 then
 				shadow_move_in = true
-				shadow_speed = -100
+				shadow_speed = -90
 				beaver.play_sound("stinger_piano02")
 			end
 		else
 			local sposx = rfr.get_position(shadow).x
-			if sposx <= 308 then shadow_speed = 100 end
+			if sposx <= 300 then shadow_speed = 90 end
 			sposx = sposx + shadow_speed * dt
 			if shadow_speed > 0 and sposx >= 320 then sposx = 320 end
 			rfr.set_position(shadow, sposx, 112)
