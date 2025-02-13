@@ -1,12 +1,11 @@
 #include "dialogue.hpp"
 #include "textbox_drawing.hpp"
 void rfr::draw_dialogue(const mmath::fvec2& actor_position, const dialogue& dialogue,
-		const std::string& fontname,
 		float scale, int padding, int wraplength,
+		sdl::texture* UI_tex,
+		sdl::font* font,
 		beaver::sdlgame& game)
 {
-	sdl::texture* UI_tex = game._assets.get<sdl::texture>("UI");		
-	sdl::font* font = game._assets.get<sdl::font>(fontname);
 	sdl::texture text = beaver::make_text_blended(game._graphics._rdr, *font, dialogue._content.substr(0, dialogue._text_index), dialogue._text_color, wraplength);
 	
 	mmath::frect text_dst = {actor_position.x + dialogue._position.x - text._width / 2.f * scale,
@@ -32,6 +31,6 @@ void rfr::draw_dialogue(const mmath::fvec2& actor_position, const dialogue& dial
 
 	// Draw corners
 	
-	if (text_box._size.x > 8 and text_box._size.y > 8) draw_textbox_9parts(text_box, {0,0}, 4, *UI_tex, game._graphics);
+	if (text_box._size.x > 8 and text_box._size.y > 8) draw_textbox_9parts(text_box, {0,0}, 4, UI_tex, game._graphics);
 	game._graphics.texture(text, text_dst);
 };

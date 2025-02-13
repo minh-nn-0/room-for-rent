@@ -114,12 +114,12 @@ function candle.update(dt)
 		local offsety = moving and frames_offsety_moving[index] or frames_offsety_idle[index] + 2
 		cpos.x = facing_left and ppos.x or ppos.x + 17
 		cpos.y = ppos.y + offsety
+
+		rfr.set_location(candle.eid, rfr.get_location(PLAYER))
 	end
-	if lit then
-		lighting.set_location("candle", rfr.get_location(candle.eid))
-		lighting.set_position("candle", cpos.x + 7.5 + math.sin(beaver.get_elapsed_time()), cpos.y + 5)
-		lighting.set_scale("candle", 0.25 + (math.random() * 2 - 1) * 0.02)
-	end
+	lighting.set_location("candle", rfr.get_location(candle.eid))
+	lighting.set_position("candle", cpos.x + 7.5 + math.sin(beaver.get_elapsed_time()), cpos.y + 5)
+	lighting.set_scale("candle", 0.3 + (math.random() * 2 - 1) * 0.02)
 	rfr.set_particle_emitter_config(candle.eid, {emitting_position = {x = cpos.x + 7, y = cpos.y + 6}})
 	rfr.set_position(candle.eid, cpos.x, cpos.y)
 end

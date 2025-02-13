@@ -9,7 +9,7 @@ rfr.set_flag("player_can_open_phone")
 rfr.set_position(PLAYER, 144, 112)
 rfr.set_location(PLAYER, "Map.Mainroom")
 rfr.set_dialogue_position(PLAYER, 16, -3)
-rfr.set_image(PLAYER, "male_shirt")
+rfr.set_image(PLAYER, ASSETS.images.male_shirt)
 rfr.set_state_entry(PLAYER, "idle",
 	function()
 		rfr.set_tileanimation(PLAYER, {

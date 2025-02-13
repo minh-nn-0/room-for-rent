@@ -7,8 +7,6 @@
 #include "textbox_drawing.hpp"
 
 #ifndef NDEBUG
-#include <stdio.h>
-#include <thread>
 //#include <readline/readline.h>
 //#include <readline/history.h>
 
@@ -161,34 +159,34 @@ void rfr::game::setup_binding()
 				if (_entities.has_component<particle_emitter>(eid))
 					_entities.get_component<particle_emitter>(eid)->draw(_beaver._graphics);
 			});
-	rfr.set_function("draw_interactions_info", [&](std::size_t eid)
+	rfr.set_function("draw_interactions_info", [&](std::size_t eid, sdl::texture* UI_tex, sdl::font* font)
 			{
 				auto& interaction = _entities.get_component<rfr::interaction>(eid);
 				if (interaction.has_value() && interaction->_condition())
 				{
 					auto& pos = _entities.get_component<position>(eid).value();
 					draw_interaction(interaction->_name, pos._value, 
-							_lua["config"]["dialogue_font"],
 							_lua["config"]["text_scale"],
 							_lua["config"]["interaction_box_padding"],
+							UI_tex, font,
 							_beaver);
 				}
 			});
-	rfr.set_function("draw_dialogue", [&](std::size_t eid)
+	rfr.set_function("draw_dialogue", [&](std::size_t eid, sdl::texture* UI_tex, sdl::font* font)
 			{
 				auto& dialogue = _entities.get_component<rfr::dialogue>(eid);
 				if (dialogue.has_value() && dialogue->_text_index > 1)
 				{
 					auto pos = _entities.get_component<beaver::component::position>(eid).value();
 					rfr::draw_dialogue(pos._value , *dialogue, 
-							_lua["config"]["dialogue_font"],
 							_lua["config"]["text_scale"],
 							_lua["config"]["dialogue_box_padding"],
 							_lua["config"]["dialogue_wraplength"],
+							UI_tex, font,
 							_beaver);
 				};
 			});
-	rfr.set_function("draw_dialogue_options", [&](float x, float y, bool align_left)
+	rfr.set_function("draw_dialogue_options", [&](sdl::texture* UI_tex, sdl::font* font, float x, float y, bool align_left)
 			{
 				float scale = _lua["config"]["text_scale"];
 				float padding = _lua["config"]["interaction_box_padding"];
@@ -196,8 +194,6 @@ void rfr::game::setup_binding()
 				for (int i = 0; i != DIALOGUE_OPTIONS._options.size(); i++)
 				{
 					const std::string& opts = DIALOGUE_OPTIONS._options[i];
-					sdl::texture* UI_tex = _beaver._assets.get<sdl::texture>("UI");		
-					sdl::font* font = _beaver._assets.get<sdl::font>(_lua["config"]["dialogue_font"]);
 					sdl::texture text = beaver::make_text_blended(_beaver._graphics._rdr, *font, opts, _beaver._graphics._draw_color);
 					
 					// Still want to figure out the oneline formula here
@@ -213,22 +209,22 @@ void rfr::game::setup_binding()
 					draw_textbox_9parts(text_box,
 										DIALOGUE_OPTIONS._selection == i ? mmath::ivec2{24, 0} : mmath::ivec2{36, 0},
 										4,
-										*UI_tex, _beaver._graphics);
+										UI_tex, _beaver._graphics);
 					_beaver._graphics.texture(text, text_dst);
 					currenty += text_box._size.y + 5/_camera._zoom;
 				};
 			});
-	rfr.set_function("draw_note", [&](float posx, float posy, const std::string& text, const std::string& header)
+	rfr.set_function("draw_note", [&](float posx, float posy, const std::string& text, const std::string& header, sdl::texture* UI_tex, sdl::font* font)
 			{
-				return rfr::draw_note(posx, posy, text, header, _beaver, _lua);
+				return rfr::draw_note(posx, posy, text, header, UI_tex, font, _beaver, _lua);
 			});
-	rfr.set_function("draw_map", [&](const std::string& map_name, float posx, float posy)
+	rfr.set_function("draw_map", [&](beaver::tile::tilemap* map, float posx, float posy)
 			{
-				_beaver._graphics.tilemap(_maps.at(map_name), {posx, posy}, _beaver._assets.get_cvec<sdl::texture>());
+				_beaver._graphics.tilemap(*map, {posx, posy}, _beaver._assets.get_cvec<sdl::texture>());
 			});
-	rfr.set_function("draw_map_by_layer", [&](const std::string& map_name, const std::string& layer_name, float posx, float posy)
+	rfr.set_function("draw_map_by_layer", [&](beaver::tile::tilemap* map, const std::string& layer_name, float posx, float posy)
 			{
-				_beaver._graphics.tilemap_by_layer(_maps.at(map_name), layer_name, {posx, posy}, _beaver._assets.get_cvec<sdl::texture>());
+				_beaver._graphics.tilemap_by_layer(*map, layer_name, {posx, posy}, _beaver._assets.get_cvec<sdl::texture>());
 			});
 
 	try 

@@ -20,7 +20,7 @@ namespace rfr
 		game();
 		beaver::sdlgame _beaver;
 		sol::state _lua;
-		std::unordered_map<std::string, beaver::tile::tilemap> _maps;
+		std::vector<beaver::tile::tilemap> _maps;
 		beaver::ecs_core<dialogue, interaction, location, event_listener> _entities;
 		event_manager _events;
 		cutscene_manager _cutscenes;

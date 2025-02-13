@@ -14,6 +14,8 @@ namespace rfr
 	};
 	
 	void draw_interaction(const std::string& name, const mmath::fvec2& position,
-			const std::string& fontname,
-			float scale, int padding, beaver::sdlgame& game);
+			float scale, int padding,
+			sdl::texture* UI_tex,
+			sdl::font* font,
+			beaver::sdlgame& game);
 };

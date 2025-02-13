@@ -43,9 +43,9 @@ function map.set_only_player_location_visible()
 	local player_location = rfr.get_location(PLAYER)
 	player_location = player_location == "Map.Hall" and "Map.Outside" or player_location
 	for _, group in ipairs(rfr.get_group_layers(current_map, "Map")) do
-		rfr.set_layer_visible(current_map, group, false)
+		rfr.set_layer_visible(MAPS[current_map], group, false)
 	end
-	rfr.set_layer_visible(current_map, player_location, true)
+	rfr.set_layer_visible(MAPS[current_map], player_location, true)
 end
 
 local player_width = 6
@@ -72,11 +72,11 @@ end
 function map.draw_bg()
 	local plocation = rfr.get_location(PLAYER)
 	if plocation == "Map.Outside" or plocation == "Map.Hall" or plocation == "Map.Balcony" then outside.draw() end
-	rfr.draw_map_by_layer(current_map, (plocation == "Map.Hall" and "Map.Outside" or plocation) .. ".Bg", 0, 0)
+	rfr.draw_map_by_layer(MAPS[current_map], (plocation == "Map.Hall" and "Map.Outside" or plocation) .. ".Bg", 0, 0)
 end
 
 function map.draw_fg()
 	local plocation = rfr.get_location(PLAYER)
-	rfr.draw_map_by_layer(current_map, (plocation == "Map.Hall" and "Map.Outside" or plocation) .. ".Fg", 0, 0)
+	rfr.draw_map_by_layer(MAPS[current_map], (plocation == "Map.Hall" and "Map.Outside" or plocation) .. ".Fg", 0, 0)
 end
 return map

@@ -66,6 +66,7 @@ lights["bathroom_ceiling"] = {pos = {216,218},
 --								location = "Map.Hall"}
 --
 lights["room_sunlight_back"] = {pos = {56, 90},
+						tod = 1,
 						scale = 1.5,
 						src = lightsource.round,
 						on = true,
@@ -76,6 +77,7 @@ lights["room_sunlight_back"] = {pos = {56, 90},
 						location = "Map.Mainroom"
 					}
 lights["room_sunlight_front"] = {pos = {355, 90},
+						tod = 1,
 						scale = 1.5,
 						src = lightsource.round,
 						on = true,
@@ -86,26 +88,29 @@ lights["room_sunlight_front"] = {pos = {355, 90},
 						location = "Map.Mainroom"
 					}
 lights["outside_pole_round"] = {pos = {318,86},
+						tod = 2,
 						scale = 1,
 						src = lightsource.round,
 						flicker_rate = 0,
 						flicker_timer = 0,
 						flickering = false,
-						tint = {255,235,63,120},
+						tint = {255,235,63,150},
 						location = "Map.Outside"
 					}
 lights["outside_pole_cone"] = {pos = {318,128},
+						tod = 2,
 						scale = 1,
 						src = lightsource.cone,
 						flicker_rate = 0,
 						flicker_timer = 0,
 						flickering = false,
-						tint = {255,235,63,255},
+						tint = {255,200,100,255},
 						location = "Map.Outside"
 					}
 
 local hall_light_color = {230,180,160, 200}
 lights["hall_first_left"] = {pos = {480,159},
+						tod = 2,
 						scale = 0.7,
 						src = {x = lightsource.round.x , y = lightsource.round.y + lightsource.round.h / 2, w = lightsource.round.w, h = lightsource.round.h / 2},
 						flicker_rate = 0,
@@ -115,6 +120,7 @@ lights["hall_first_left"] = {pos = {480,159},
 						location = "Map.Hall"
 					}
 lights["hall_first_right"] = {pos = {592,159},
+						tod = 2,
 						scale = 0.7,
 						src = {x = lightsource.round.x , y = lightsource.round.y + lightsource.round.h / 2, w = lightsource.round.w, h = lightsource.round.h / 2},
 						flicker_rate = 0,
@@ -124,6 +130,7 @@ lights["hall_first_right"] = {pos = {592,159},
 						location = "Map.Hall"
 					}
 lights["hall_second_left"] = {pos = {480,111},
+						tod = 2,
 						scale = 0.7,
 						src = {x = lightsource.round.x , y = lightsource.round.y + lightsource.round.h / 2, w = lightsource.round.w, h = lightsource.round.h / 2},
 						flicker_rate = 0,
@@ -133,6 +140,7 @@ lights["hall_second_left"] = {pos = {480,111},
 						location = "Map.Hall"
 					}
 lights["hall_second_right"] = {pos = {592,111},
+						tod = 2,
 						scale = 0.7,
 						src = {x = lightsource.round.x , y = lightsource.round.y + lightsource.round.h / 2, w = lightsource.round.w, h = lightsource.round.h / 2},
 						flicker_rate = 0,
@@ -142,6 +150,7 @@ lights["hall_second_right"] = {pos = {592,111},
 						location = "Map.Hall"
 					}
 lights["hall_second_left_outside"] = {pos = {480,111},
+						tod = 2,
 						scale = 0.7,
 						src = {x = lightsource.round.x , y = lightsource.round.y + lightsource.round.h / 2, w = lightsource.round.w, h = lightsource.round.h / 2},
 						flicker_rate = 0,
@@ -151,6 +160,7 @@ lights["hall_second_left_outside"] = {pos = {480,111},
 						location = "Map.Outside"
 					}
 lights["hall_second_right_outside"] = {pos = {592,111},
+						tod = 2,
 						scale = 0.7,
 						src = {x = lightsource.round.x , y = lightsource.round.y + lightsource.round.h / 2, w = lightsource.round.w, h = lightsource.round.h / 2},
 						flicker_rate = 0,
@@ -170,6 +180,7 @@ lights["room_dream_ceiling"] = {pos = {200, 88},
 					location = "Map.Dream"}
 
 lights["darkview"] = {pos =  {0,0},
+					tod = 2,
 					scale = 0.6,
 					src = lightsource.round,
 					on = false,
@@ -179,13 +190,13 @@ lights["darkview"] = {pos =  {0,0},
 					tint = {40,40,40,180},
 					location = "Map.Mainroom"}
 lights["candle"] = {pos = {0.0},
-				scale = 0.3,
+				scale = 0.4,
 				src = lightsource.round,
 				on = false,
 				flicker_rate = 0,
 				flicker_timer = 0,
 				flickering = false,
-				tint = {200,130,80,255},
+				tint = {200,130,80,220},
 				location = "Map.Mainroom"}
 function lighting.set_background_color(r,g,b,a)
 	bg_color = {r,g,b,a}
@@ -229,45 +240,13 @@ function lighting.update(dt)
 	if not rfr.get_flag("dreaming") then
 		local color = {}
 		if tod == 1 then
-			lights["room_sunlight_back"].on = true
-			lights["room_sunlight_front"].on = true
-			lights["outside_pole_round"].on = false
-			lights["outside_pole_cone"].on = false
-			lights["hall_first_left"].on = false
-			lights["hall_first_right"].on = false
-			lights["hall_second_left"].on = false
-			lights["hall_second_right"].on = false
-			lights["hall_second_left_outside"].on = false
-			lights["hall_second_right_outside"].on = false
 			color = {240,240,240,255}
 			if location == "Map.Mainroom" or location == "Map.Bathroom" then
 				color = {140,140,140,255}
 			end
-
-			lights["darkview"].on = false
 		else
-			color = {0,0,10, 255}
-			lights["room_sunlight_back"].on = false
-			lights["room_sunlight_front"].on = false
-			lights["outside_pole_round"].on = true
-			lights["outside_pole_cone"].on = true
-			lights["hall_first_left"].on = true
-			lights["hall_first_right"].on = true
-			if location == "Map.Outside" then
-				lights["hall_second_left"].on = false
-				lights["hall_second_right"].on = false
-				lights["hall_second_left_outside"].on = true
-				lights["hall_second_right_outside"].on = true
-			end
-			if location == "Map.Hall" then
-				lights["hall_second_left"].on = true
-				lights["hall_second_right"].on = true
-				lights["hall_second_left_outside"].on = false
-				lights["hall_second_right_outside"].on = false
-			end
-
+			color = (location == "Map.Outside" or location == "Map.Hall") and {10,10,30, 255} or {0,0,10,255}
 			local ppos = rfr.get_position(PLAYER)
-			lights["darkview"].on = true
 			lights["darkview"].location = location
 			lights["darkview"].pos = {ppos.x + 16, ppos.y + 8}
 		end
@@ -275,6 +254,10 @@ function lighting.update(dt)
 		bg_color = color
 	end
 	for _,light in pairs(lights) do
+		if light.tod then
+			if light.tod == tod then light.on = true
+			else light.on = false end
+		end
 		if light.on and light.location == location then
 			light.flicker_timer = light.flicker_timer + 1
 			if not light.flickering and math.random() < light.flicker_rate then
