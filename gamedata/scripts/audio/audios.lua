@@ -27,9 +27,9 @@ function audio.update()
 				local tileanimation_id = rfr.get_tileanimation(eid)
 				if tileanimation_id and rfr.get_properties(eid, "footstep_sound") then
 					if location == "Map.Outside" or location == "Map.Hall" then
-						rfr.set_properties(eid, "footstep_sound", eid == PLAYER and "footstep_tile_medium" or "footstep_tile_light")
+						rfr.set_properties(eid, "footstep_sound", eid == PLAYER and ASSETS.audios.footstep_tile_medium or ASSETS.audios.footstep_tile_light)
 					else
-						rfr.set_properties(eid, "footstep_sound", "footstep_wood_light")
+						rfr.set_properties(eid, "footstep_sound", ASSETS.audios.footstep_wood_light)
 					end
 					if tileanimation_id.currentid == 5 or tileanimation_id.currentid == 9 then
 						if not rfr.get_properties(eid, "footstep") then

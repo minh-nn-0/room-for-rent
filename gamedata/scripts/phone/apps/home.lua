@@ -47,7 +47,7 @@ local function draw()
 		else beaver.set_draw_color(40,40,40,255)
 		end
 		beaver.draw_text(app_posx + 10 * config.cam_zoom, app_posy + 1.5 * config.cam_zoom,
-						config.ui_font, 1,
+						ASSETS.fonts[config.ui_font], 1,
 						app_text, 0, true)
 	end
 end

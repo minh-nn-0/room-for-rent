@@ -112,7 +112,7 @@ function notebook.draw()
 	beaver.draw_texture(ASSETS.images.notebook, {dst = book_dst})
 	beaver.set_draw_color(0,0,0,255)
 	beaver.draw_text_centered(book_posx + 26 * config.cam_zoom, book_posy + (70 - 8) * config.cam_zoom,
-								config.ui_font, 1,
+								ASSETS.fonts[config.ui_font], 1,
 								tostring(current_questionid), 0, true)
 
 	local current_day,_ = rfr.current_time()
@@ -122,13 +122,13 @@ function notebook.draw()
 	local current_correct_answer = questions[current_questionid]["correct"]
 	local current_answer = answered[current_questionid] or 0
 	beaver.draw_text(book_posx + 7 * config.cam_zoom, book_posy + 15 * config.cam_zoom,
-						config.ui_font, 1,
+						ASSETS.fonts[config.ui_font], 1,
 						topic, 180, true)
 
 	local answer_posy = book_posy + 30 * config.cam_zoom
 	if not past_question then
 		beaver.draw_text(book_posx + 4.5 * config.cam_zoom, answer_posy + 2.5 + 8 * current_selection * config.cam_zoom,
-						config.ui_font, 1,
+						ASSETS.fonts[config.ui_font], 1,
 						"✏ ", 0 , true)
 	end
 	for i, answer in ipairs(answers) do
@@ -138,20 +138,20 @@ function notebook.draw()
 			if current_answer == current_correct_answer then
 				beaver.set_draw_color(38,133,76,255)
 				beaver.draw_text(book_posx + 40 * config.cam_zoom, book_posy + 56 * config.cam_zoom,
-									config.ui_font, 2,
+									ASSETS.fonts[config.ui_font], 2,
 									"✔", 0, true)
 				if current_answer ~= i then beaver.set_draw_color(0,0,0,255) end
 			else
 				beaver.set_draw_color(236,39,63,255)
 				beaver.draw_text(book_posx + 40 * config.cam_zoom, book_posy + 56 * config.cam_zoom,
-									config.ui_font, 2,
+									ASSETS.fonts[config.ui_font], 2,
 									"✘", 0, true)
 				if current_answer ~= i then beaver.set_draw_color(0,0,0,255) end
 				if current_correct_answer == i then beaver.set_draw_color(38,133,76,255) end
 			end
 		end
 		beaver.draw_text(book_posx + 10 * config.cam_zoom, answer_posy,
-							config.ui_font, 1,
+							ASSETS.fonts[config.ui_font], 1,
 							prefix .. answer, 0, true)
 	end
 end

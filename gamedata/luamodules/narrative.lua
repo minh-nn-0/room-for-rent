@@ -48,7 +48,7 @@ function narrative.text_appearing()
 end
 function narrative.draw_text()
 	if narrative.text_active() then
-		beaver.draw_text_centered(text_posx, text_posy, config.ui_font, scale, string.sub(text_content, 1, text_index), wraplength)
+		beaver.draw_text_centered(text_posx, text_posy, ASSETS.fonts[config.ui_font], scale, string.sub(text_content, 1, text_index), wraplength)
 	end
 end
 

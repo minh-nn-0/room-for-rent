@@ -56,7 +56,7 @@ local states = {
 				end
 
 				beaver.draw_text(posx + 10 * config.cam_zoom, posy + 1.5 * config.cam_zoom,
-								config.ui_font, 1,
+								ASSETS.fonts[config.ui_font], 1,
 								char_name, 0, true)
 			end
 		end,
@@ -84,7 +84,7 @@ local states = {
 			end
 
 			if status ~= "Calling" or not rfr.get_flag("phone_opening") then
-				beaver.halt_channel(ring_channel)
+				beaver.halt_channel(audio_channel)
 			end
 		end,
 		draw = function()
@@ -99,10 +99,10 @@ local states = {
 			beaver.draw_texture(ASSETS.images.character_heads, {dst = {x = posx, y = posy, w = 16 * config.cam_zoom, h = 16 * config.cam_zoom},
 													src = character_icon[callee]})
 			beaver.set_draw_color(40,40,40,255)
-			beaver.draw_text_centered(posx + 8 * config.cam_zoom, posy + 20 * config.cam_zoom, config.ui_font, 1, phone_label["phone"][status], 0, true)
+			beaver.draw_text_centered(posx + 8 * config.cam_zoom, posy + 20 * config.cam_zoom, ASSETS.fonts[config.ui_font], 1, phone_label["phone"][status], 0, true)
 			if call_content ~= "" then
 					beaver.draw_text(phone_position.x + 6 * config.cam_zoom, posy + 30 * config.cam_zoom,
-								config.ui_font, 1,
+								ASSETS.fonts[config.ui_font], 1,
 								string.sub(call_content,1,text_index), 155 ,true)
 				end
 		end,

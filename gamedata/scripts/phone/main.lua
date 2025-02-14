@@ -34,7 +34,7 @@ local function draw_app_title()
 	local phone_position = rfr.get_position(PHONE)
 	if rfr.get_state(PHONE) == "home" then
 		beaver.draw_text_centered(phone_position.x + phone_tex_width / 2 * config.cam_zoom, phone_position.y + 15 * config.cam_zoom,
-									config.ui_font, 1,
+									ASSETS.fonts[config.ui_font], 1,
 									phone_texts["home"], 0, true)
 	else
 		beaver.draw_texture(ASSETS.images.UI, {dst = { x = phone_position.x + (phone_tex_width / 2 - 4) * config.cam_zoom,

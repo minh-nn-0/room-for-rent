@@ -5,25 +5,25 @@ local current_tod = 1
 local sounds_per_location = {
 	["Map.Outside"] = {
 		{
-			ambience = {"ambience_wind"},
+			ambience = {ASSETS.audios.ambience_wind},
 			random_sound = {
-				{"carpassing",60,0.4},
-				{"dog",60,0.2}
+				{ASSETS.audios.carpassing,60,0.4},
+				{ASSETS.audios.dog,60,0.2}
 			}
 		},
 		{
-			ambience = {"ambience_wind", "ambience_cricket"},
+			ambience = {ASSETS.audios.ambience_wind, ASSETS.audios.ambience_cricket},
 		},
 	},
 	["Map.Mainroom"] = {
 		{
 			ambience = {},
 			random_sound = {
-				{"bird", 40, 0.3}
+				{ASSETS.audios.bird, 40, 0.3}
 			}
 		},
 		{
-			ambience = {"ambience_cricket"},
+			ambience = {ASSETS.audios.ambience_cricket},
 		}
 	}
 }

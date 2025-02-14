@@ -33,7 +33,7 @@ local states = {
 				end
 
 				beaver.draw_text(posx + 10 * config.cam_zoom, posy + 1.5 * config.cam_zoom,
-								config.ui_font, 1,
+								ASSETS.fonts[config.ui_font], 1,
 								actor_name, 0, true)
 			end
 		end,

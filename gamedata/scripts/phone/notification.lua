@@ -38,7 +38,8 @@ function rfr.draw_phone_notification()
 	beaver.draw_texture(ASSETS.images.UI, {dst = {x = 20, y = 15, w = 6 * config.cam_zoom, h = 10 * config.cam_zoom},
 								src = {x = 0, y = 22, w = 6, h = 10}})
 	beaver.set_draw_color(255,255,255,255)
-	beaver.draw_text(60, 20, config.ui_font, 1, text, 0, true)
+	beaver.draw_text(60, ASSETS.fonts[config.ui_font], 1, text, 0, true)
+	beaver.draw_text(60, ASSETS.fonts[config.ui_font], 1, text, 0, true)
 end
 
 return phone_noti
