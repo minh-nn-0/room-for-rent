@@ -7,6 +7,7 @@
 #include "location.hpp"
 #include "event.hpp"
 #include "cutscene.hpp"
+#include "zindex.hpp"
 namespace rfr
 {
 	template<typename... Ts>
@@ -270,6 +271,17 @@ namespace rfr
 		tbl.set_function("update_cutscene", [&](float dt)
 				{
 					cm.update(dt);
+				});
+	};
+
+	// ZINDEX
+	template<typename... Ts>
+	void bind_zindex(beaver::ecs<Ts...>& ecs, std::vector<std::size_t>& draw_order, sol::table& tbl)
+	{
+		tbl.set_function("set_zindex", [&](std::size_t eid, std::int8_t zindex)
+				{
+					ecs.template get_or_set_component<rfr::zindex>()._index = zindex;
+					std::ranges::stable_sort(draw_order);
 				});
 	};
 };

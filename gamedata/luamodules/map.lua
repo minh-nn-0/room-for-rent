@@ -72,11 +72,17 @@ end
 function map.draw_bg()
 	local plocation = rfr.get_location(PLAYER)
 	if plocation == "Map.Outside" or plocation == "Map.Hall" or plocation == "Map.Balcony" then outside.draw() end
-	rfr.draw_map_by_layer(MAPS[current_map], (plocation == "Map.Hall" and "Map.Outside" or plocation) .. ".Bg", 0, 0)
+	local bg = (plocation == "Map.Hall" and "Map.Outside" or plocation) .. ".Bg"
+	if rfr.has_layer(MAPS[current_map], bg) then
+		rfr.draw_map_by_layer(MAPS[current_map], bg, 0, 0)
+	end
 end
 
 function map.draw_fg()
 	local plocation = rfr.get_location(PLAYER)
-	rfr.draw_map_by_layer(MAPS[current_map], (plocation == "Map.Hall" and "Map.Outside" or plocation) .. ".Fg", 0, 0)
+	local fg = (plocation == "Map.Hall" and "Map.Outside" or plocation) .. ".Fg"
+	if rfr.has_layer(MAPS[current_map], fg) then
+		rfr.draw_map_by_layer(MAPS[current_map], fg, 0, 0)
+	end
 end
 return map

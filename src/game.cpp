@@ -52,6 +52,7 @@ constexpr std::string game_path()
 //}
 //#endif
 
+std::vector<std::size_t> DRAW_ORDER_DATA;
 rfr::game::game(): _beaver("RFR", 1280, 720)
 {
 	_beaver._graphics._cam = &_camera;

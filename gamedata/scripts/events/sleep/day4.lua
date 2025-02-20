@@ -19,21 +19,21 @@ local ghost_chase = rfr.add_cutscene({
 	scripts = {
 		function(dt)
 			if rfr.get_location(PLAYER) ~= "Map.Mainroom" then return false end
-			rfr.set_timer(GAME, 3)
+			rfr.set_timer(timer, 3)
 			return true
 		end,
 		function(dt)
-			if rfr.get_timer(GAME).running then return false end
+			if rfr.get_timer(timer).running then return false end
 			lighting.set_flicker("room_ceiling", 0.3)
-			rfr.set_timer(GAME, 2)
+			rfr.set_timer(timer, 2)
 			return true
 		end,
 		function(dt)
-			if rfr.get_timer(GAME).running then return false end
+			if rfr.get_timer(timer).running then return false end
 			if lighting.light_flickering("room_ceiling") then
 				lighting.set_flicker("room_ceiling", 0)
 				lighting.set_light_on("room_ceiling", false)
-				rfr.get_timer(GAME, 1)
+				rfr.set_timer(timer, 1)
 				rfr.set_flag("screen_fill")
 				return true
 			else
@@ -41,7 +41,7 @@ local ghost_chase = rfr.add_cutscene({
 			end
 		end,
 		function(dt)
-			if rfr.get_timer(GAME).running then return false end
+			if rfr.get_timer(timer).running then return false end
 			rfr.unset_flag("screen_fill")
 			rfr.fade_in(2)
 			return true
@@ -154,12 +154,11 @@ local bathroom = rfr.add_cutscene({
 		end,
 		function(dt)
 			if not (rfr.get_last_interaction() == DOOR_BATHROOM_ROOM) then return false end
-			rfr.set_timer(GAME, 3)
+			rfr.set_timer(timer, 3)
 			return true
 		end,
 		function(dt)
-			print("hihihihihihi")
-			if rfr.get_timer(GAME).running then return false end
+			if rfr.get_timer(timer).running then return false end
 			hands_on_door.begin()
 			rfr.set_tile(MAPS.room, "Map.Mainroom.Bg.Items.2", 15, 6, 434)
 			rfr.set_tile(MAPS.room, "Map.Mainroom.Bg.Items.2", 16, 6, 435)

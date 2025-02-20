@@ -189,7 +189,7 @@ lights["darkview"] = {pos =  {0,0},
 					flickering = false,
 					tint = {40,40,40,180},
 					location = "Map.Mainroom"}
-lights["candle"] = {pos = {0.0},
+lights["candle"] = {pos = {0,0},
 				scale = 0.4,
 				src = lightsource.round,
 				on = false,
@@ -262,7 +262,7 @@ function lighting.update(dt)
 			light.flicker_timer = light.flicker_timer + 1
 			if not light.flickering and math.random() < light.flicker_rate then
 				light.flickering = true
-				light.flicer_timer = 0
+				light.flicker_timer = 0
 			elseif light.flicker_timer > flicker_wait_time then
 				light.flickering = false
 			end
