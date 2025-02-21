@@ -1,4 +1,3 @@
-
 CHARACTER_INFO = {
 	main_male = {
 		name = "Sáng",

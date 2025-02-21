@@ -1,3 +1,4 @@
+local camera = require "luamodules.camera"
 local character = require "character"
 local map = require "luamodules.map"
 local util = require "luamodules.utilities"
@@ -19,7 +20,7 @@ CS_PROLOGUE_ARRIVE = rfr.add_cutscene({
 		rfr.set_flag("prologue_outside")
 		rfr.fade_in(5)
 		rfr.set_cam_zoom(2)
-		rfr.set_cam_target(PLAYER, 16, -43)
+		camera.set_target(PLAYER, 16, -43)
 		map.set_current_map("outside")
 		rfr.set_location(PLAYER, "Map.Outside")
 		rfr.set_position(PLAYER, 30, 144)

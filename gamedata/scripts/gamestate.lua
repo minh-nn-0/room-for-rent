@@ -25,7 +25,7 @@ local ghost = require "ghost"
 local audio = require "audio.audios"
 local bloods_drip = require "events.sleep.blood_dripping_bathroom"
 
-local camera_shake = require "misc.camera_shake"
+local camera = require "luamodules.camera"
 local interaction = require "luamodules.interaction"
 local gamestate = {
 	current_state = "ingame"
@@ -42,7 +42,7 @@ state["menu"] = {
 }
 state["ingame"] = {
 	load = function()
-		rfr.set_cam_target(PLAYER, 16,0)
+		camera.set_target(PLAYER, 16,0)
 	end,
 	update = function(dt)
 		config.text_scale = 1/rfr.get_cam_zoom()
@@ -51,8 +51,7 @@ state["ingame"] = {
 		player.update(dt)
 		--ghost.update(dt)
 		lighting.update(dt)
-		rfr.update_camera(dt)
-		camera_shake.update(dt)
+		camera.update(dt)
 		rfr.update_phone(dt)
 		--rfr.update_event_listener()
 		rfr.update_character(dt)
@@ -77,7 +76,7 @@ state["ingame"] = {
 		map.update(dt)
 		narrative.update(dt)
 		audio.update()
-		rfr.cleanup_entities()
+		--rfr.cleanup_entities()
 
 		return true
 	end,
@@ -100,7 +99,7 @@ state["ingame"] = {
 		if plocation == "Map.Bathroom" then bloods_drip.draw() end
 
 		lighting.draw()
-		local i = interaction.get_first()
+		local i = interaction.get_first_available()
 		if rfr.get_flag("player_can_interact") and i > 0 then
 			beaver.set_draw_color(255,255,255,255)
 			rfr.draw_interactions_info(i, ASSETS.images.UI, ASSETS.fonts[config.ui_font])

@@ -1,3 +1,4 @@
+local camera = require "luamodules.camera"
 local util = require "luamodules.utilities"
 local interaction_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
@@ -35,7 +36,7 @@ local cs_eat = rfr.add_cutscene({
 		rfr.set_image(eat, rfr.get_image(PLAYER))
 		rfr.set_animation_playing(eat, true)
 		rfr.set_position(eat, 168, 112)
-		rfr.set_cam_target(eat, 16,0)
+		camera.set_target(eat, 16,0)
 		rfr.set_position(PLAYER, 1000,1000)
 		rfr.set_particle_emitter_auto(eat, true)
 		beaver.play_sound(ASSETS.audios.eatnoddle)
@@ -45,7 +46,7 @@ local cs_eat = rfr.add_cutscene({
 	exit = function()
 		rfr.set_animation_playing(eat, false)
 		rfr.set_position(eat, 1000, 1000)
-		rfr.set_cam_target(PLAYER, 16,0)
+		camera.set_target(PLAYER, 16,0)
 		rfr.set_position(PLAYER, 169,112)
 
 		local d,_ = rfr.current_time()

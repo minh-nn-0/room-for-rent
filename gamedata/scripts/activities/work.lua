@@ -1,3 +1,4 @@
+local camera = require "luamodules.camera"
 local util = require "luamodules.utilities"
 local narrative = require "luamodules.narrative"
 local narrative_text = util.load_json(rfr.gamepath() .. "data/narratives/" .. config.language .. ".json")
@@ -15,7 +16,7 @@ local cs_gotowork = rfr.add_cutscene({
 			bus.stop()
 			beaver.play_sound(ASSETS.audios.busdoor, -1, 0)
 			rfr.set_timer(bus.eid, 3)
-			rfr.set_cam_target(nil, 0, 0)
+			camera.set_target(nil, 0, 0)
 			rfr.set_position(PLAYER, 1000, 1000)
 			return true
 		end,
@@ -52,7 +53,7 @@ local cs_gotowork = rfr.add_cutscene({
 			rfr.unset_flag("screen_fill")
 			rfr.fade_in(2)
 			beaver.fade_in_channel("busengine", 2, 0, 4000)
-			rfr.set_cam_target(bus.eid, 50, -36)
+			camera.set_target(bus.eid, 50, -36)
 			return true
 		end,
 		function(dt)
@@ -68,7 +69,7 @@ local cs_gotowork = rfr.add_cutscene({
 			local bpos = rfr.get_position(bus.eid)
 			rfr.manual_emit_particles(bus.eid, 60, bpos.x + 125, bpos.y + 40, {})
 			rfr.set_position(PLAYER, 239, 144)
-			rfr.set_cam_target(PLAYER, 16, -43)
+			camera.set_target(PLAYER, 16, -43)
 			rfr.set_flag("player_can_move")
 			beaver.fade_out_channel(2, 7000)
 			return true

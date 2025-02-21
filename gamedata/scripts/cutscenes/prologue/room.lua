@@ -1,3 +1,4 @@
+local camera = require "luamodules.camera"
 local util = require "luamodules.utilities"
 local dialogues
 local map = require "luamodules.map"
@@ -36,7 +37,7 @@ CS_PROLOGUE_ROOM = rfr.add_cutscene({
 		rfr.set_timer(start_talking_timer, 3)
 		rfr.set_dialogue(PLAYER, {content = ""})
 		rfr.set_dialogue(OWNER, {content = ""})
-		rfr.set_cam_target(cam_target1)
+		camera.set_target(cam_target1)
 	end,
 	exit = function()
 		rfr.set_active(confirm_owner, false)
@@ -80,7 +81,7 @@ CS_PROLOGUE_ROOM = rfr.add_cutscene({
 			cam_target_pos.x = cam_target_pos.x + 40 * dt
 			rfr.set_position(cam_target1, cam_target_pos.x, cam_target_pos.y)
 		else
-			rfr.set_cam_target(PLAYER, 16, 0)
+			camera.set_target(PLAYER, 16, 0)
 		end
 	end
 })

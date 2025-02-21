@@ -1,3 +1,4 @@
+local camera = require "luamodules.camera"
 local util = require "luamodules.utilities"
 local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
@@ -35,7 +36,7 @@ function bed.animate_bed_sleep()
 end
 
 function bed.go_to_sleep_normally()
-	rfr.set_cam_target(BED,0,2)
+	camera.set_target(BED,0,2)
 	rfr.set_position(PLAYER, 1000,1000)
 	rfr.set_state(PLAYER, "idle")
 	rfr.unset_flag("player_can_move")
@@ -46,7 +47,7 @@ end
 
 function bed.wake_up()
 	rfr.set_position(PLAYER, 96,112)
-	rfr.set_cam_target(PLAYER, 16,0)
+	camera.set_target(PLAYER, 16,0)
 	rfr.set_state(PLAYER, "idle")
 	rfr.set_flag("player_can_move")
 	rfr.set_flag("player_can_interact")

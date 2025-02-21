@@ -1,3 +1,4 @@
+local camera = require "luamodules.camera"
 local util = require "luamodules.utilities"
 local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
@@ -142,7 +143,7 @@ rfr.set_interaction(DOOR_HALL_STAIR_FIRST, interaction_name["door_hall_stair_fir
 	end,
 	function()
 		rfr.fade_in(1)
-		rfr.set_cam_target(PLAYER, 16, 0)
+		camera.set_target(PLAYER, 16, 0)
 		move_player_to_destination("hallstair_1")
 	end)
 rfr.set_interaction(DOOR_HALL_STAIR_SECOND, interaction_name["door_hall_stair_second"],
@@ -164,7 +165,7 @@ rfr.set_interaction(METAL_GATE_OUTSIDE, interaction_name["metal_gate"],
 		else
 			map.prepare_hall()
 			rfr.set_cam_zoom(3)
-			rfr.set_cam_target(PLAYER, 16, -16)
+			camera.set_target(PLAYER, 16, -16)
 			rfr.fade_in(3)
 			move_player_to_destination("gate_out", true)
 		end
@@ -178,6 +179,6 @@ rfr.set_interaction(METAL_GATE_INSIDE, interaction_name["metal_gate"],
 		map.prepare_outside()
 		rfr.set_cam_zoom(2)
 		rfr.fade_in(3)
-		rfr.set_cam_target(PLAYER, 16, -43)
+		camera.set_target(PLAYER, 16, -43)
 		move_player_to_destination("gate_in", true)
 	end)

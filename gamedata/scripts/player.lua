@@ -1,3 +1,4 @@
+local camera = require "luamodules.camera"
 local player = {}
 PLAYER = rfr.add_entity()
 rfr.set_properties(PLAYER, "walkspeed", 0.6)
@@ -108,7 +109,7 @@ function player.update(dt)
 		ppos.x = 400
 		ppos.y = 144
 		rfr.set_cam_zoom(2)
-		rfr.set_cam_target(PLAYER, 16, -43)
+		camera.set_target(PLAYER, 16, -43)
 		rfr.set_location(PLAYER, "Map.Outside")
 	end
 

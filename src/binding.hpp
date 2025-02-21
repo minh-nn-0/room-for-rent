@@ -158,10 +158,10 @@ namespace rfr
 		//			}
 		//			else return -1;
 		//		});
-		//tbl.set_function("has_interaction", [&](std::size_t eid)
-		//		{
-		//			return ecs.template has_component<interaction>(eid);
-		//		});
+		tbl.set_function("has_interaction", [&](std::size_t eid)
+				{
+					return ecs.template has_component<interaction>(eid);
+				});
 		//tbl.set_function("get_interaction", [&](std::size_t eid) -> std::string
 		//		{
 		//			if (auto& interaction = ecs.template get_component<rfr::interaction>(eid); interaction.has_value())

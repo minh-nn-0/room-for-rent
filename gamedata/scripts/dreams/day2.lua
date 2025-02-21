@@ -1,3 +1,4 @@
+local camera = require "luamodules.camera"
 local map = require "luamodules.map"
 local scatter_paper = require "dreams.scatter_paper"
 local girl_at_table = require "dreams.girl_at_table"
@@ -16,7 +17,7 @@ local dream_day2 = rfr.add_cutscene({
 		rfr.set_cam_zoom(3)
 		rfr.set_location(PLAYER, "Map.Dream")
 		rfr.set_position(girl_at_table, 168, 112)
-		rfr.set_cam_target(girl_at_table, 16, 5)
+		camera.set_target(girl_at_table, 16, 5)
 
 		lighting.toggle_light("room_dream_ceiling")
 
@@ -24,7 +25,7 @@ local dream_day2 = rfr.add_cutscene({
 	end,
 	exit = function()
 		rfr.unset_flag("dreaming")
-		rfr.set_cam_target(BED, 0, 12)
+		camera.set_target(BED, 0, 12)
 		map.set_current_map("room")
 		rfr.set_location(PLAYER, "Map.Mainroom")
 		rfr.set_cam_zoom(config.cam_zoom)

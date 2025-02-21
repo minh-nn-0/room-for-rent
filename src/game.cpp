@@ -102,48 +102,48 @@ void rfr::game::setup_binding()
 	//				_entities.set_component<velocity>(eid, new_vel);
 	//			};
 	//		});
-	rfr.set_function("update_animation", [&](float dt)
-			{
-				beaver::system::animation::update_tile_animation(_beaver._assets, _entities, dt);
-			});
-	rfr.set_function("update_countdown", [&](float dt)
-			{
-				for (auto&& eid: _entities.with<timing::countdown>())
-				{
-					_entities.get_component<timing::countdown>(eid)->update(dt);
-				};
-			});
-	rfr.set_function("update_timer", [&](float dt)
-			{
-				for (auto&& eid: _entities.with<timing::stopwatch>())
-				{
-					_entities.get_component<timing::stopwatch>(eid)->update(dt);
-				};
-			});
-	rfr.set_function("update_particle_emitter", [&](float dt)
-			{
-				for (auto&& eid: _entities.with<particle_emitter>())
-				{
-					_entities.get_component<particle_emitter>(eid)->update(dt);
-				};
-			});
-	rfr.set_function("update_state", [&]()
-			{
-				for (auto&& eid: _entities.with<beaver::component::fsmstr>())
-				{
-					_entities.get_component<beaver::component::fsmstr>(eid)->update();
-				};
-			});
-	// COLLISIONS
-	rfr.set_function("find_collisions", [&](std::size_t eid) -> std::vector<std::size_t>
-			{
-				return beaver::system::collision::find_collisions(eid, _entities);
-			});
-	rfr.set_function("colliding_with", [&](std::size_t eid, std::size_t other_eid)
-			{
-				auto collisions = beaver::system::collision::find_collisions(eid, _entities);
-				return std::ranges::find(collisions, other_eid) != collisions.end();
-			});
+	//rfr.set_function("update_animation", [&](float dt)
+	//		{
+	//			beaver::system::animation::update_tile_animation(_beaver._assets, _entities, dt);
+	//		});
+	//rfr.set_function("update_countdown", [&](float dt)
+	//		{
+	//			for (auto&& eid: _entities.with<timing::countdown>())
+	//			{
+	//				_entities.get_component<timing::countdown>(eid)->update(dt);
+	//			};
+	//		});
+	//rfr.set_function("update_timer", [&](float dt)
+	//		{
+	//			for (auto&& eid: _entities.with<timing::stopwatch>())
+	//			{
+	//				_entities.get_component<timing::stopwatch>(eid)->update(dt);
+	//			};
+	//		});
+	//rfr.set_function("update_particle_emitter", [&](float dt)
+	//		{
+	//			for (auto&& eid: _entities.with<particle_emitter>())
+	//			{
+	//				_entities.get_component<particle_emitter>(eid)->update(dt);
+	//			};
+	//		});
+	//rfr.set_function("update_state", [&]()
+	//		{
+	//			for (auto&& eid: _entities.with<beaver::component::fsmstr>())
+	//			{
+	//				_entities.get_component<beaver::component::fsmstr>(eid)->update();
+	//			};
+	//		});
+	//// COLLISIONS
+	//rfr.set_function("find_collisions", [&](std::size_t eid) -> std::vector<std::size_t>
+	//		{
+	//			return beaver::system::collision::find_collisions(eid, _entities);
+	//		});
+	//rfr.set_function("colliding_with", [&](std::size_t eid, std::size_t other_eid)
+	//		{
+	//			auto collisions = beaver::system::collision::find_collisions(eid, _entities);
+	//			return std::ranges::find(collisions, other_eid) != collisions.end();
+	//		});
 	rfr.set_function("camera_target", [&](float tx, float ty, float dt)
 			{
 				_camera.target({tx, ty},dt);
@@ -288,11 +288,15 @@ bool rfr::game::update(float dt)
 	// scene
 	// cutscene
 	_cutscenes.update(dt);
+
+	// tile animation
+	beaver::system::animation::update_tile_animation(_beaver._assets, _entities, dt);
 	sol::protected_function lua_update = _lua["safe_update"];
 	auto update_result = lua_update(dt);
 	if (!update_result.valid())
 		throw std::runtime_error(std::format("runtime error: {}", sol::error{update_result}.what()));
 	// cleanup
+	_entities.clear_inactive();
 	return update_result;
 };
 

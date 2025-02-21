@@ -36,3 +36,5 @@ function interaction.update()
 end
 
 function interaction.get_last() return last_interaction end
+
+return interaction

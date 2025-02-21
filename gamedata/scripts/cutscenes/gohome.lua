@@ -1,3 +1,4 @@
+local camera = require "luamodules.camera"
 local util = require "luamodules.utilities"
 local narrative = require "luamodules.narrative"
 local narrative_text = util.load_json(rfr.gamepath() .. "data/narratives/" .. config.language .. ".json")["gohome_prologue"]
@@ -41,7 +42,7 @@ local cs_gohome_prologue = rfr.add_cutscene({
 			bus.stop()
 			beaver.play_sound(ASSETS.audios.busdoor, -1, 0)
 			rfr.set_timer(bus.eid, 3)
-			rfr.set_cam_target(nil, 0, 0)
+			camera.set_target(nil, 0, 0)
 			rfr.set_position(PLAYER, 1000, 1000)
 			return true
 		end,
