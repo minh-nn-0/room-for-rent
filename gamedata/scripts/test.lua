@@ -4,6 +4,7 @@ local hands = require "events.sleep.hands_bathroom_door"
 local camera_shake = require "misc.camera_shake"
 local candle = require "misc.candle"
 local day3 = require "events.sleep.day3"
+local eat = require "activities.eat"
 rfr.set_position(candle.eid, 160,112)
 rfr.set_location(candle.eid, "Map.Mainroom")
 function test.update(dt)

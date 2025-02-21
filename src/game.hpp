@@ -21,7 +21,7 @@ namespace rfr
 		beaver::sdlgame _beaver;
 		sol::state _lua;
 		std::vector<beaver::tile::tilemap> _maps;
-		beaver::ecs_core<dialogue, interaction, location, event_listener> _entities;
+		beaver::ecs_core<dialogue, interaction, location, event_listener, zindex> _entities;
 		event_manager _events;
 		cutscene_manager _cutscenes;
 		beaver::camera2D _camera;

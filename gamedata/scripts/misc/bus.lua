@@ -4,6 +4,7 @@ rfr.set_image(bus.eid, ASSETS.images.tileset)
 rfr.set_image_source(bus.eid, 478, 0, 130, 55)
 rfr.set_location(bus.eid, "Map.Outside")
 rfr.set_position(bus.eid, 1000,1000)
+rfr.set_zindex(bus.eid, 1)
 
 rfr.set_particle_emitter_config(bus.eid, {
 	linear_acceleration = {x = 0, y = -30},

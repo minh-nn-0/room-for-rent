@@ -86,8 +86,8 @@ state["ingame"] = {
 		local plocation = rfr.get_location(PLAYER)
 		local ppos = rfr.get_position(PLAYER)
 		map.draw_bg()
-		for _, eid in ipairs(rfr.get_active_entities()) do
-			if rfr.get_location(eid) == plocation and not rfr.has_tag(eid, "ui") then
+		for _, eid in ipairs(rfr.get_drawable()) do
+			if rfr.get_location(eid) == plocation then
 				rfr.draw_particles(eid)
 				rfr.draw_entities(eid)
 			end

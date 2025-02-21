@@ -13,6 +13,7 @@ local timer = rfr.add_entity()
 local light_switch = rfr.add_entity()
 rfr.set_image(light_switch, ASSETS.images.tileset)
 rfr.set_image_source(light_switch, 64, 368, 16, 16)
+rfr.set_image(light_switch, 0)
 rfr.set_position(light_switch, 128,112)
 rfr.set_location(light_switch, "Map.Void")
 rfr.set_interaction(light_switch, interaction_names["light_switch"],

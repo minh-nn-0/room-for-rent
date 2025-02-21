@@ -9,5 +9,5 @@ namespace rfr
 		DEFAULT = 1,
 		FG = 2
 	};
-	struct zindex { int8_t _index;};
+	struct zindex { int8_t _value;};
 };

@@ -3,6 +3,7 @@ local candle = {}
 candle.eid = rfr.add_entity()
 rfr.set_image(candle.eid, ASSETS.images.tileset)
 rfr.set_image_source(candle.eid, 416, 64, 16,16)
+rfr.set_zindex(candle.eid, 0)
 
 rfr.set_particle_emitter_config(candle.eid, {
 	color_gradient = {
@@ -35,8 +36,10 @@ rfr.set_interaction(candle_interaction, "NEN",
 	function()
 		if not pickedup then
 			pickedup = true
+			rfr.set_zindex(candle.eid, 1)
 		else
 			rfr.set_position(candle.eid, 160,112)
+			rfr.set_zindex(candle.eid, 0)
 			pickedup = false
 		end
 	end)

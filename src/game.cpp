@@ -52,7 +52,9 @@ constexpr std::string game_path()
 //}
 //#endif
 
-std::vector<std::size_t> DRAW_ORDER_DATA;
+std::vector<std::size_t> DRAW_ORDER;
+bool NEED_SORTING {true};
+
 rfr::game::game(): _beaver("RFR", 1280, 720)
 {
 	_beaver._graphics._cam = &_camera;
@@ -84,8 +86,9 @@ void rfr::game::setup_binding()
 	bind_interaction(_entities, rfr);
 	bind_location(_entities, rfr);
 	bind_event(_entities, _events, rfr);
-
 	bind_cutscene(_cutscenes, rfr);
+	bind_zindex(_entities, DRAW_ORDER, NEED_SORTING, rfr);
+
 	rfr.set_function("gamepath", [&]{return game_path();});
 	using namespace beaver::component;
 	//rfr.set_function("update_movement", [&](float dt)
@@ -303,6 +306,12 @@ bool rfr::game::update(float dt)
 
 void rfr::game::draw()
 {
+	if (NEED_SORTING)
+	{
+		DRAW_ORDER = _entities.with<rfr::zindex>();
+		std::ranges::stable_sort(DRAW_ORDER, {}, [&](std::size_t eid){return _entities.get_component<rfr::zindex>(eid)->_value;});
+		NEED_SORTING = false;
+	};
 	sol::protected_function lua_draw = _lua["DRAW"];
 	auto draw_result = lua_draw();
 	if (!draw_result.valid())

@@ -112,6 +112,7 @@ local cs_shower = rfr.add_cutscene({
 
 rfr.set_position(SHOWER, 194, 224)
 rfr.set_location(SHOWER, "Map.Bathroom")
+rfr.set_zindex(SHOWER, 0)
 rfr.set_interaction(SHOWER, interaction_names["shower"],
 	function()
 		local px,_ = util.player_center()

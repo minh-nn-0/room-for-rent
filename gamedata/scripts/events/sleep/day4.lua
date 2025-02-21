@@ -11,6 +11,7 @@ rfr.set_image(shadow, ASSETS.images.tileset)
 rfr.set_image_source(shadow, 320,304,16,32)
 rfr.set_location(shadow, "Map.Mainroom")
 rfr.set_rotation(shadow, -30)
+rfr.set_zindex(shadow, 1)
 
 local ghost_chase = rfr.add_cutscene({
 	init = function()

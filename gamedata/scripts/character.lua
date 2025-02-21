@@ -31,6 +31,8 @@ rfr.set_properties(OWNER, "facing_direction", "left")
 rfr.set_properties(NEIGHBOUR, "facing_direction", "left")
 rfr.set_image(OWNER, ASSETS.images.woman)
 rfr.set_image(NEIGHBOUR, ASSETS.images.neighbour)
+rfr.set_zindex(NEIGHBOUR, 0)
+rfr.set_zindex(OWNER, 0)
 rfr.set_state_entry(OWNER, "idle",
 	function()
 		rfr.set_tileanimation(OWNER, {

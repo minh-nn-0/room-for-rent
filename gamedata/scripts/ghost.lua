@@ -1,7 +1,7 @@
 local util = require "luamodules.utilities"
 local ghost = {}
 ghost.eid = rfr.add_entity()
-
+rfr.set_zindex(ghost.eid, 1)
 -- HANGING
 rfr.set_state_entry(ghost.eid, "hanging",
 	function()

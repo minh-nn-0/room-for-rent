@@ -1,7 +1,7 @@
 local ambience = {}
 local current_sound_channels = {}
-local current_location = nil
-local current_tod = 1
+local current_location = ""
+local current_tod = 0
 local sounds_per_location = {
 	["Map.Outside"] = {
 		{
@@ -63,14 +63,17 @@ end
 function ambience.update()
 	local plocation = rfr.get_location(PLAYER)
 	local _,tod = rfr.current_time()
-	if sounds_per_location[plocation] ~= nil then
-		if current_location ~= plocation or current_tod ~= tod then
-			current_location = plocation
-			current_tod = tod
-			fade_out_ambience()
-			fade_in_ambience(current_location, tod)
-		else
-			play_random_sounds(current_location, tod)
+	if current_location ~= plocation then
+		current_location = plocation
+		fade_out_ambience()
+		if sounds_per_location[current_location] ~= nil then
+			if current_tod ~= tod then
+				current_tod = tod
+				fade_in_ambience(current_location, current_tod)
+				print("hihihhi")
+			else
+				play_random_sounds(current_location, current_tod)
+			end
 		end
 	end
 end

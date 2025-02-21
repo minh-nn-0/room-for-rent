@@ -32,6 +32,7 @@ local cs_shadow_appear_behind = rfr.add_cutscene({
 				rfr.set_location(shadow, "Map.Mainroom")
 				rfr.set_image(shadow, ASSETS.images.tileset)
 				rfr.set_image_source(shadow, 320,304,16,32)
+				rfr.set_zindex(shadow, 1)
 			end
 			if shadow_timer > 1.5 then
 				shadow_full_duration = true

@@ -269,12 +269,13 @@ namespace rfr
 
 	// ZINDEX
 	template<typename... Ts>
-	void bind_zindex(beaver::ecs<Ts...>& ecs, std::vector<std::size_t>& draw_order, sol::table& tbl)
+	void bind_zindex(beaver::ecs<Ts...>& ecs, std::vector<std::size_t>& draw_order, bool& need_sorting, sol::table& tbl)
 	{
 		tbl.set_function("set_zindex", [&](std::size_t eid, std::int8_t zindex)
 				{
-					ecs.template get_or_set_component<rfr::zindex>()._index = zindex;
-					std::ranges::stable_sort(draw_order);
+					ecs.template get_or_set_component<rfr::zindex>(eid)->_value = zindex;
+					need_sorting = true;
 				});
+		tbl.set_function("get_drawable", [&](){return draw_order;});
 	};
 };

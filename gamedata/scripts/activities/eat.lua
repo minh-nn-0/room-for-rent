@@ -22,6 +22,7 @@ rfr.set_particle_emitter_config(eat, {
 
 rfr.set_particle_emitter_auto(eat, false)
 rfr.set_image(eat, rfr.get_image(PLAYER))
+rfr.set_zindex(eat, 1)
 rfr.set_tileanimation(eat, {
 	frames = {{15,300},{16,300},{17,300},{18,300}},
 	framewidth = 32,
