@@ -4,6 +4,7 @@ local bed = require "activities.sleep"
 local ghost = require "ghost"
 local timer = rfr.add_entity()
 local lighting = require "lighting"
+local interaction = require "luamodules.interaction"
 
 local shadow = rfr.add_entity()
 rfr.set_image(shadow, ASSETS.images.tileset)
@@ -153,7 +154,7 @@ local bathroom = rfr.add_cutscene({
 			return true
 		end,
 		function(dt)
-			if not (rfr.get_last_interaction() == DOOR_BATHROOM_ROOM) then return false end
+			if not (interaction.get_last() == DOOR_BATHROOM_ROOM) then return false end
 			rfr.set_timer(timer, 3)
 			return true
 		end,

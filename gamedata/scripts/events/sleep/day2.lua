@@ -1,5 +1,6 @@
 local util = require "luamodules.utilities"
-local dialogues =util.load_json(rfr.gamepath() .. "data/dialogues/events/sleep_2_" .. config.language .. ".json")
+local dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/events/sleep_2_" .. config.language .. ".json")
+local interaction = require "luamodules.interaction"
 local bed = require "activities.sleep"
 local timer = rfr.add_entity()
 local doorknock_track
@@ -33,7 +34,7 @@ local cs_sleep_1 = rfr.add_cutscene({
 		function(dt)
 			if rfr.has_active_dialogue(BED) then return false end
 			if count == 2 then
-				if rfr.get_last_interaction() == DOOR_ROOM_HALL then
+				if interaction.get_last() == DOOR_ROOM_HALL then
 					print("hihihi")
 					shadow_appeared = true
 					rfr.set_position(shadow, 420, 96)
@@ -50,7 +51,7 @@ local cs_sleep_1 = rfr.add_cutscene({
 		end,
 		function(dt)
 			if count == 2 then
-				if rfr.get_last_interaction() == DOOR_HALL_ROOM then
+				if interaction.get_last() == DOOR_HALL_ROOM then
 					rfr.set_dialogue(PLAYER, {content = dialogues["confused"]})
 					return true
 				else return false

@@ -1,10 +1,11 @@
+local interaction = require "luamodules.interaction"
 local ghost_in_mirror_evaluated = false
 local ghost_in_mirror = rfr.add_event(
 	function()
 		local _,tod = rfr.current_time()
 		if not ghost_in_mirror_evaluated then
 			ghost_in_mirror_evaluated = true
-			return tod == 2 and rfr.get_last_interaction() == DOOR_ROOM_BATHROOM and not rfr.get_flag("ghost_in_mirror") and math.random() < 0.8
+			return tod == 2 and interaction.get_last() == DOOR_ROOM_BATHROOM and not rfr.get_flag("ghost_in_mirror") and math.random() < 0.8
 		elseif rfr.get_location(PLAYER) ~= "Map.Bathroom" then
 			ghost_in_mirror_evaluated = false
 		end

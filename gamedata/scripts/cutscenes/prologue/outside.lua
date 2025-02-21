@@ -5,6 +5,7 @@ local dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" ..
 local timer = rfr.add_entity()
 local owner_interaction = rfr.add_entity()
 local call = require "phone.apps.call"
+local interaction = require "luamodules.interaction"
 
 local gate_posx = 424
 local function player_near_gate()
@@ -84,7 +85,7 @@ local cs_prologue_talk_at_gate = rfr.add_cutscene({
 				if not rfr.has_active_dialogue(OWNER) then rfr.set_dialogue(OWNER, {content = dialogues["owner_confused"]}) end
 				rfr.set_timer(timer, 10)
 			end
-			if rfr.get_last_interaction() == METAL_GATE_OUTSIDE then return true end
+			if interaction.get_last() == METAL_GATE_OUTSIDE then return true end
 			return false
 		end,
 	},

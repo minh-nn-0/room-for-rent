@@ -1,5 +1,6 @@
 local util = require "luamodules.utilities"
 local dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
+local interaction = require "luamodules.interaction"
 local map = require "luamodules.map"
 local timer = rfr.add_entity()
 local function on_second_floor()
@@ -163,7 +164,7 @@ CS_PROLOGUE_HALL = rfr.add_cutscene({
 			return false
 		end,
 		function(dt)
-			if rfr.get_last_interaction() == DOOR_HALL_ROOM then return true end
+			if interaction.get_last() == DOOR_HALL_ROOM then return true end
 			return false
 		end
 	},

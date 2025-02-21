@@ -1,6 +1,7 @@
+local interaction = require "luamodules.interaction"
 local pickup_card_ev = rfr.add_event(
 	function()
-		return rfr.get_last_interaction() == CABINET
+		return interaction.get_last() == CABINET
 	end)
 
 rfr.set_event_listener(GAME, pickup_card_ev, function()

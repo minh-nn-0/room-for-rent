@@ -26,6 +26,7 @@ local audio = require "audio.audios"
 local bloods_drip = require "events.sleep.blood_dripping_bathroom"
 
 local camera_shake = require "misc.camera_shake"
+local interaction = require "luamodules.interaction"
 local gamestate = {
 	current_state = "ingame"
 }
@@ -53,16 +54,16 @@ state["ingame"] = {
 		rfr.update_camera(dt)
 		camera_shake.update(dt)
 		rfr.update_phone(dt)
-		rfr.update_event_listener()
+		--rfr.update_event_listener()
 		rfr.update_character(dt)
-		rfr.update_animation(dt)
-		rfr.update_dialogue(dt)
-		rfr.update_timer(dt)
-		rfr.update_countdown(dt)
-		rfr.update_cutscene(dt)
-		rfr.update_interaction()
+		--rfr.update_animation(dt)
+		--rfr.update_dialogue(dt)
+		--rfr.update_timer(dt)
+		--rfr.update_countdown(dt)
+		--rfr.update_cutscene(dt)
+		interaction.update()
 		rfr.update_transition(dt)
-		rfr.update_particle_emitter(dt)
+		--rfr.update_particle_emitter(dt)
 		homework.update()
 		bed.update()
 		bus.update(dt)
@@ -99,9 +100,9 @@ state["ingame"] = {
 		if plocation == "Map.Bathroom" then bloods_drip.draw() end
 
 		lighting.draw()
-		if rfr.get_flag("player_can_interact") and rfr.get_first_interaction() ~= -1 then
+		local i = interaction.get_first()
+		if rfr.get_flag("player_can_interact") and i > 0 then
 			beaver.set_draw_color(255,255,255,255)
-			local i = rfr.get_first_interaction()
 			rfr.draw_interactions_info(i, ASSETS.images.UI, ASSETS.fonts[config.ui_font])
 		end
 

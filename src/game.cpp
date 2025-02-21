@@ -88,20 +88,20 @@ void rfr::game::setup_binding()
 	bind_cutscene(_cutscenes, rfr);
 	rfr.set_function("gamepath", [&]{return game_path();});
 	using namespace beaver::component;
-	rfr.set_function("update_movement", [&](float dt)
-			{
-				for (auto&& eid:_entities.with<position, velocity>()) 
-				{
-					position new_pos = _entities.get_component<position>(eid).value();
-					velocity new_vel = _entities.get_component<velocity>(eid).value();
+	//rfr.set_function("update_movement", [&](float dt)
+	//		{
+	//			for (auto&& eid:_entities.with<position, velocity>()) 
+	//			{
+	//				position new_pos = _entities.get_component<position>(eid).value();
+	//				velocity new_vel = _entities.get_component<velocity>(eid).value();
 
 
-					new_pos = beaver::system::movement::apply_velocity(new_pos, new_vel, dt);
+	//				new_pos = beaver::system::movement::apply_velocity(new_pos, new_vel, dt);
 
-					_entities.set_component<position>(eid, new_pos);
-					_entities.set_component<velocity>(eid, new_vel);
-				};
-			});
+	//				_entities.set_component<position>(eid, new_pos);
+	//				_entities.set_component<velocity>(eid, new_vel);
+	//			};
+	//		});
 	rfr.set_function("update_animation", [&](float dt)
 			{
 				beaver::system::animation::update_tile_animation(_beaver._assets, _entities, dt);
@@ -251,14 +251,48 @@ void rfr::game::setup_binding()
 	)");
 };
 
-
+using namespace beaver::component;
 bool rfr::game::update(float dt)
 {
 	_camera._view._size = _beaver.render_logical_size();
+	// countdown
+	for (auto&& eid: _entities.with<timing::countdown>())
+		_entities.get_component<timing::countdown>(eid)->update(dt);
+
+	// stopwatch
+	for (auto&& eid: _entities.with<timing::stopwatch>())
+		_entities.get_component<timing::stopwatch>(eid)->update(dt);
+
+	// particles
+	for (auto&& eid: _entities.with<particle_emitter>())
+		_entities.get_component<particle_emitter>(eid)->update(dt);
+
+	// state
+	for (auto&& eid: _entities.with<beaver::component::fsmstr>())
+		_entities.get_component<beaver::component::fsmstr>(eid)->update();
+
+	// event
+	for (auto&& eid: _entities.with<rfr::event_listener>())
+		rfr::update_event_listener(_entities.get_component<rfr::event_listener>(eid).value(), _events);
+
+	for (auto&& [eid, eventid]: _events._to_remove)
+	{
+		_entities.get_component<rfr::event_listener>(eid)->erase(eventid);
+		_events._to_remove.clear();
+	}
+	// dialogue
+	for (auto&& eid: _entities.with<rfr::dialogue>())
+		rfr::update_dialogue(_entities.get_component<rfr::dialogue>(eid).value(),
+				_lua["config"]["dialogue_wait_time"], dt);
+	// interaction
+	// scene
+	// cutscene
+	_cutscenes.update(dt);
 	sol::protected_function lua_update = _lua["safe_update"];
 	auto update_result = lua_update(dt);
 	if (!update_result.valid())
 		throw std::runtime_error(std::format("runtime error: {}", sol::error{update_result}.what()));
+	// cleanup
 	return update_result;
 };
 

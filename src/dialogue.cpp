@@ -1,5 +1,26 @@
 #include "dialogue.hpp"
 #include "textbox_drawing.hpp"
+void rfr::update_dialogue(rfr::dialogue& dl, float wait_time, float dt)
+{
+	if (dl._text_index < dl._content.size())
+	{
+		dl._time += dl._cpf * dt;
+		if (dl._time > 1)
+		{
+			dl._text_index += static_cast<int>(dl._time);
+			dl._time = 0;
+		};
+		if (dl._text_index > dl._content.size())
+			dl._text_index = dl._content.size();
+	}
+	else
+	{
+		if (dl._time < wait_time)
+			dl._time += dt;
+		else
+			dl._content.clear();
+	};
+};
 void rfr::draw_dialogue(const mmath::fvec2& actor_position, const dialogue& dialogue,
 		float scale, int padding, int wraplength,
 		std::size_t UI_tex,

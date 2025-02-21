@@ -9,8 +9,9 @@
 --	function()
 --		lighting.toggle_light("room_desk_lamp")
 --	end)
+local interaction = {}
 local last_interaction
-function rfr.get_first_interaction()
+function interaction.get_first_available()
 	for _, eid in ipairs(rfr.get_active_entities()) do
 		if rfr.has_interaction(eid) and rfr.get_location(eid) == rfr.get_location(PLAYER)
 			and rfr.is_interaction_available(eid) and not rfr.get_properties(eid, "disable") then
@@ -20,9 +21,9 @@ function rfr.get_first_interaction()
 	return -1
 end
 
-function rfr.update_interaction()
+function interaction.update()
 	if rfr.get_flag("player_can_interact") then
-		local available_interaction = rfr.get_first_interaction()
+		local available_interaction = interaction.get_first_available()
 		if available_interaction > 0 then
 			--local ppos = rfr.get_position(PLAYER)
 			--rfr.set_position(available_interaction, ppos.x + 16, ppos.y)
@@ -34,4 +35,4 @@ function rfr.update_interaction()
 	end
 end
 
-function rfr.get_last_interaction() return last_interaction end
+function interaction.get_last() return last_interaction end

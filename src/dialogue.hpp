@@ -35,6 +35,8 @@ namespace rfr
 		std::vector<std::string> _options;
 		unsigned char _selection;
 	};
+
+	void update_dialogue(dialogue& dl, float wait_time, float dt);
 	void draw_dialogue(const mmath::fvec2& actor_position,
 			const dialogue& dialogue,
 			float scale,

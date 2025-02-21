@@ -124,11 +124,6 @@ namespace rfr
 	};
 
 	template<typename... Ts>
-	void bind_dialogue_options(beaver::ecs<Ts...>& ecs, std::vector<std::string>& options, sol::table& tbl)
-	{
-	};
-
-	template<typename... Ts>
 	void bind_interaction(beaver::ecs<Ts...>& ecs, sol::table& tbl)
 	{
 		tbl.set_function("set_interaction", [&](std::size_t eid, const std::string& name, sol::object condition, sol::object action)
@@ -136,8 +131,8 @@ namespace rfr
 					auto & intr = ecs.template get_or_set_component<rfr::interaction>(eid);
 					intr->_name = name;
 
-					if (condition.is<sol::function>()) intr->_condition = [condition]{return condition.as<sol::function>()();};
-					if (action.is<sol::function>()) intr->_action = [action]{action.as<sol::function>()();};
+					if (condition.is<sol::function>()) intr->_condition = condition;
+					if (action.is<sol::function>()) intr->_action = action;
 				});
 		tbl.set_function("trigger_interaction", [&](std::size_t eid)
 				{
@@ -152,28 +147,27 @@ namespace rfr
 					}
 					else throw std::runtime_error(std::format("eid {} doesn't have interaction component", eid));
 				});
-		tbl.set_function("find_interaction_with_name", [&](const std::string& name) -> long
-				{
-					auto interactions = ecs.template with<rfr::interaction>();
-					if (auto findrs = std::ranges::find_if(interactions, [&](auto&& eid){
-								return ecs.template get_component<rfr::interaction>(eid)->_name == name;});
-							findrs != interactions.end())
-					{
-						return *findrs;
-					}
-					else return -1;
-				});
-		tbl.set_function("has_interaction", [&](std::size_t eid)
-				{
-					return ecs.template has_component<interaction>(eid);
-				});
-
-		tbl.set_function("get_interaction", [&](std::size_t eid) -> std::string
-				{
-					if (auto& interaction = ecs.template get_component<rfr::interaction>(eid); interaction.has_value())
-						return interaction->_name;
-					else return "";
-				});
+		//tbl.set_function("find_interaction_with_name", [&](const std::string& name) -> long
+		//		{
+		//			auto interactions = ecs.template with<rfr::interaction>();
+		//			if (auto findrs = std::ranges::find_if(interactions, [&](auto&& eid){
+		//						return ecs.template get_component<rfr::interaction>(eid)->_name == name;});
+		//					findrs != interactions.end())
+		//			{
+		//				return *findrs;
+		//			}
+		//			else return -1;
+		//		});
+		//tbl.set_function("has_interaction", [&](std::size_t eid)
+		//		{
+		//			return ecs.template has_component<interaction>(eid);
+		//		});
+		//tbl.set_function("get_interaction", [&](std::size_t eid) -> std::string
+		//		{
+		//			if (auto& interaction = ecs.template get_component<rfr::interaction>(eid); interaction.has_value())
+		//				return interaction->_name;
+		//			else return "";
+		//		});
 	};
 
 	template<typename... Ts>
@@ -193,7 +187,6 @@ namespace rfr
 	template<typename... Ts>
 	void bind_event(beaver::ecs<Ts...>& ecs, event_manager& events, sol::table& tbl)
 	{
-		static std::vector<std::pair<std::size_t, std::size_t>> to_remove_listeners;
 		tbl.set_function("add_event", [&](sol::function trigger)
 				{
 					events._events.emplace_back(trigger);
@@ -218,16 +211,16 @@ namespace rfr
 
 		tbl.set_function("unset_event_listener", [&](std::size_t eid, std::size_t eventid)
 				{
-					to_remove_listeners.emplace_back(eid, eventid);
+					events._to_remove.emplace_back(eid, eventid);
 				});
 		tbl.set_function("update_event_listener", [&]()
 				{
 					for (auto&& eid: ecs.template with<event_listener>())
 						for (auto&& event: ecs.template get_component<event_listener>(eid).value())
 							if (events._events.at(event.first)()) event.second();	
-					for (const auto& [eid, eventid]: to_remove_listeners)
+					for (const auto& [eid, eventid]: events._to_remove)
 						ecs.template get_component<event_listener>(eid)->erase(eventid);
-					to_remove_listeners.clear();
+					events._to_remove.clear();
 				});
 
 		//tbl.set_function("update_events", [&]()
