@@ -1,4 +1,5 @@
 local util = require "luamodules.utilities"
+local interaction = require "luamodules.interaction"
 local character_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local selection = require "phone.selection"
 local call = {}
@@ -27,15 +28,17 @@ local states = {
 		update = function(dt)
 			selection.set_max(#phonebook)
 			selection.update()
-			if beaver.get_input(config.button.back) == 1 then
-				rfr.set_state(PHONE, "home")
-			end
 			if beaver.get_input(config.button.interaction) == 1 then
 				callee = phonebook[selection.get()]
 				rfr.set_timer(call_timer, 10)
 				app_state = "calling"
 				status = "Calling"
 				beaver.play_sound(ASSETS.audios.phonering,audio_channel)
+				interaction.set_back("back", function()
+						beaver.halt_channel(audio_channel)
+						interaction.set_back("back", function() rfr.set_state(PHONE, "home") end)
+						app_state = "home"
+					end)
 			end
 		end,
 		draw = function()
@@ -63,10 +66,6 @@ local states = {
 	},
 	["calling"] = {
 		update = function(dt)
-			if beaver.get_input(config.button.back) == 1 then
-				beaver.halt_channel(audio_channel)
-				app_state = "home"
-			end
 			if status == "Calling" and not rfr.get_timer(call_timer).running then
 				status = "Failed"
 			end
@@ -114,7 +113,7 @@ function call.set_app_state(state)
 end
 
 function call.load()
-	character_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
+	interaction.set_back("back", function() rfr.set_state(PHONE, "home") end)
 end
 function call.update(dt)
 	states[app_state].update(dt)

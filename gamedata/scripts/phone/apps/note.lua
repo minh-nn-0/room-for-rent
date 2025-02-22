@@ -1,4 +1,5 @@
 local util = require "luamodules.utilities"
+local interaction = require "luamodules.interaction"
 local note = {}
 local note_entries = {}
 local scroll = 0
@@ -14,7 +15,6 @@ end
 local states = {
 	["home"] = {
 		update = function(dt)
-			if beaver.get_input(config.button.back) == 1 then rfr.set_state(PHONE, "home") end
 			if beaver.get_input("UP") > 0 then scroll = scroll + 1 end
 			if beaver.get_input("DOWN") > 0 then scroll = scroll - 1 end
 			local min_scroll = -((total_note_height - clip_rect_height)/ config.cam_zoom)
@@ -51,6 +51,10 @@ function note.add(name)
 	noti.set("note")
 end
 function note.load()
+	interaction.set_back("back", function() rfr.set_state(PHONE, "home") end)
+end
+function note.set_app_state(state)
+	app_state = state
 end
 function note.update(dt)
 	states[app_state].update(dt)

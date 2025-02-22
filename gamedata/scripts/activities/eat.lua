@@ -40,6 +40,9 @@ local cs_eat = rfr.add_cutscene({
 		rfr.set_position(eat, 168, 112)
 		camera.set_target(eat, 16,0)
 		rfr.set_position(PLAYER, 1000,1000)
+		rfr.unset_flag("player_can_move")
+		rfr.unset_flag("player_can_interact")
+		rfr.set_flag("eating")
 		rfr.set_particle_emitter_auto(eat, true)
 		beaver.play_sound(ASSETS.audios.eatnoddle)
 
@@ -51,6 +54,9 @@ local cs_eat = rfr.add_cutscene({
 		camera.set_target(PLAYER, 16,0)
 		rfr.set_position(PLAYER, 169,112)
 
+		rfr.set_flag("player_can_move")
+		rfr.set_flag("player_can_interact")
+		rfr.unset_flag("eating")
 		local d,_ = rfr.current_time()
 		rfr.set_day_flag(d, "eat")
 	end,

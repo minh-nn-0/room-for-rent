@@ -1,4 +1,5 @@
 local util = require "luamodules.utilities"
+local interaction = require "luamodules.interaction"
 local phone_states = require "phone.states"
 local noti = require "phone.notification"
 
@@ -26,7 +27,6 @@ rfr.add_tag(PHONE, "ui")
 for _,app in ipairs(apps) do
 	rfr.set_state_entry(PHONE, app, function() phone_states[app].load() end)
 end
-rfr.set_state(PHONE, "home")
 --local phone_screen_color = {40,40,40,255}
 --local phone_screen_rect = {3, 3, 42, 77}
 local function draw_app_title()
@@ -74,9 +74,11 @@ function rfr.toggle_phone()
 	if rfr.get_flag("phone_opening") then
 		rfr.unset_flag("player_can_move")
 		rfr.unset_flag("player_can_interact")
+		rfr.set_state(PHONE, "home")
 	else
 		rfr.set_flag("player_can_move")
 		rfr.set_flag("player_can_interact")
+		interaction.unset_back()
 	end
 end
 
@@ -95,8 +97,8 @@ function rfr.update_phone(dt)
 	end
 	if rfr.get_flag("phone_opening") then
 		phone_states[phone_state].update(dt)
-	elseif phone_position.y >= config.render_size[2] then
-		rfr.set_state(PHONE, "home")
+	elseif phone_at_position() then
+		rfr.set_state(PHONE, "off")
 		for _,app in ipairs(apps) do
 			if phone_states[app].set_app_state then phone_states[app].set_app_state("home") end
 		end
@@ -121,6 +123,8 @@ function rfr.update_phone(dt)
 end
 
 function rfr.draw_phone()
-	draw_app_title()
-	phone_states[rfr.get_state(PHONE)].draw()
+	if rfr.get_flag("phone_opening") or (not rfr.get_flag("phone_opening") and not phone_at_position()) then
+		draw_app_title()
+		phone_states[rfr.get_state(PHONE)].draw()
+	end
 end

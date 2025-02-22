@@ -58,9 +58,8 @@ function interaction.update()
 				last_interaction = current_interaction
 			end
 		end
-		if current_back and beaver.get_input(config.button.back) == 1 then
-			current_back.action()
-		end
+	elseif current_back and beaver.get_input(config.button.back) == 1 then
+		current_back.action()
 	end
 end
 

@@ -28,10 +28,11 @@ void rfr::interaction_helper::draw(const std::string& Xcontent, const std::strin
 			game._graphics.text_blended(mmath::ivec2{icon_dst._pos.x - 5, icon_dst._pos.y + 7}, *ddata._font, content, 1, 0, beaver::graphics::TEXT_ALIGNMENT::RIGHT);
 		};
 		game._graphics.texture(*ddata._tex, static_cast<mmath::frect>(icon_dst), static_cast<mmath::frect>(icon_src));
-
 	};
 	draw_icon_and_text(Xcontent, X_dst, ddata._Xsrc);
 	draw_icon_and_text(Zcontent, Z_dst, ddata._Zsrc);
+
+	SDL_SetTextureAlphaMod(*ddata._tex, 255);
 	game._graphics._using_cam = true;
 };
 

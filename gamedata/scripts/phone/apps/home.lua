@@ -4,6 +4,7 @@ local noti = require "phone.notification"
 local phone_texts
 local phone_apps_info
 local phone_apps = {"call", "message", "note", "setting", "exit"}
+local interaction = require "luamodules.interaction"
 
 local function load()
 	phone_texts = util.load_json(rfr.gamepath() .. "data/ui/" .. config.language .. ".json")
@@ -14,6 +15,7 @@ local function load()
 		setting = {src = {x = 0, y = 56, w = 8, h = 8}, text = phone_texts["setting"]},
 		exit = {src = {x = 8, y = 32, w = 8, h = 8}, text = phone_texts["exit"]},
 	}
+	interaction.set_back("back", rfr.toggle_phone)
 end
 local function update(dt)
 	selection.set_max(#phone_apps)
@@ -22,9 +24,6 @@ local function update(dt)
 		rfr.set_state(PHONE, phone_apps[selection.get()])
 		noti.clear(phone_apps[selection.get()])
 		selection.set(1)
-	end
-	if beaver.get_input(config.button.back) == 1 then
-		rfr.toggle_phone()
 	end
 end
 local function draw()

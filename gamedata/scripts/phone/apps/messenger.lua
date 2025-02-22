@@ -1,4 +1,5 @@
 local util = require "luamodules.utilities"
+local interaction = require "luamodules.interaction"
 local selection = require "phone.selection"
 
 local actor_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
@@ -12,9 +13,6 @@ local states = {
 		update = function(dt)
 			selection.set_max(#actors)
 			selection.update()
-			if beaver.get_input(config.button.back) == 1 then
-				rfr.set_state(PHONE, "home")
-			end
 		end,
 		draw = function()
 			selection.draw_box()
@@ -38,6 +36,8 @@ local states = {
 			end
 		end,
 		["in_messages"] = {
+			init = function()
+			end,
 			update = function(dt)
 			end,
 			draw = function()
@@ -45,11 +45,9 @@ local states = {
 		}
 	}
 }
-
 local function load()
-	actor_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
+	interaction.set_back("back", function() rfr.set_state(PHONE, "home") end)
 end
-
 local function update(dt)
 	states[app_state].update(dt)
 end
@@ -64,4 +62,5 @@ function rfr.add_phone_messages(actor, content)
 	noti.set("message")
 end
 
-return {set_app_state = function(state) app_state = state end, load = load, update = update, draw = draw}
+return {set_app_state = function(state) app_state = state end,
+	load = load, update = update, draw = draw}

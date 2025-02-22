@@ -104,8 +104,8 @@ state["ingame"] = {
 		local current_back = ""
 		if rfr.get_flag("player_can_interact") then
 			current_interaction = interaction.get_current_interaction() and interaction.get_current_interaction().name or ""
-			current_back = interaction.get_current_back() and interaction.get_current_back().name or ""
 		end
+		current_back = interaction.get_current_back() and interaction.get_current_back().name or ""
 		print(current_interaction, current_back)
 		rfr.draw_interaction_helper(current_interaction, current_back)
 
