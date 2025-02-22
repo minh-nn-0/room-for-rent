@@ -1,5 +1,6 @@
 local camera = require "luamodules.camera"
 local util = require "luamodules.utilities"
+local interaction = require "luamodules.interaction"
 local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
 local map = require "luamodules.map"
@@ -28,14 +29,14 @@ local door_destination = {
 	gate_in = {pos = {400,144}, location = "Map.Outside", map = "outside"},
 	gate_out = {pos = {400,144}, location = "Map.Hall", map = "outside"},
 }
-local function make_door(d)
-	local door_eid = rfr.add_entity()
-	local door_pos = door_label_position[d].pos
-	local door_location = door_label_position[d].location
-	rfr.set_position(door_eid, door_pos[1], door_pos[2])
-	rfr.set_location(door_eid, door_location)
-	return door_eid
-end
+--local function make_door(d)
+--	local door_eid = rfr.add_entity()
+--	local door_pos = door_label_position[d].pos
+--	local door_location = door_label_position[d].location
+--	rfr.set_position(door_eid, door_pos[1], door_pos[2])
+--	rfr.set_location(door_eid, door_location)
+--	return door_eid
+--end
 local function player_in_range(d,range)
 	local px,_ = util.player_center()
 	local door_pos = door_label_position[d].pos
@@ -51,19 +52,18 @@ local function move_player_to_destination(d, move_cam)
 		rfr.set_cam_center(door_dst.pos[1] + 16, door_dst.pos[2]+16)
 	end
 end
-DOOR_ROOM_BATHROOM = make_door("room_bathroom")
-DOOR_ROOM_HALL = make_door("room_hall")
-DOOR_ROOM_BALCONY = make_door("room_balcony")
-DOOR_BATHROOM_ROOM = make_door("bathroom_room")
-DOOR_BALCONY_ROOM = make_door("balcony_room")
-DOOR_HALL_ROOM = make_door("hall_room")
-DOOR_HALL_STAIR_FIRST = make_door("hallstair_1")
-DOOR_HALL_STAIR_SECOND = make_door("hallstair_2")
-METAL_GATE_OUTSIDE = make_door("gate_out")
-METAL_GATE_INSIDE = make_door("gate_in")
-rfr.set_interaction(DOOR_ROOM_BATHROOM, interaction_name["door_room_to_bathroom"],
+--DOOR_ROOM_HALL = make_door("room_hall")
+--DOOR_ROOM_BALCONY = make_door("room_balcony")
+--DOOR_BATHROOM_ROOM = make_door("bathroom_room")
+--DOOR_BALCONY_ROOM = make_door("balcony_room")
+--DOOR_HALL_ROOM = make_door("hall_room")
+--DOOR_HALL_STAIR_FIRST = make_door("hallstair_1")
+--DOOR_HALL_STAIR_SECOND = make_door("hallstair_2")
+--METAL_GATE_OUTSIDE = make_door("gate_out")
+--METAL_GATE_INSIDE = make_door("gate_in")
+DOOR_ROOM_BATHROOM = interaction.add(interaction_name["door_room_to_bathroom"],
 	function()
-		return player_in_range("room_bathroom", 10)
+		return player_in_range("room_bathroom", 10) and rfr.get_location(PLAYER) == "Map.Mainroom"
 	end,
 	function()
 		beaver.play_sound(ASSETS.audios.dooropen)
@@ -71,9 +71,9 @@ rfr.set_interaction(DOOR_ROOM_BATHROOM, interaction_name["door_room_to_bathroom"
 		move_player_to_destination("room_bathroom", true)
 	end)
 
-rfr.set_interaction(DOOR_BATHROOM_ROOM, interaction_name["door_bathroom_to_room"],
+DOOR_BATHROOM_ROOM = interaction.add(interaction_name["door_bathroom_to_room"],
 	function()
-		return player_in_range("bathroom_room", 10)
+		return player_in_range("bathroom_room", 10) and rfr.get_location(PLAYER) == "Map.Bathroom"
 	end,
 	function()
 		if rfr.get_properties(DOOR_BATHROOM_ROOM, "locked") then
@@ -85,9 +85,9 @@ rfr.set_interaction(DOOR_BATHROOM_ROOM, interaction_name["door_bathroom_to_room"
 		end
 	end)
 
-rfr.set_interaction(DOOR_ROOM_HALL, interaction_name["door_room_to_hall"],
+DOOR_ROOM_HALL = interaction.add(interaction_name["door_room_to_hall"],
 	function()
-		return player_in_range("room_hall", 10)
+		return player_in_range("room_hall", 10) and rfr.get_location(PLAYER) == "Map.Mainroom"
 	end,
 	function()
 		if rfr.get_flag("naked") then
@@ -100,9 +100,9 @@ rfr.set_interaction(DOOR_ROOM_HALL, interaction_name["door_room_to_hall"],
 			move_player_to_destination("room_hall", true)
 		end
 	end)
-rfr.set_interaction(DOOR_ROOM_BALCONY, interaction_name["door_room_to_balcony"],
+DOOR_ROOM_BALCONY = interaction.add(interaction_name["door_room_to_balcony"],
 	function()
-		return player_in_range("room_balcony", 10)
+		return player_in_range("room_balcony", 10) and rfr.get_location(PLAYER) == "Map.Mainroom"
 	end,
 	function()
 		if rfr.get_flag("naked") then
@@ -114,9 +114,9 @@ rfr.set_interaction(DOOR_ROOM_BALCONY, interaction_name["door_room_to_balcony"],
 		end
 	end)
 
-rfr.set_interaction(DOOR_BALCONY_ROOM, interaction_name["door_balcony_to_room"],
+DOOR_BALCONY_ROOM = interaction.add(interaction_name["door_balcony_to_room"],
 	function()
-		return player_in_range("balcony_room", 10)
+		return player_in_range("balcony_room", 10) and rfr.get_location(PLAYER) == "Map.Balcony"
 	end,
 	function()
 		rfr.set_cam_zoom(config.cam_zoom)
@@ -124,9 +124,9 @@ rfr.set_interaction(DOOR_BALCONY_ROOM, interaction_name["door_balcony_to_room"],
 		move_player_to_destination("balcony_room", true)
 	end)
 
-rfr.set_interaction(DOOR_HALL_ROOM, interaction_name["door_hall_to_room"],
+DOOR_HALL_ROOM = interaction.add(interaction_name["door_hall_to_room"],
 	function()
-		return player_in_range("hall_room", 10)
+		return player_in_range("hall_room", 10) and rfr.get_location(PLAYER) == "Map.Hall"
 	end,
 	function()
 		beaver.play_sound(ASSETS.audios.dooropen2)
@@ -136,29 +136,29 @@ rfr.set_interaction(DOOR_HALL_ROOM, interaction_name["door_hall_to_room"],
 		move_player_to_destination("hall_room", true)
 	end)
 
-rfr.set_interaction(DOOR_HALL_STAIR_FIRST, interaction_name["door_hall_stair_first"],
+DOOR_HALL_STAIR_FIRST = interaction.add(interaction_name["door_hall_stair_first"],
 	function()
 		local pposy = rfr.get_position(PLAYER).y
-		return player_in_range("hallstair_1", 10) and pposy == 144
+		return player_in_range("hallstair_1", 10) and pposy == 144 and rfr.get_location(PLAYER) == "Map.Hall"
 	end,
 	function()
 		rfr.fade_in(1)
 		camera.set_target(PLAYER, 16, 0)
 		move_player_to_destination("hallstair_1")
 	end)
-rfr.set_interaction(DOOR_HALL_STAIR_SECOND, interaction_name["door_hall_stair_second"],
+DOOR_HALL_STAIR_SECOND = interaction.add(interaction_name["door_hall_stair_second"],
 	function()
 		local pposy = rfr.get_position(PLAYER).y
-		return player_in_range("hallstair_2", 10) and pposy == 96
+		return player_in_range("hallstair_2", 10) and pposy == 96 and rfr.get_location(PLAYER) == "Map.Hall"
 	end,
 	function()
 		rfr.fade_in(1)
 		move_player_to_destination("hallstair_2")
 	end)
 
-rfr.set_interaction(METAL_GATE_OUTSIDE, interaction_name["metal_gate"],
+METAL_GATE_OUTSIDE = interaction.add(interaction_name["metal_gate"],
 	function()
-		return player_in_range("gate_out", 15)
+		return player_in_range("gate_out", 15) and rfr.get_location(PLAYER) == "Map.Outside"
 	end,
 	function()
 		if rfr.get_flag("metal_gate_first_time") then rfr.set_dialogue(PLAYER, {content = interaction_details["metal_gate_first_time"]})
@@ -170,10 +170,10 @@ rfr.set_interaction(METAL_GATE_OUTSIDE, interaction_name["metal_gate"],
 			move_player_to_destination("gate_out", true)
 		end
 	end)
-rfr.set_interaction(METAL_GATE_INSIDE, interaction_name["metal_gate"],
+METAL_GATE_INSIDE = interaction.add(interaction_name["metal_gate"],
 	function()
 		local pposy = rfr.get_position(PLAYER).y
-		return player_in_range("gate_in", 15) and pposy == 144
+		return player_in_range("gate_in", 15) and pposy == 144 and rfr.get_location(PLAYER) == "Map.Hall"
 	end,
 	function()
 		map.prepare_outside()

@@ -55,6 +55,9 @@ constexpr std::string game_path()
 std::vector<std::size_t> DRAW_ORDER;
 bool NEED_SORTING {true};
 
+rfr::dialogue_options DIALOGUE_OPTIONS;
+rfr::interaction_helper::drawdata INTERACTION_DRAWDATA;
+
 rfr::game::game(): _beaver("RFR", 1280, 720)
 {
 	_beaver._graphics._cam = &_camera;
@@ -65,11 +68,13 @@ rfr::game::game(): _beaver("RFR", 1280, 720)
 	if (!load_result.valid()) 
 		throw std::runtime_error(std::format("runtime error: {}", sol::error{load_result}.what()));
 
+	INTERACTION_DRAWDATA._tex = &_beaver._assets.get_vec<sdl::texture>().at(_lua["ASSETS"]["images"]["UI"]);
+	INTERACTION_DRAWDATA._font = &_beaver._assets.get_vec<sdl::font>().at(_lua["ASSETS"]["fonts"][_lua["config"]["ui_font"]]);
+	INTERACTION_DRAWDATA._Zsrc = {54,34,10,10};
+	INTERACTION_DRAWDATA._Xsrc = {44,34,10,10};
 	for (auto& map: _maps)
 		beaver::tile::load_textures(map, _beaver._assets.get_vec<sdl::texture>());
 };
-
-rfr::dialogue_options DIALOGUE_OPTIONS;
 
 void rfr::game::setup_binding()
 {
@@ -178,6 +183,10 @@ void rfr::game::setup_binding()
 							UI_tex, font,
 							_beaver);
 				}
+			});
+	rfr.set_function("draw_interaction_helper", [&](const std::string& Xcontent, const std::string& Zcontent)
+			{
+				rfr::interaction_helper::draw(Xcontent, Zcontent, _beaver, INTERACTION_DRAWDATA);
 			});
 	rfr.set_function("draw_dialogue", [&](std::size_t eid, std::size_t UI_tex, std::size_t font)
 			{

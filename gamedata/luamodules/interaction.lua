@@ -10,12 +10,40 @@
 --		lighting.toggle_light("room_desk_lamp")
 --	end)
 local interaction = {}
+local list = {}
+local disabled = {}
+local current_interaction = -1
+local current_back = nil
 local last_interaction
+
+function interaction.add(name, condition, action)
+	list[#list + 1] = {name = name, condition = condition, action = action}
+	return #list
+end
+
+function interaction.set_active(id, active)
+	disabled[id] = active
+end
+
+function interaction.set_back(name, action)
+	current_back = {name = name, action = action}
+end
+
+function interaction.unset_back()
+	current_back = nil
+end
+
+function interaction.get_current_interaction()
+	return list[current_interaction] and list[current_interaction] or nil
+end
+
+function interaction.get_current_back()
+	return current_back
+end
 function interaction.get_first_available()
-	for _, eid in ipairs(rfr.get_active_entities()) do
-		if rfr.has_interaction(eid) and rfr.get_location(eid) == rfr.get_location(PLAYER)
-			and rfr.is_interaction_available(eid) and not rfr.get_properties(eid, "disable") then
-			return eid
+	for id, itrt in ipairs(list) do
+		if not disabled[id] and itrt.condition() then
+			return id
 		end
 	end
 	return -1
@@ -23,14 +51,15 @@ end
 
 function interaction.update()
 	if rfr.get_flag("player_can_interact") then
-		local available_interaction = interaction.get_first_available()
-		if available_interaction > 0 then
-			--local ppos = rfr.get_position(PLAYER)
-			--rfr.set_position(available_interaction, ppos.x + 16, ppos.y)
+		current_interaction = interaction.get_first_available()
+		if current_interaction > 0 then
 			if beaver.get_input(config.button.interaction) == 1 then
-				rfr.trigger_interaction(available_interaction)
-				last_interaction = available_interaction
+				list[current_interaction].action()
+				last_interaction = current_interaction
 			end
+		end
+		if current_back and beaver.get_input(config.button.back) == 1 then
+			current_back.action()
 		end
 	end
 end

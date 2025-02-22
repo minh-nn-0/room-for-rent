@@ -21,7 +21,7 @@ namespace rfr
 			mmath::irect _Zsrc, _Xsrc;
 			sdl::font* _font;
 		};
-		void draw(const std::string& Zcontent, const std::string& Xcontent, beaver::sdlgame&, const drawdata&, float scale);
+		void draw(const std::string& Zcontent, const std::string& Xcontent, beaver::sdlgame&, const drawdata&);
 	};
 	
 	void draw_interaction(const std::string& name, const mmath::fvec2& position,

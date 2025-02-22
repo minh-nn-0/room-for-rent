@@ -1,11 +1,11 @@
 local camera = require "luamodules.camera"
 local util = require "luamodules.utilities"
+local interaction = require "luamodules.interaction"
 local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
 local bed = {}
 BED = rfr.add_entity()
 rfr.set_position(BED, 104,110)
-
 
 local anim_frames = {
 	{619,620,621,657,658,659},
@@ -90,12 +90,11 @@ local cs_sleep = rfr.add_cutscene({
 	end
 })
 
-rfr.set_location(BED, "Map.Mainroom")
 rfr.set_properties(BED, "normal", true)
-rfr.set_interaction(BED, interaction_name["bed"],
+local bed_interaction = interaction.add(interaction_name["bed"],
 	function()
 		local px,_ = util.player_center()
-		return px >= 90 and px <= 120 and not rfr.get_flag("prologue")
+		return px >= 90 and px <= 120 and not rfr.get_flag("prologue") and rfr.get_location(PLAYER) == "Map.Mainroom"
 	end,
 	function()
 		if rfr.get_flag("naked") then

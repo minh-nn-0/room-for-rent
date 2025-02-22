@@ -1,5 +1,6 @@
 local bed = require "activities.sleep"
 local util = require "luamodules.utilities"
+local interaction = require "luamodules.interaction"
 local interaction_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local day3 = {}
 local lighting = require "lighting"
@@ -55,10 +56,10 @@ rfr.set_image_source(light_switch, 64, 368, 16, 16)
 rfr.set_zindex(light_switch, 0)
 rfr.set_position(light_switch, 128,112)
 rfr.set_location(light_switch, "Map.Void")
-rfr.set_interaction(light_switch, interaction_names["light_switch"],
+interaction.add(interaction_names["light_switch"],
 	function()
 		local px, _ = util.player_center()
-		return px >= 130 and px <= 140
+		return px >= 130 and px <= 140 and rfr.get_location(PLAYER) == "Map.Void"
 	end,
 	function()
 		rfr.play_cutscene(cs_room)

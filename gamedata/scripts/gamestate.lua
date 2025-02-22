@@ -99,11 +99,15 @@ state["ingame"] = {
 		if plocation == "Map.Bathroom" then bloods_drip.draw() end
 
 		lighting.draw()
-		local i = interaction.get_first_available()
-		if rfr.get_flag("player_can_interact") and i > 0 then
-			beaver.set_draw_color(255,255,255,255)
-			rfr.draw_interactions_info(i, ASSETS.images.UI, ASSETS.fonts[config.ui_font])
+		beaver.set_draw_color(255,255,255,255)
+		local current_interaction = ""
+		local current_back = ""
+		if rfr.get_flag("player_can_interact") then
+			current_interaction = interaction.get_current_interaction() and interaction.get_current_interaction().name or ""
+			current_back = interaction.get_current_back() and interaction.get_current_back().name or ""
 		end
+		print(current_interaction, current_back)
+		rfr.draw_interaction_helper(current_interaction, current_back)
 
 		for _, eid in ipairs(rfr.get_active_entities()) do
 			if rfr.get_location(eid) == plocation then

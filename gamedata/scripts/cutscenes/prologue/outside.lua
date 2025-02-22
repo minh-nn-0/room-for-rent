@@ -4,7 +4,7 @@ local map = require "luamodules.map"
 local util = require "luamodules.utilities"
 local dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
 local timer = rfr.add_entity()
-local owner_interaction = rfr.add_entity()
+local owner_interaction
 local call = require "phone.apps.call"
 local interaction = require "luamodules.interaction"
 
@@ -55,7 +55,7 @@ CS_PROLOGUE_ARRIVE = rfr.add_cutscene({
 local cs_prologue_talk_at_gate = rfr.add_cutscene({
 	init = function()
 		dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
-		rfr.set_active(owner_interaction, false)
+		interaction.set_active(owner_interaction, false)
 	end,
 	exit = function()
 		print("exit talk_at_gate")
@@ -77,7 +77,7 @@ local cs_prologue_talk_at_gate = rfr.add_cutscene({
 			if rfr.has_active_dialogue(OWNER) then return false end
 			rfr.set_location(OWNER, "Map.Hall")
 			rfr.set_timer(timer, 10)
-			rfr.set_properties(METAL_GATE_OUTSIDE, "disable", false)
+			interaction.set_active(METAL_GATE_OUTSIDE, true)
 			rfr.unset_flag("metal_gate_first_time")
 			return true
 		end,
@@ -98,12 +98,10 @@ local cs_prologue_owner_pickup = rfr.add_cutscene({
 	init = function()
 		local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 		rfr.set_timer(timer, 5)
-		rfr.set_location(owner_interaction, "Map.Outside")
-		rfr.set_position(owner_interaction, gate_posx, 128)
-		rfr.set_interaction(owner_interaction, interaction_name["owner"],
+		owner_interaction = interaction.add(interaction_name["owner"],
 			function()
 				local px,_ = util.player_center()
-				return px >= gate_posx - 10 and px <= gate_posx + 10
+				return px >= gate_posx - 10 and px <= gate_posx + 10 and rfr.get_location(PLAYER) == "Map.Outside"
 			end,
 			function()
 				rfr.play_cutscene(cs_prologue_talk_at_gate)
@@ -115,7 +113,7 @@ local cs_prologue_owner_pickup = rfr.add_cutscene({
 	scripts = {
 		function(dt)
 			if rfr.get_timer(timer).running or not player_near_gate() then return false end
-			rfr.set_properties(METAL_GATE_OUTSIDE, "disable", true)
+			interaction.set_active(METAL_GATE_OUTSIDE, false)
 			rfr.set_position(OWNER, gate_posx - 16,144)
 			rfr.set_location(OWNER, "Map.Outside")
 			rfr.set_state(OWNER, "idle")

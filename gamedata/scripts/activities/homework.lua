@@ -1,5 +1,6 @@
 local util = require "luamodules.utilities"
 local notebook = require "activities.notebook"
+local interaction = require "luamodules.interaction"
 local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local UI_name = util.load_json(rfr.gamepath() .. "data/ui/" .. config.language .. ".json")
 local homework = {}
@@ -36,13 +37,10 @@ function homework.draw()
 	end
 end
 
-DESK = rfr.add_entity()
-rfr.set_position(DESK, 184,100)
-rfr.set_location(DESK, "Map.Mainroom")
-rfr.set_interaction(DESK, interaction_name["desk"],
+interaction.add(interaction_name["desk"],
 	function()
 		local px,_ = util.player_center()
-		return px >= 176 and px <= 190 and not rfr.get_flag("prologue")
+		return px >= 176 and px <= 190 and not rfr.get_flag("prologue") and rfr.get_location(PLAYER) == "Map.Mainroom"
 	end,
 	function()
 		notebook.toggle()

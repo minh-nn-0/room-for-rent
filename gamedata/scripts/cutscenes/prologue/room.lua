@@ -1,5 +1,6 @@
 local camera = require "luamodules.camera"
 local util = require "luamodules.utilities"
+local interaction = require "luamodules.interaction"
 local dialogues
 local map = require "luamodules.map"
 local cam_target1 = rfr.add_entity()
@@ -22,12 +23,10 @@ CS_PROLOGUE_ROOM = rfr.add_cutscene({
 		rfr.set_state(OWNER, "idle")
 		rfr.set_properties(OWNER,"facing_direction", "left")
 
-		rfr.set_position(confirm_owner, 294, 100)
-		rfr.set_location(confirm_owner, "Map.Mainroom")
-		rfr.set_interaction(confirm_owner, interaction_name["owner"],
+		confirm_owner = interaction.add(interaction_name["owner"],
 			function()
 				local px,_ = util.player_center()
-				return px >= 280 and px <= 300
+				return px >= 280 and px <= 300 and rfr.get_location(PLAYER) == "Map.Mainroom"
 			end,
 			function()
 				rfr.set_dialogue_options(rfr.get_dialogue_options_from_json(dialogues, "player_choice_take_room"))
@@ -40,7 +39,7 @@ CS_PROLOGUE_ROOM = rfr.add_cutscene({
 		camera.set_target(cam_target1)
 	end,
 	exit = function()
-		rfr.set_active(confirm_owner, false)
+		interaction.set_active(confirm_owner, false)
 		if rfr.get_flag("refuse_room") then
 			rfr.play_cutscene(CS_PROLOGUE_REFUSE_ROOM)
 		else

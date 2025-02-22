@@ -1,4 +1,5 @@
 local candle = {}
+local interaction = require "luamodules.interaction"
 
 candle.eid = rfr.add_entity()
 rfr.set_image(candle.eid, ASSETS.images.tileset)
@@ -25,13 +26,10 @@ local pickedup = false
 local lighting = require "lighting"
 local util = require "luamodules.utilities"
 
-local candle_interaction = rfr.add_entity()
-rfr.set_position(candle_interaction, 167, 112)
-rfr.set_location(candle_interaction, "Map.Dream")
-rfr.set_interaction(candle_interaction, "NEN",
+interaction.add("NEN",
 	function()
 		local px, _ = util.player_center()
-		return px >= 160 and px <= 172 and rfr.get_flag("can_pickup_candle")
+		return px >= 160 and px <= 172 and rfr.get_flag("can_pickup_candle") and rfr.get_location(PLAYER) == "Map.Dream"
 	end,
 	function()
 		if not pickedup then

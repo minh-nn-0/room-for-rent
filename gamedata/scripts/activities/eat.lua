@@ -1,5 +1,6 @@
 local camera = require "luamodules.camera"
 local util = require "luamodules.utilities"
+local interaction = require "luamodules.interaction"
 local interaction_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
 
@@ -63,13 +64,10 @@ local cs_eat = rfr.add_cutscene({
 	update = function(dt) end
 })
 
-local eat_interaction = rfr.add_entity()
-rfr.set_position(eat_interaction, 214,96)
-rfr.set_location(eat_interaction, "Map.Mainroom")
-rfr.set_interaction(eat_interaction, interaction_names["eat"],
+interaction.add(interaction_names["eat"],
 	function()
 		local px,_ = util.player_center()
-		return px >= 204 and px <= 220
+		return px >= 204 and px <= 220 and rfr.get_location(PLAYER) == "Map.Mainroom"
 	end,
 	function()
 		local d,_ = rfr.current_time()

@@ -1,60 +1,47 @@
 local util = require "luamodules.utilities"
 local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
-ALTAR = rfr.add_entity()
-CABINET = rfr.add_entity()
-LIGHT_SWITCH_MAINROOM = rfr.add_entity()
-LIGHT_SWITCH_BATHROOM = rfr.add_entity()
-
-rfr.set_position(ALTAR, 152,94)
-rfr.set_properties(ALTAR, "normal", true)
-rfr.set_location(ALTAR, "Map.Mainroom")
-rfr.set_interaction(ALTAR, interaction_name["altar"],
+local interaction = require "luamodules.interaction"
+local room_items = {}
+room_items.altar = interaction.add(interaction_name["altar"],
 	function()
 		local px,_ = util.player_center()
-		return px >= 144 and px <= 160
+		return px >= 144 and px <= 160 and rfr.get_location(PLAYER) == "Map.Mainroom"
 	end,
 	function()
-		if rfr.get_properties(ALTAR, "normal") then
-			rfr.set_dialogue(PLAYER, {content = interaction_details["altar"]})
-		end
+		rfr.set_dialogue(PLAYER, {content = interaction_details["altar"]})
 	end)
-rfr.set_position(CABINET, 288,100)
-rfr.set_properties(CABINET, "normal", true)
-rfr.set_location(CABINET, "Map.Mainroom")
-rfr.set_interaction(CABINET, interaction_name["cabinet"],
+room_items.cabinet = interaction.add(interaction_name["cabinet"],
 	function()
 		local px,_ = util.player_center()
-		return px >= 276 and px <= 300
+		return px >= 276 and px <= 300 and rfr.get_location(PLAYER) == "Map.Mainroom"
 	end,
 	function()
-		if rfr.get_properties(CABINET, "normal") then
-			-- rfr.set_dialogue(PLAYER, {content = interaction_details["cabinet"]})
-			-- change_clothes
-		end
+		--if rfr.get_properties(CABINET, "normal") then
+		--	-- rfr.set_dialogue(PLAYER, {content = interaction_details["cabinet"]})
+		--	-- change_clothes
+		--end
 	end)
 
 local lighting = require "lighting"
-rfr.set_position(LIGHT_SWITCH_MAINROOM, 135,110)
-rfr.set_location(LIGHT_SWITCH_MAINROOM, "Map.Mainroom")
-rfr.set_interaction(LIGHT_SWITCH_MAINROOM, interaction_name["light_switch"],
+room_items.light_switch_mainroom = interaction.add(interaction_name["light_switch"],
 	function()
 		local px,_ = util.player_center()
-		return px >= 128 and px < 144
+		return px >= 128 and px < 144 and rfr.get_location(PLAYER) == "Map.Mainroom"
 	end,
 	function()
 		beaver.play_sound(ASSETS.audios.lightswitch)
 		lighting.toggle_light("room_ceiling")
 	end)
 
-rfr.set_position(LIGHT_SWITCH_BATHROOM, 272,224)
-rfr.set_location(LIGHT_SWITCH_BATHROOM, "Map.Bathroom")
-rfr.set_interaction(LIGHT_SWITCH_BATHROOM, interaction_name["light_switch"],
+room_items.light_switch_bathroom = interaction.add(interaction_name["light_switch"],
 	function()
 		local px,_ = util.player_center()
-		return px >= 272 and px < 287
+		return px >= 272 and px < 287 and rfr.get_location(PLAYER) == "Map.Bathroom"
 	end,
 	function()
 		beaver.play_sound(ASSETS.audios.lightswitch)
 		lighting.toggle_light("bathroom_ceiling")
 	end)
+
+return room_items

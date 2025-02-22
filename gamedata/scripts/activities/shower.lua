@@ -1,13 +1,14 @@
 local util = require "luamodules.utilities"
 local interaction_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
+local interaction = require "luamodules.interaction"
 local shower = {}
 local on = false
 local running_water_channel = 30
-SHOWER = rfr.add_entity()
+local showerpe = rfr.add_entity()
 
 local blur = require "misc.blur"
-rfr.set_particle_emitter_config(SHOWER, {
+rfr.set_particle_emitter_config(showerpe, {
 	emitting_position = {x = 198, y = 224},
 	linear_acceleration = {x = 0, y = 0},
 	color_gradient = {
@@ -25,11 +26,11 @@ rfr.set_particle_emitter_config(SHOWER, {
 
 function shower.toggle()
 	if on then
-		rfr.set_particle_emitter_auto(SHOWER, false)
+		rfr.set_particle_emitter_auto(showerpe, false)
 		beaver.halt_channel(running_water_channel)
 		on = false
 	else
-		rfr.set_particle_emitter_auto(SHOWER, true)
+		rfr.set_particle_emitter_auto(showerpe, true)
 		beaver.play_sound(ASSETS.audios.running_water, running_water_channel, -1)
 		on = true
 	end
@@ -109,14 +110,10 @@ local cs_shower = rfr.add_cutscene({
 	end
 })
 
-
-rfr.set_position(SHOWER, 194, 224)
-rfr.set_location(SHOWER, "Map.Bathroom")
-rfr.set_zindex(SHOWER, 0)
-rfr.set_interaction(SHOWER, interaction_names["shower"],
+interaction.add(interaction_names["shower"],
 	function()
 		local px,_ = util.player_center()
-		return px >= 176 and px <= 200
+		return px >= 176 and px <= 200 and rfr.get_location(PLAYER) == "Map.Bathroom"
 	end,
 	function()
 		local d,_ = rfr.current_time()

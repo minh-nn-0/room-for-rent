@@ -1,4 +1,5 @@
 local util = require "luamodules.utilities"
+local interaction = require "luamodules.interaction"
 local dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/events/talk_neighbour_at_door_" .. config.language .. ".json")["dialogues"]
 local interaction_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local count = 1
@@ -212,7 +213,7 @@ local neighbour_interaction = rfr.add_entity()
 rfr.set_position(neighbour_interaction, neighbour_posx + 16,140)
 rfr.set_location(neighbour_interaction, "Map.Hall")
 
-rfr.set_interaction(neighbour_interaction, interaction_names["neighbour"],
+interaction.add(interaction_names["neighbour"],
 	function()
 		local px,py = util.player_center()
 		return px >= neighbour_posx + 6 and px <= neighbour_posx + 26 and py == 160 and rfr.get_flag("neighbour_chilling") and not rfr.is_cutscene_playing()

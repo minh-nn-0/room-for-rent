@@ -1,10 +1,11 @@
 local util = require "luamodules.utilities"
 local map = require "luamodules.map"
 local narrative = require "luamodules.narrative"
-local dialogues
-local interaction_names
+local dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
+local interaction = require "luamodules.interaction"
+local interaction_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local narrative_text = util.load_json(rfr.gamepath() .. "data/narratives/" .. config.language .. ".json")
-local broom = rfr.add_entity()
+local broom
 local cs_prologue_after_broom = rfr.add_cutscene({
 	init = function()
 		dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
@@ -46,7 +47,7 @@ local cs_prologue_after_broom = rfr.add_cutscene({
 			rfr.unset_flag("prologue_room")
 			map.set_current_map("room")
 			rfr.fade_in(2)
-			rfr.set_active(broom, false)
+			interaction.set_active(broom, false)
 			return true
 		end,
 		function(dt)
@@ -60,8 +61,6 @@ local cs_prologue_after_broom = rfr.add_cutscene({
 CS_PROLOGUE_CLEAN_ROOM = rfr.add_cutscene({
 	init = function()
 		print("enter clean")
-		dialogues = util.load_json(rfr.gamepath() .. "data/dialogues/prologue_" .. config.language .. ".json")
-		interaction_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 	end,
 	exit = function()
 		print("exit prologue_clean_room")
@@ -79,13 +78,11 @@ CS_PROLOGUE_CLEAN_ROOM = rfr.add_cutscene({
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end
 			rfr.set_dialogue(PLAYER, {content = dialogues["player_should_clean"]})
-			rfr.set_position(broom, 218, 110)
-			rfr.set_location(broom, "Map.Mainroom")
-			rfr.set_interaction(broom, interaction_names["broom"],
+			broom = interaction.add(interaction_names["broom"],
 				function()
 					local px,_ = util.player_center()
-					return px >= 210 and px <= 220
-				end,
+					return px >= 210 and px <= 220 and rfr.get_location(PLAYER) == "Map.Mainroom"
+			end,
 				function()
 					rfr.play_cutscene(cs_prologue_after_broom)
 				end)
