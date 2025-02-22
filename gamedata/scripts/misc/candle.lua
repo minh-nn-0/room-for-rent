@@ -31,20 +31,24 @@ rfr.set_location(candle_interaction, "Map.Dream")
 rfr.set_interaction(candle_interaction, "NEN",
 	function()
 		local px, _ = util.player_center()
-		return px >= 160 and px <= 172
+		return px >= 160 and px <= 172 and rfr.get_flag("can_pickup_candle")
 	end,
 	function()
 		if not pickedup then
 			pickedup = true
 			rfr.set_zindex(candle.eid, 1)
+			candle.toggle()
 		else
-			rfr.set_position(candle.eid, 160,112)
-			rfr.set_zindex(candle.eid, 0)
-			pickedup = false
+			candle.put_down()
 		end
 	end)
 
 local light_scale = 0
+function candle.put_down()
+	rfr.set_position(candle.eid, 160,112)
+	rfr.set_zindex(candle.eid, 0)
+	pickedup = false
+end
 function candle.toggle()
 	lit = not lit
 	rfr.set_particle_emitter_auto(candle.eid, lit)

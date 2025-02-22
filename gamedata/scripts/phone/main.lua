@@ -74,7 +74,6 @@ function rfr.toggle_phone()
 	if rfr.get_flag("phone_opening") then
 		rfr.unset_flag("player_can_move")
 		rfr.unset_flag("player_can_interact")
-		rfr.set_state(PLAYER, "idle")
 	else
 		rfr.set_flag("player_can_move")
 		rfr.set_flag("player_can_interact")

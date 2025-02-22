@@ -25,6 +25,17 @@ local sounds_per_location = {
 		{
 			ambience = {ASSETS.audios.ambience_cricket},
 		}
+	},
+	["Map.Dream"] = {
+		{},
+		{
+			ambience = {ASSETS.audios.creepy_atmosphere},
+			random_sound = {
+				{ASSETS.audios.crack1, 40, 0.1},
+				{ASSETS.audios.crack3, 40, 0.15},
+				{ASSETS.audios.crack5, 40, 0.2},
+			}
+		}
 	}
 }
 local function fade_out_ambience()

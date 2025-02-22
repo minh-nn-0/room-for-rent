@@ -67,15 +67,23 @@ function LOAD()
 		thrill1 = beaver.new_sound(rfr.gamepath() .. "assets/audios/thrill1.wav"),
 		stinger_piano02 = beaver.new_sound(rfr.gamepath() .. "assets/audios/horror_01_stinger_piano_02.ogg"),
 		stinger_piano12 = beaver.new_sound(rfr.gamepath() .. "assets/audios/horror_01_stinger_piano_12.ogg"),
+		stinger_impact01 = beaver.new_sound(rfr.gamepath() .. "assets/audios/horror_01_stinger_impact_01.ogg"),
+		creepy_atmosphere = beaver.new_sound(rfr.gamepath() .. "assets/audios/NDKG_CreepyAtmosphereLooped.ogg"),
 		thrillsuspend = beaver.new_sound(rfr.gamepath() .. "assets/audios/thrillsuspend.wav"),
 		dog = beaver.new_sound(rfr.gamepath() .. "assets/audios/dogbark.wav"),
 		waterdrops = beaver.new_sound(rfr.gamepath() .. "assets/audios/waterdrops.wav"),
 		doorslam = beaver.new_sound(rfr.gamepath() .. "assets/audios/doorslam.wav"),
 		lockeddoor = beaver.new_sound(rfr.gamepath() .. "assets/audios/lockeddoor.wav"),
 		cry = beaver.new_sound(rfr.gamepath() .. "assets/audios/cry.wav"),
+		crack1 = beaver.new_sound(rfr.gamepath() .. "assets/audios/crack1.ogg"),
+		crack2 = beaver.new_sound(rfr.gamepath() .. "assets/audios/crack2.ogg"),
+		crack3 = beaver.new_sound(rfr.gamepath() .. "assets/audios/crack3.ogg"),
+		crack4 = beaver.new_sound(rfr.gamepath() .. "assets/audios/crack4.ogg"),
+		crack5 = beaver.new_sound(rfr.gamepath() .. "assets/audios/crack5.ogg"),
 		lighter = beaver.new_sound(rfr.gamepath() .. "assets/audios/lighter.wav"),
 	}
 
+	beaver.set_volume_sound(ASSETS.audios.creepy_atmosphere, 40)
 	ASSETS.fonts = {
 		unifontexmono = beaver.new_font(rfr.gamepath() .. "assets/fonts/UnifontExMono.ttf", 16),
 		unifont = beaver.new_font(rfr.gamepath() .. "assets/fonts/unifont.otf", 16),

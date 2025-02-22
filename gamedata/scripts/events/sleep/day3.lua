@@ -6,6 +6,7 @@ local lighting = require "lighting"
 local girl_at_table = require "dreams.girl_at_table"
 local map = require "luamodules.map"
 
+local timer = rfr.add_entity()
 --local cs_blow_candle = rfr.add_cutscene({
 --})
 --local cs_lights_out = rfr.add_cutscene({
@@ -14,6 +15,7 @@ local map = require "luamodules.map"
 local candle = require "misc.candle"
 local cs_room = rfr.add_cutscene({
 	init = function()
+		beaver.play_sound(ASSETS.audios.stinger_impact01)
 		map.set_current_map("room_dream")
 		rfr.set_location(PLAYER, "Map.Dream")
 		lighting.set_tint("darkview", {40,40,40,180})
@@ -21,14 +23,32 @@ local cs_room = rfr.add_cutscene({
 		lighting.set_tint("room_dream_ceiling", {212,120,100,200})
 		lighting.set_scale("room_dream_ceiling", 1.5)
 		rfr.set_location(candle.eid, "Map.Dream")
+		rfr.set_timer(timer, 10)
 	end,
 	exit = function()
 	end,
 	scripts = {
+		function(dt)
+			if rfr.get_timer(timer).running then return false end
+			lighting.set_light_on("room_dream_ceiling", false)
+			rfr.set_position(girl_at_table, 500,500)
+			rfr.fade_in(2)
+			return true
+		end,
+		function(dt)
+			if rfr.is_transition_active() then return false end
+			rfr.set_dialogue(PLAYER, {content = "Toi qua"})
+			rfr.set_flag("can_pickup_candle")
+			return true
+		end,
+		function(dt)
+			if not candle.picked_up() then return false end
+			rfr.unset_flag("can_pickup_candle")
+			return true
+		end,
 	},
 	update = function(dt) end
 })
-local timer = rfr.add_entity()
 local light_switch = rfr.add_entity()
 rfr.set_image(light_switch, ASSETS.images.tileset)
 rfr.set_image_source(light_switch, 64, 368, 16, 16)
@@ -38,7 +58,7 @@ rfr.set_location(light_switch, "Map.Void")
 rfr.set_interaction(light_switch, interaction_names["light_switch"],
 	function()
 		local px, _ = util.player_center()
-		return px >= 118 and px <= 138
+		return px >= 130 and px <= 140
 	end,
 	function()
 		rfr.play_cutscene(cs_room)

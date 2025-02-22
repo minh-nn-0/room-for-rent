@@ -99,7 +99,6 @@ function player.update(dt)
 			rfr.set_properties(PLAYER, "walkspeed", 0.6)
 			if pstate == "move_fast" then pstate = "move" end
 		end
-		rfr.set_state(PLAYER, candle.picked_up() and pstate .. "_candle" or pstate)
 	end
 	--print(ppos.x + 16, ppos.y + 16)
 	if beaver.get_input("S") == 1 then
@@ -152,6 +151,7 @@ function player.update(dt)
 		end
 	end
 	--ghost.set_target(ppos.x + 16, ppos.y + 16)
+	rfr.set_state(PLAYER, candle.picked_up() and pstate .. "_candle" or pstate)
 end
 
 return player
