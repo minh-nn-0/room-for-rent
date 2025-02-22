@@ -1,5 +1,6 @@
 local util = require "luamodules.utilities"
 local interaction = require "luamodules.interaction"
+local UI_name = util.load_json(rfr.gamepath() .. "data/ui/" .. config.language .. ".json")
 local character_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local selection = require "phone.selection"
 local call = {}
@@ -36,7 +37,7 @@ local states = {
 				beaver.play_sound(ASSETS.audios.phonering,audio_channel)
 				interaction.set_back("back", function()
 						beaver.halt_channel(audio_channel)
-						interaction.set_back("back", function() rfr.set_state(PHONE, "home") end)
+						interaction.set_back(UI_name["back"], function() rfr.set_state(PHONE, "home") end)
 						app_state = "home"
 					end)
 			end
@@ -113,7 +114,7 @@ function call.set_app_state(state)
 end
 
 function call.load()
-	interaction.set_back("back", function() rfr.set_state(PHONE, "home") end)
+	interaction.set_back(UI_name["back"], function() rfr.set_state(PHONE, "home") end)
 end
 function call.update(dt)
 	states[app_state].update(dt)

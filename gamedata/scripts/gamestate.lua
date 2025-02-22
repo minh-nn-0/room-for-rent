@@ -99,15 +99,6 @@ state["ingame"] = {
 		if plocation == "Map.Bathroom" then bloods_drip.draw() end
 
 		lighting.draw()
-		beaver.set_draw_color(255,255,255,255)
-		local current_interaction = ""
-		local current_back = ""
-		if rfr.get_flag("player_can_interact") then
-			current_interaction = interaction.get_current_interaction() and interaction.get_current_interaction().name or ""
-		end
-		current_back = interaction.get_current_back() and interaction.get_current_back().name or ""
-		print(current_interaction, current_back)
-		rfr.draw_interaction_helper(current_interaction, current_back)
 
 		for _, eid in ipairs(rfr.get_active_entities()) do
 			if rfr.get_location(eid) == plocation then
@@ -124,13 +115,19 @@ state["ingame"] = {
 		beaver.set_draw_color(10,10,10,255)
 
 		beaver.set_using_cam(false)
-		rfr.draw_helper()
 		if rfr.get_flag("screen_fill") then
 			local fill_color = rfr.get_properties(GAME, "screen_fill_color") or {0,0,0,255}
 			beaver.set_draw_color(fill_color[1], fill_color[2], fill_color[3], fill_color[4])
-			beaver.draw_rectangle(0,0,1000,1000,true)
+			beaver.draw_rectangle(0,0,0,0,true)
 		end
-		rfr.draw_helper_fg()
+		beaver.set_draw_color(255,255,255,255)
+		local current_interaction = ""
+		local current_back = ""
+		if rfr.get_flag("player_can_interact") then
+			current_interaction = interaction.get_current_interaction() and interaction.get_current_interaction().name or ""
+		end
+		current_back = interaction.get_current_back() and interaction.get_current_back().name or ""
+		rfr.draw_interaction_helper(current_interaction, current_back)
 		config.text_scale = 1
 		for _, eid in ipairs(rfr.get_entities_with_tags({"ui"})) do
 			rfr.draw_entities(eid)

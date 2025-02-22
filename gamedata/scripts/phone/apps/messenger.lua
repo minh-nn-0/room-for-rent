@@ -2,6 +2,7 @@ local util = require "luamodules.utilities"
 local interaction = require "luamodules.interaction"
 local selection = require "phone.selection"
 
+local UI_names = util.load_json(rfr.gamepath() .. "data/ui/" .. config.language .. ".json")
 local actor_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 
 local messages = {}
@@ -46,7 +47,7 @@ local states = {
 	}
 }
 local function load()
-	interaction.set_back("back", function() rfr.set_state(PHONE, "home") end)
+	interaction.set_back(UI_names["back"], function() rfr.set_state(PHONE, "home") end)
 end
 local function update(dt)
 	states[app_state].update(dt)

@@ -4,7 +4,9 @@ local map_cam_boundaries = {
 	["Map.Bathroom"] = {112,288},
 	["Map.Hall"] = {330, 690},
 	["Map.Balcony"] = {0, 800},
-	["Map.Outside"] = {0, 690}
+	["Map.Outside"] = {0, 690},
+	["Map.Void"] = {0, 400},
+	["Map.Dream"] = {64,320},
 }
 local map_move_boundaries = {
 	["Map.Mainroom"] = {64, 320},
@@ -12,7 +14,9 @@ local map_move_boundaries = {
 	["Map.Hall1"] = {386, 673},
 	["Map.Hall2"] = {418, 672},
 	["Map.Balcony"] = {96, 238},
-	["Map.Outside"] = {0, 690}
+	["Map.Outside"] = {0, 690},
+	["Map.Void"] = {0, 400},
+	["Map.Dream"] = {64,320},
 }
 local current_map = "room"
 function map.set_current_map(m)

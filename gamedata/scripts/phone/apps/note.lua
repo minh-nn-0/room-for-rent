@@ -7,6 +7,7 @@ local app_state = "home"
 local note_spacing = 1
 local total_note_height = 0
 local clip_rect_height = math.floor(40 * config.cam_zoom)
+local UI_names = util.load_text(rfr.gamepath() .. "data/ui/" .. config.language .. ".json")
 function note.draw_note(posx, posy, entry)
 	local text = util.load_text(rfr.gamepath() .. "data/note/" .. entry .. "_" .. config.language .. ".txt")
 	local entry_names = util.load_json(rfr.gamepath() .. "data/note/entry_" .. config.language .. ".json")
@@ -51,7 +52,7 @@ function note.add(name)
 	noti.set("note")
 end
 function note.load()
-	interaction.set_back("back", function() rfr.set_state(PHONE, "home") end)
+	interaction.set_back(UI_names["back"], function() rfr.set_state(PHONE, "home") end)
 end
 function note.set_app_state(state)
 	app_state = state

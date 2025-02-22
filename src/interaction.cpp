@@ -3,7 +3,6 @@
 
 void rfr::interaction_helper::draw(const std::string& Xcontent, const std::string& Zcontent, beaver::sdlgame& game, const rfr::interaction_helper::drawdata& ddata)
 {
-	game._graphics._using_cam = false;
 	static constexpr mmath::ivec2 X_icon_position {600, 270};
 	static constexpr mmath::ivec2 Z_icon_position {X_icon_position.x, X_icon_position.y + 50};
 	static constexpr mmath::irect X_dst {X_icon_position.x, X_icon_position.y, 10 * 3, 10 * 3};
@@ -33,7 +32,6 @@ void rfr::interaction_helper::draw(const std::string& Xcontent, const std::strin
 	draw_icon_and_text(Zcontent, Z_dst, ddata._Zsrc);
 
 	SDL_SetTextureAlphaMod(*ddata._tex, 255);
-	game._graphics._using_cam = true;
 };
 
 void rfr::draw_interaction(const std::string& name, const mmath::fvec2& position,

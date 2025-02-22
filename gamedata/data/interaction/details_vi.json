@@ -1,4 +1,7 @@
 {
+	"books" : "Đều là sách chuyên ngành của khoa mình",
+	"read_diary" : "Có một cuốn nhật kí ghi tên ... ở đây",
+	"choice_read_diary" : "Đọc nhật kí|Không đọc",
 	"power_box" : "Một hộp điện trông không có gì bất thường",
 	"house_number" : "3xx Lệ Chi",
 	"not_use_bus" : "Mình không cần phải đi đâu bây giờ.",

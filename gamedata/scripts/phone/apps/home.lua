@@ -1,21 +1,20 @@
 local util = require "luamodules.utilities"
 local selection = require "phone.selection"
 local noti = require "phone.notification"
-local phone_texts
+local UI_names = util.load_json(rfr.gamepath() .. "data/ui/" .. config.language .. ".json")
 local phone_apps_info
 local phone_apps = {"call", "message", "note", "setting", "exit"}
 local interaction = require "luamodules.interaction"
 
 local function load()
-	phone_texts = util.load_json(rfr.gamepath() .. "data/ui/" .. config.language .. ".json")
 	phone_apps_info = {
-		call = {src = {x = 0, y = 32, w = 8, h = 8}, text = phone_texts["call"]},
-		message = {src = {x = 0, y = 40, w = 8, h = 8}, text = phone_texts["message"]},
-		note = {src = {x = 0, y = 48, w = 8, h = 8}, text = phone_texts["note"]},
-		setting = {src = {x = 0, y = 56, w = 8, h = 8}, text = phone_texts["setting"]},
-		exit = {src = {x = 8, y = 32, w = 8, h = 8}, text = phone_texts["exit"]},
+		call = {src = {x = 0, y = 32, w = 8, h = 8}, text = UI_names["call"]},
+		message = {src = {x = 0, y = 40, w = 8, h = 8}, text = UI_names["message"]},
+		note = {src = {x = 0, y = 48, w = 8, h = 8}, text = UI_names["note"]},
+		setting = {src = {x = 0, y = 56, w = 8, h = 8}, text = UI_names["setting"]},
+		exit = {src = {x = 8, y = 32, w = 8, h = 8}, text = UI_names["exit"]},
 	}
-	interaction.set_back("back", rfr.toggle_phone)
+	interaction.set_back(UI_names["back"], rfr.toggle_phone)
 end
 local function update(dt)
 	selection.set_max(#phone_apps)
