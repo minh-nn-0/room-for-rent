@@ -62,18 +62,17 @@ local function play_random_sounds(location, tod)
 end
 function ambience.update()
 	local plocation = rfr.get_location(PLAYER)
-	local _,tod = rfr.current_time()
-	if current_location ~= plocation then
+	local _, tod = rfr.current_time()
+
+	if current_location ~= plocation or current_tod ~= tod then
 		current_location = plocation
+		current_tod = tod
 		fade_out_ambience()
-		if sounds_per_location[current_location] ~= nil then
-			if current_tod ~= tod then
-				current_tod = tod
-				fade_in_ambience(current_location, current_tod)
-				print("hihihhi")
-			else
-				play_random_sounds(current_location, current_tod)
-			end
+	end
+	if sounds_per_location[current_location] ~= nil then
+		play_random_sounds(current_location, current_tod)
+		if (#current_sound_channels == 0) then
+			fade_in_ambience(current_location, current_tod)
 		end
 	end
 end

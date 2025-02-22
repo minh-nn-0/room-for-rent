@@ -27,7 +27,7 @@ local util = require "luamodules.utilities"
 
 local candle_interaction = rfr.add_entity()
 rfr.set_position(candle_interaction, 167, 112)
-rfr.set_location(candle_interaction, "Map.Mainroom")
+rfr.set_location(candle_interaction, "Map.Dream")
 rfr.set_interaction(candle_interaction, "NEN",
 	function()
 		local px, _ = util.player_center()
@@ -44,11 +44,15 @@ rfr.set_interaction(candle_interaction, "NEN",
 		end
 	end)
 
-
+local light_scale = 0
 function candle.toggle()
 	lit = not lit
 	rfr.set_particle_emitter_auto(candle.eid, lit)
 	lighting.set_light_on("candle", lit)
+	if lit then
+		beaver.play_sound(ASSETS.audios.lighter)
+		light_scale = 0
+	end
 end
 
 function candle.is_lit()
@@ -120,10 +124,13 @@ function candle.update(dt)
 
 		rfr.set_location(candle.eid, rfr.get_location(PLAYER))
 	end
-	lighting.set_location("candle", rfr.get_location(candle.eid))
-	lighting.set_position("candle", cpos.x + 7.5 + math.sin(beaver.get_elapsed_time()), cpos.y + 5)
-	lighting.set_scale("candle", 0.3 + (math.random() * 2 - 1) * 0.02)
-	rfr.set_particle_emitter_config(candle.eid, {emitting_position = {x = cpos.x + 7, y = cpos.y + 6}})
+	if lit then
+		if light_scale < 0.25 then light_scale = light_scale + dt / 4 end
+		lighting.set_location("candle", rfr.get_location(candle.eid))
+		lighting.set_position("candle", cpos.x + 7.5 + math.sin(beaver.get_elapsed_time()), cpos.y + 5)
+		lighting.set_scale("candle", light_scale + (math.random() * 2 - 1) * 0.02)
+		rfr.set_particle_emitter_config(candle.eid, {emitting_position = {x = cpos.x + 7, y = cpos.y + 6}})
+	end
 	rfr.set_position(candle.eid, cpos.x, cpos.y)
 end
 

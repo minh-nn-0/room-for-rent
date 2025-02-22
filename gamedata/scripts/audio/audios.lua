@@ -31,7 +31,7 @@ function audio.update()
 					else
 						rfr.set_properties(eid, "footstep_sound", ASSETS.audios.footstep_wood_light)
 					end
-					if tileanimation_id.currentid == 5 or tileanimation_id.currentid == 9 then
+					if tileanimation_id.currentid == 5 or tileanimation_id.currentid == 9 or tileanimation_id.currentid == 25 or tileanimation_id.currentid == 29 then
 						if not rfr.get_properties(eid, "footstep") then
 							beaver.play_sound(rfr.get_properties(eid,"footstep_sound"))
 							rfr.set_properties(eid, "footstep", true)

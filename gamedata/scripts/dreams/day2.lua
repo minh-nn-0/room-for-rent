@@ -16,7 +16,6 @@ local dream_day2 = rfr.add_cutscene({
 		map.set_current_map("room_dream")
 		rfr.set_cam_zoom(3)
 		rfr.set_location(PLAYER, "Map.Dream")
-		rfr.set_position(girl_at_table, 168, 112)
 		camera.set_target(girl_at_table, 16, 5)
 
 		lighting.toggle_light("room_dream_ceiling")

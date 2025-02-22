@@ -73,6 +73,7 @@ function LOAD()
 		doorslam = beaver.new_sound(rfr.gamepath() .. "assets/audios/doorslam.wav"),
 		lockeddoor = beaver.new_sound(rfr.gamepath() .. "assets/audios/lockeddoor.wav"),
 		cry = beaver.new_sound(rfr.gamepath() .. "assets/audios/cry.wav"),
+		lighter = beaver.new_sound(rfr.gamepath() .. "assets/audios/lighter.wav"),
 	}
 
 	ASSETS.fonts = {
