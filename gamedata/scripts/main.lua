@@ -21,6 +21,7 @@ function LOAD()
 			beaver.new_image(rfr.gamepath() .. "assets/images/house3.png"),
 			beaver.new_image(rfr.gamepath() .. "assets/images/road.png"),
 			beaver.new_image(rfr.gamepath() .. "assets/images/tree1.png"),
+		diary = beaver.new_image(rfr.gamepath() .. "assets/images/diary.png"),
 		male_shirt = beaver.new_image(rfr.gamepath() .. "assets/images/male_shirt.png"),
 		male_naked = beaver.new_image(rfr.gamepath() .. "assets/images/male_naked.png"),
 		girl = beaver.new_image(rfr.gamepath() .. "assets/images/girl.png"),
@@ -39,7 +40,9 @@ function LOAD()
 		bloods_floor = beaver.new_image(rfr.gamepath() .. "assets/images/bloods_floor.png"),
 		hands_on_door = beaver.new_image(rfr.gamepath() .. "assets/images/hands_on_door.png"),
 		ghost_crawl = beaver.new_image(rfr.gamepath() .. "assets/images/ghost_crawl_room.png"),
+		light = beaver.new_image(rfr.gamepath() .. "assets/images/lights.png"),
 	}
+	beaver.set_texture_blend_mode(ASSETS.images.light, "additive")
 	ASSETS.audios = {
 		dialogue1 = beaver.new_sound(rfr.gamepath() .. "assets/audios/dialogue1.wav"),
 		dooropen = beaver.new_sound(rfr.gamepath() .. "assets/audios/dooropen.wav"),

@@ -187,11 +187,11 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":59,
+ "nextlayerid":61,
  "nextobjectid":20,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.11.1",
+ "tiledversion":"1.11.2",
  "tileheight":16,
  "tilesets":[
         {

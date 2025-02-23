@@ -2,10 +2,8 @@ local lighting = {}
 
 local bg_color = {255,255,255,255}
 local lights = {}
-local light_texture = beaver.new_image(rfr.gamepath() .. "assets/images/lights.png")
 local shadow = beaver.create_texture_for_drawing(1280, 720)
 beaver.set_texture_blend_mode(shadow, "modulate")
-beaver.set_texture_blend_mode(light_texture, "additive")
 local lightsource = {
 	round = {x = 56, y = 65, w = 190, h = 190},
 	cone = {x = 377, y = 91, w = 146, h = 119}
@@ -283,9 +281,9 @@ function lighting.draw()
 
 			dst.x = light.pos[1] - dst.w / 2
 			dst.y = light.pos[2] - dst.h / 2
-			beaver.set_texture_color_mod(light_texture, light.tint)
-			beaver.draw_texture(light_texture, {dst = dst, src = light.src})
-			beaver.set_texture_color_mod(light_texture, {255,255,255,255})
+			beaver.set_texture_color_mod(ASSETS.images.light, light.tint)
+			beaver.draw_texture(ASSETS.images.light, {dst = dst, src = light.src})
+			beaver.set_texture_color_mod(ASSETS.images.light, {255,255,255,255})
 		end
 	end
 

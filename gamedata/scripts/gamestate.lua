@@ -18,6 +18,7 @@ local bus = require "misc.bus"
 local test = require "test"
 local blur = require "misc.blur"
 local candle = require "misc.candle"
+local diary = require "misc.diary"
 local map = require "luamodules.map"
 local narrative = require "luamodules.narrative"
 local dream = require "dreams.dream"
@@ -67,6 +68,7 @@ state["ingame"] = {
 		bed.update()
 		bus.update(dt)
 		candle.update(dt)
+		diary.update(dt)
 
 		ghost.update(dt)
 		bloods_drip.update(dt)
@@ -123,7 +125,7 @@ state["ingame"] = {
 		beaver.set_draw_color(255,255,255,255)
 		local current_interaction = ""
 		local current_back = ""
-		if rfr.get_flag("player_can_interact") then
+		if rfr.get_flag("player_can_interact") and not rfr.having_dialogue_options() then
 			current_interaction = interaction.get_current_interaction() and interaction.get_current_interaction().name or ""
 		end
 		current_back = interaction.get_current_back() and interaction.get_current_back().name or ""
@@ -135,6 +137,7 @@ state["ingame"] = {
 		rfr.draw_phone_notification()
 		rfr.draw_phone()
 		homework.draw()
+		diary.draw()
 
 		beaver.set_draw_color(255,255,255,255)
 		narrative.draw_text()

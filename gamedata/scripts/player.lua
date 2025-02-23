@@ -59,18 +59,15 @@ local map = require "luamodules.map"
 --})
 --rfr.set_particle_emitter_auto(PLAYER, true)
 
-require "room_items"
-require "activities.shower"
+--require "room_items"
+--require "activities.shower"
 --require "activities.work"
 --require "activities.sleep"
 --require "activities.homework"
 --require "events.sleep.day1"
 --require "events.sleep.day2"
 --require "events.pickup_card"
-
-require "events.sleep"
-local blur = require "misc.blur"
-
+--require "events.sleep"
 local ghost = require "ghost"
 local candle = require "misc.candle"
 function player.update(dt)
@@ -131,11 +128,11 @@ function player.update(dt)
 		rfr.advance_time()
 	end
 
-	if rfr.having_dialogue_options() or rfr.has_active_dialogue(PLAYER) then
-		rfr.unset_flag("player_can_interact")
-	elseif not (rfr.has_tag(PLAYER, "npc") or rfr.get_flag("phone_opening") or rfr.get_flag("notebook_opening") or rfr.get_flag("inbed") or rfr.get_flag("eating")) then
-		rfr.set_flag("player_can_interact")
-	end
+--	if rfr.having_dialogue_options() or rfr.has_active_dialogue(PLAYER) then
+--		rfr.unset_flag("player_can_interact")
+--	elseif not (rfr.has_tag(PLAYER, "npc") or rfr.get_flag("phone_opening") or rfr.get_flag("notebook_opening") or rfr.get_flag("inbed") or rfr.get_flag("eating")) then
+--		rfr.set_flag("player_can_interact")
+--	end
 
 	if rfr.get_flag("phone_opening") then
 		if rfr.get_flipflag(PLAYER) == beaver.FLIP_H then

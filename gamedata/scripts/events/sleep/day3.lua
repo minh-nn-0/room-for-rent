@@ -14,6 +14,9 @@ local timer = rfr.add_entity()
 --})
 
 local candle = require "misc.candle"
+
+require "events.sleep.room_dream_items"
+
 local cs_room = rfr.add_cutscene({
 	init = function()
 		beaver.play_sound(ASSETS.audios.stinger_impact01)
@@ -24,7 +27,7 @@ local cs_room = rfr.add_cutscene({
 		lighting.set_tint("room_dream_ceiling", {212,120,100,200})
 		lighting.set_scale("room_dream_ceiling", 1.5)
 		rfr.set_location(candle.eid, "Map.Dream")
-		rfr.set_timer(timer, 10)
+		rfr.set_timer(timer, 5)
 	end,
 	exit = function()
 	end,

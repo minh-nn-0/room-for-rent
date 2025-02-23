@@ -50,7 +50,7 @@ function interaction.get_first_available()
 end
 
 function interaction.update()
-	if rfr.get_flag("player_can_interact") then
+	if rfr.get_flag("player_can_interact") and not rfr.having_dialogue_options() then
 		current_interaction = interaction.get_first_available()
 		if current_interaction > 0 then
 			if beaver.get_input(config.button.interaction) == 1 then
@@ -58,7 +58,8 @@ function interaction.update()
 				last_interaction = current_interaction
 			end
 		end
-	elseif current_back and beaver.get_input(config.button.back) == 1 then
+	end
+	if current_back and beaver.get_input(config.button.back) == 1 then
 		current_back.action()
 	end
 end
