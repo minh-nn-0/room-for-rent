@@ -42,7 +42,7 @@ local should_read_diary = rfr.add_cutscene({
 items.bookshelf = interaction.add(interaction_names["bookshelf"],
 	function()
 		local px,_ = util.player_center()
-		return px >= 278 and px <= 296 --and rfr.get_location(PLAYER) == "Map.Dream" and candle.picked_up()
+		return px >= 278 and px <= 296 and rfr.get_location(PLAYER) == "Map.Dream" and candle.picked_up()
 	end,
 	function()
 		if not rfr.is_cutscene_playing() then
