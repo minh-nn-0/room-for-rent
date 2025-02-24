@@ -25,7 +25,7 @@ local dream = require "dreams.dream"
 local ghost = require "ghost"
 local audio = require "audio.audios"
 local bloods_drip = require "events.sleep.blood_dripping_bathroom"
-
+local cgdms = require "events.sleep.cogidaumaso"
 local camera = require "luamodules.camera"
 local interaction = require "luamodules.interaction"
 local gamestate = {
@@ -48,6 +48,7 @@ state["ingame"] = {
 	update = function(dt)
 		config.text_scale = 1/rfr.get_cam_zoom()
 
+		interaction.update()
 		test.update(dt)
 		player.update(dt)
 		--ghost.update(dt)
@@ -61,7 +62,6 @@ state["ingame"] = {
 		--rfr.update_timer(dt)
 		--rfr.update_countdown(dt)
 		--rfr.update_cutscene(dt)
-		interaction.update()
 		rfr.update_transition(dt)
 		--rfr.update_particle_emitter(dt)
 		homework.update()
@@ -73,6 +73,7 @@ state["ingame"] = {
 		ghost.update(dt)
 		bloods_drip.update(dt)
 		blur.update()
+		cgdms.update(dt)
 		if rfr.get_flag("dreaming") then dream.update(dt) end
 		--map.set_only_player_location_visible()
 		map.update(dt)
@@ -117,28 +118,34 @@ state["ingame"] = {
 		beaver.set_draw_color(10,10,10,255)
 
 		beaver.set_using_cam(false)
+
+		beaver.set_draw_color(255,255,255,255)
+		if rfr.get_flag("draw_helper") then
+			local current_interaction = ""
+			local current_back = ""
+			if rfr.get_flag("player_can_interact") and not rfr.having_dialogue_options() then
+				current_interaction = interaction.get_current_interaction() and interaction.get_current_interaction().name or ""
+			end
+			current_back = interaction.get_current_back() and interaction.get_current_back().name or ""
+			rfr.draw_interaction_helper(current_interaction, current_back)
+		end
+
 		if rfr.get_flag("screen_fill") then
 			local fill_color = rfr.get_properties(GAME, "screen_fill_color") or {0,0,0,255}
 			beaver.set_draw_color(fill_color[1], fill_color[2], fill_color[3], fill_color[4])
 			beaver.draw_rectangle(0,0,0,0,true)
 		end
-		beaver.set_draw_color(255,255,255,255)
-		local current_interaction = ""
-		local current_back = ""
-		if rfr.get_flag("player_can_interact") and not rfr.having_dialogue_options() then
-			current_interaction = interaction.get_current_interaction() and interaction.get_current_interaction().name or ""
-		end
-		current_back = interaction.get_current_back() and interaction.get_current_back().name or ""
-		rfr.draw_interaction_helper(current_interaction, current_back)
+
 		config.text_scale = 1
 		for _, eid in ipairs(rfr.get_entities_with_tags({"ui"})) do
 			rfr.draw_entities(eid)
 		end
+
 		rfr.draw_phone_notification()
 		rfr.draw_phone()
 		homework.draw()
 		diary.draw()
-
+		cgdms.draw()
 		beaver.set_draw_color(255,255,255,255)
 		narrative.draw_text()
 		rfr.draw_transition()

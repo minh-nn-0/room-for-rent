@@ -8,26 +8,29 @@ local target_zoom = 7
 local red_change_rate = 30
 local bg_color = {0,0,20,255}
 local wake_up_timer = rfr.add_entity()
+local bed = require "activities.sleep"
 local dream_day2 = rfr.add_cutscene({
 	init = function()
 		rfr.set_flag("dreaming")
+		rfr.set_flag("custom_background_color")
 		rfr.set_flag("screen_fill")
 		rfr.set_properties(GAME, "screen_fill_color", {0,0,0,255})
 		map.set_current_map("room_dream")
 		rfr.set_cam_zoom(3)
 		rfr.set_location(PLAYER, "Map.Dream")
 		camera.set_target(girl_at_table, 16, 5)
-
 		lighting.toggle_light("room_dream_ceiling")
-
 		rfr.set_flag("scatter_paper")
+		rfr.unset_flag("draw_helper")
 	end,
 	exit = function()
 		rfr.unset_flag("dreaming")
-		camera.set_target(BED, 0, 12)
-		map.set_current_map("room")
+		rfr.unset_flag("custom_background_color")
+		bed.go_to_sleep_normally()
 		rfr.set_location(PLAYER, "Map.Mainroom")
+		map.set_current_map("room")
 		rfr.set_cam_zoom(config.cam_zoom)
+		rfr.set_flag("draw_helper")
 	end,
 	scripts = {
 		function(dt)

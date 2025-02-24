@@ -3,6 +3,7 @@ local util = require "luamodules.utilities"
 local interaction = require "luamodules.interaction"
 local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
+local UI_names = util.load_json(rfr.gamepath() .. "data/ui/" .. config.language .. ".json")
 local bed = {}
 BED = rfr.add_entity()
 rfr.set_position(BED, 104,110)
@@ -41,8 +42,13 @@ function bed.go_to_sleep_normally()
 	rfr.set_state(PLAYER, "idle")
 	rfr.unset_flag("player_can_move")
 	rfr.unset_flag("player_can_interact")
+	rfr.unset_flag("player_can_open_phone")
 	rfr.set_flag("inbed")
 	bed.set_tiles(3)
+	interaction.set_back(UI_names["back"],
+		function()
+			if not rfr.get_flag("sleeping") and not rfr.get_flag("dreaming") then bed.wake_up() end
+		end)
 end
 
 function bed.wake_up()
@@ -51,7 +57,9 @@ function bed.wake_up()
 	rfr.set_state(PLAYER, "idle")
 	rfr.set_flag("player_can_move")
 	rfr.set_flag("player_can_interact")
+	rfr.set_flag("player_can_open_phone")
 	rfr.unset_flag("inbed")
+	interaction.unset_back()
 	bed.set_tiles(math.random() > 0.5 and 1 or 2)
 end
 
@@ -86,7 +94,7 @@ local cs_sleep = rfr.add_cutscene({
 		end,
 	},
 	update = function()
-		if beaver.get_input(config.button.back) == 1 then rfr.set_flag("premature_wakeup") end
+		if not rfr.get_flag("inbed") then rfr.set_flag("premature_wakeup") end
 	end
 })
 
@@ -107,9 +115,6 @@ local bed_interaction = interaction.add(interaction_name["bed"],
 function bed.update()
 	if rfr.get_flag("inbed") then
 		bed.animate_bed_sleep()
-		if not rfr.get_flag("sleeping") and not rfr.get_flag("dreaming") and beaver.get_input(config.button.back) == 1
-			then bed.wake_up()
-		end
 	end
 end
 return bed

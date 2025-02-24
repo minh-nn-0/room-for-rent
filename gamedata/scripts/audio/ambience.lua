@@ -38,6 +38,12 @@ local sounds_per_location = {
 		}
 	}
 }
+
+function ambience.set_sound(location, tod, sounds)
+	if tod < 0 or tod > 2 then error("invalid tod " .. tod) end
+
+	sounds_per_location[location][tod] = sounds
+end
 local function fade_out_ambience()
 	for _,channel in ipairs(current_sound_channels) do
 		beaver.fade_out_channel(channel, 1000)
@@ -45,7 +51,6 @@ local function fade_out_ambience()
 
 	current_sound_channels = {}
 end
-
 local function fade_in_ambience(location, tod)
 	local sounds = sounds_per_location[location][tod]
 	if sounds.ambience then

@@ -10,6 +10,7 @@ beaver.set_texture_blend_mode(shadow, "modulate")
 local diary_texts = util.load_json(rfr.gamepath() .. "data/diary_" .. config.language .. ".json")["entries"]
 diary.current_page = 1
 
+diary.read_last_page = false
 diary.opening = false
 local opacity = 0
 local target_opacity = 0
@@ -44,6 +45,8 @@ function diary.update(dt)
 		else
 			opacity = target_opacity
 		end
+		if beaver.get_input("LEFT") == 1 then diary.current_page = math.max(1, diary.current_page - 1) end
+		if beaver.get_input("RIGHT") == 1 then diary.current_page = math.min(#diary_texts, diary.current_page + 1) end
 	else
 		if elapsed < fade_time then
 			opacity = math.floor(math.max(0, 255 - (255 * util.ease_in_out(elapsed / fade_time))))
@@ -52,9 +55,7 @@ function diary.update(dt)
 		end
 	end
 	if elapsed < fade_time then elapsed = elapsed + dt end
-
-	if beaver.get_input("LEFT") == 1 then diary.current_page = math.max(1, diary.current_page - 1) end
-	if beaver.get_input("RIGHT") == 1 then diary.current_page = math.min(#diary_texts, diary.current_page + 1) end
+	if not diary.read_last_page then diary.read_last_page = diary.current_page == #diary_texts end
 end
 
 local function draw_text()
@@ -65,6 +66,8 @@ end
 function diary.draw()
 	if not diary.opening and opacity == target_opacity then return end
 	beaver.set_render_target(drawing_texture)
+	beaver.set_draw_color(0,0,0,0)
+	beaver.clear()
 	beaver.draw_texture(ASSETS.images.diary, {dst = diary_dst})
 	beaver.set_render_target(shadow)
 	beaver.set_draw_color(40,40,40,255)

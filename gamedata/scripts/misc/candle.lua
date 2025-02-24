@@ -5,7 +5,8 @@ candle.eid = rfr.add_entity()
 rfr.set_image(candle.eid, ASSETS.images.tileset)
 rfr.set_image_source(candle.eid, 416, 64, 16,16)
 rfr.set_zindex(candle.eid, 0)
-
+rfr.set_position(candle.eid, 160,112)
+rfr.set_location(candle.eid, "Map.Dream")
 rfr.set_particle_emitter_config(candle.eid, {
 	color_gradient = {
 		{time = 0.0, color = {245,239,176,255}},
@@ -26,10 +27,11 @@ local pickedup = false
 local lighting = require "lighting"
 local util = require "luamodules.utilities"
 
+candle.can_be_pickup = false
 interaction.add("NEN",
 	function()
 		local px, _ = util.player_center()
-		return px >= 160 and px <= 172 and rfr.get_flag("can_pickup_candle") and rfr.get_location(PLAYER) == "Map.Dream"
+		return px >= 160 and px <= 172 and candle.can_be_pickup and rfr.get_location(PLAYER) == "Map.Dream"
 	end,
 	function()
 		if not pickedup then

@@ -5,13 +5,18 @@ local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/d
 local items = {}
 local diary = require "misc.diary"
 local candle = require "misc.candle"
+items.can_interact = false
 items.books = interaction.add(interaction_names["books"],
 	function()
 		local px,_ = util.player_center()
-		return px >= 194 and px <= 208 and rfr.get_location(PLAYER) == "Map.Dream" and candle.picked_up()
+		return px >= 194 and px <= 208 and rfr.get_location(PLAYER) == "Map.Dream" and items.can_interact
 	end,
 	function()
-		rfr.set_dialogue(PLAYER, {content = interaction_details["books"]})
+		if candle.picked_up() then
+			rfr.set_dialogue(PLAYER, {content = interaction_details["books"]})
+		else
+			rfr.set_dialogue(PLAYER, {content = interaction_details["toodark"]})
+		end
 	end)
 
 local should_read_diary = rfr.add_cutscene({
@@ -42,11 +47,15 @@ local should_read_diary = rfr.add_cutscene({
 items.bookshelf = interaction.add(interaction_names["bookshelf"],
 	function()
 		local px,_ = util.player_center()
-		return px >= 278 and px <= 296 and rfr.get_location(PLAYER) == "Map.Dream" and candle.picked_up()
+		return px >= 278 and px <= 296 and rfr.get_location(PLAYER) == "Map.Dream" and not rfr.has_active_dialogue(PLAYER) and items.can_interact
 	end,
 	function()
-		if not rfr.is_cutscene_playing() then
+		if candle.picked_up() then
 			rfr.play_cutscene(should_read_diary)
+		else
+			rfr.set_dialogue(PLAYER, {content = interaction_details["toodark"]})
 		end
 	end)
+
+return items
 

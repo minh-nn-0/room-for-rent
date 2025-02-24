@@ -235,7 +235,12 @@ end
 function lighting.update(dt)
 	local _,tod = rfr.current_time()
 	local location = rfr.get_location(PLAYER)
-	if not rfr.get_flag("dreaming") then
+	local ppos = rfr.get_position(PLAYER)
+
+	lights["darkview"].location = location
+	lights["darkview"].pos = {ppos.x + 16, ppos.y + 8}
+
+	if not rfr.get_flag("custom_background_color") then
 		local color = {}
 		if tod == 1 then
 			color = {240,240,240,255}
@@ -244,9 +249,6 @@ function lighting.update(dt)
 			end
 		else
 			color = (location == "Map.Outside" or location == "Map.Hall") and {10,10,30, 255} or {0,0,10,255}
-			local ppos = rfr.get_position(PLAYER)
-			lights["darkview"].location = location
-			lights["darkview"].pos = {ppos.x + 16, ppos.y + 8}
 		end
 
 		bg_color = color

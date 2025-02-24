@@ -22,6 +22,7 @@ function LOAD()
 			beaver.new_image(rfr.gamepath() .. "assets/images/road.png"),
 			beaver.new_image(rfr.gamepath() .. "assets/images/tree1.png"),
 		diary = beaver.new_image(rfr.gamepath() .. "assets/images/diary.png"),
+		cgdms = beaver.new_image(rfr.gamepath() .. "assets/images/cogidaumaso.png"),
 		male_shirt = beaver.new_image(rfr.gamepath() .. "assets/images/male_shirt.png"),
 		male_naked = beaver.new_image(rfr.gamepath() .. "assets/images/male_naked.png"),
 		girl = beaver.new_image(rfr.gamepath() .. "assets/images/girl.png"),
@@ -75,6 +76,7 @@ function LOAD()
 		thrillsuspend = beaver.new_sound(rfr.gamepath() .. "assets/audios/thrillsuspend.wav"),
 		dog = beaver.new_sound(rfr.gamepath() .. "assets/audios/dogbark.wav"),
 		waterdrops = beaver.new_sound(rfr.gamepath() .. "assets/audios/waterdrops.wav"),
+		ghosthowling = beaver.new_sound(rfr.gamepath() .. "assets/audios/ghosthowling.ogg"),
 		doorslam = beaver.new_sound(rfr.gamepath() .. "assets/audios/doorslam.wav"),
 		lockeddoor = beaver.new_sound(rfr.gamepath() .. "assets/audios/lockeddoor.wav"),
 		cry = beaver.new_sound(rfr.gamepath() .. "assets/audios/cry.wav"),
@@ -83,10 +85,13 @@ function LOAD()
 		crack3 = beaver.new_sound(rfr.gamepath() .. "assets/audios/crack3.ogg"),
 		crack4 = beaver.new_sound(rfr.gamepath() .. "assets/audios/crack4.ogg"),
 		crack5 = beaver.new_sound(rfr.gamepath() .. "assets/audios/crack5.ogg"),
+		blowcandle = beaver.new_sound(rfr.gamepath() .. "assets/audios/blowcandle.ogg"),
+		whisper = beaver.new_sound(rfr.gamepath() .. "assets/audios/whisper.ogg"),
 		lighter = beaver.new_sound(rfr.gamepath() .. "assets/audios/lighter.wav"),
 	}
 
-	beaver.set_volume_sound(ASSETS.audios.creepy_atmosphere, 40)
+	beaver.set_volume_sound(ASSETS.audios.creepy_atmosphere, 30)
+	beaver.set_volume_sound(ASSETS.audios.ghosthowling, 50)
 	ASSETS.fonts = {
 		unifontexmono = beaver.new_font(rfr.gamepath() .. "assets/fonts/UnifontExMono.ttf", 16),
 		unifont = beaver.new_font(rfr.gamepath() .. "assets/fonts/unifont.otf", 16),

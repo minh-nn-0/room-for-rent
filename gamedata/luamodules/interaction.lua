@@ -16,6 +16,7 @@ local current_interaction = -1
 local current_back = nil
 local last_interaction
 
+rfr.set_flag("draw_helper")
 function interaction.add(name, condition, action)
 	list[#list + 1] = {name = name, condition = condition, action = action}
 	return #list

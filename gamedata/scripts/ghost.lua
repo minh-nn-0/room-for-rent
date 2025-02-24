@@ -52,8 +52,9 @@ rfr.set_state_entry(ghost.eid, "idle",
 
 rfr.set_state_entry(ghost.eid, "move",
 	function()
+		local speed = 100 / rfr.get_properties(ghost.eid, "walkspeed")
 		rfr.set_tileanimation(ghost.eid, {
-			frames = {{5,100},{6,100},{7,100},{8,100},{9,100},{10,100},{11,100},{12,100}},
+			frames = {{5,speed},{6,speed},{7,speed},{8,speed},{9,speed},{10,speed},{11,speed},{12,speed}},
 			framewidth = 64,
 			frameheight = 64,
 			["repeat"] = true

@@ -32,7 +32,7 @@ end
 function scatter_paper.draw()
 	for _,p in ipairs(papers) do
 		local pwidth = 16 * p.scale
-		beaver.set_texture_color_mod("tileset", {255,255,255,math.floor(255 - (255 * p.timer / max_time))})
+		beaver.set_texture_color_mod(ASSETS.images.tileset, {255,255,255,math.floor(255 - (255 * p.timer / max_time))})
 		beaver.draw_texture(ASSETS.images.tileset, {dst = {x = p.pos[1] - pwidth / 2, y = p.pos[2] - pwidth / 2, w = pwidth, h = pwidth},
 										src = {x = paper_srcxs[p.type], y = 80, w = 16, h = 16},
 										angle = math.floor(p.rotation),
