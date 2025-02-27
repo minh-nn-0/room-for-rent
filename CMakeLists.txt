@@ -16,6 +16,10 @@ add_executable(rfr
 target_compile_definitions(rfr PRIVATE
 	GAMEPATH="${CMAKE_CURRENT_SOURCE_DIR}"
 )
+option(CONCURRENT_LOAD "Enable concurrent assets loading" ON)
+if (CONCURRENT_LOAD)
+	target_compile_definitions(rfr PRIVATE CONCURRENT_LOAD)
+endif()
 if (EMSCRIPTEN)
 	add_custom_command(
 		TARGET rfr PRE_BUILD

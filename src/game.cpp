@@ -63,12 +63,20 @@ rfr::game::game(): _beaver("RFR", 1280, 720), _asset_loader(&_beaver)
 	_beaver._graphics._cam = &_camera;
 
 	setup_binding();
+#ifdef CONCURRENT_LOAD
+	std::println("LOADING CONCURRENTLY");
+#endif
 	auto asset_file_rs = _lua.do_file(game_path() + "assets.lua");
 	sol::table asset_table = asset_file_rs.get<sol::table>();
+#ifndef NDEBUG
+	auto time = std::chrono::steady_clock::now();
 	_asset_loader.load_from_lua(asset_table);
 
 	auto assets = _asset_loader.output();
+	auto time_done = std::chrono::steady_clock::now();
+	std::println("ASSETS LOADING TAKES: {}", std::chrono::duration_cast<std::chrono::milliseconds>(time_done - time));
 
+#endif
 	auto lua_assets = _lua["ASSETS"].get<sol::table>();
 	for (auto& [type, tbl] : asset_table)
 	{
@@ -77,11 +85,6 @@ rfr::game::game(): _beaver("RFR", 1280, 720), _asset_loader(&_beaver)
 		{
 			auto index = assets.at(name.as<std::string>());
 			to_add_tbl[name] = assets.at(name.as<std::string>());
-			if (type.as<std::string>() == "images")
-			{
-				sdl::texture& tex = _beaver._assets.get_vec<sdl::texture>().at(index);
-				std::cout << "name " << tex._name << " ptr " << tex._t << " null " << std::boolalpha << (tex._t == nullptr) << " id " << index << '\n';
-			};
 		};
 	};
 
