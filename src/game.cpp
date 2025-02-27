@@ -58,11 +58,33 @@ bool NEED_SORTING {true};
 rfr::dialogue_options DIALOGUE_OPTIONS;
 rfr::interaction_helper::drawdata INTERACTION_DRAWDATA;
 
-rfr::game::game(): _beaver("RFR", 1280, 720)
+rfr::game::game(): _beaver("RFR", 1280, 720), _asset_loader(&_beaver)
 {
 	_beaver._graphics._cam = &_camera;
 
 	setup_binding();
+	auto asset_file_rs = _lua.do_file(game_path() + "assets.lua");
+	sol::table asset_table = asset_file_rs.get<sol::table>();
+	_asset_loader.load_from_lua(asset_table);
+
+	auto assets = _asset_loader.output();
+
+	auto lua_assets = _lua["ASSETS"].get<sol::table>();
+	for (auto& [type, tbl] : asset_table)
+	{
+		sol::table to_add_tbl = lua_assets[type].get_or_create<sol::table>();
+		for (auto& [name, _] : tbl.as<sol::table>())
+		{
+			auto index = assets.at(name.as<std::string>());
+			to_add_tbl[name] = assets.at(name.as<std::string>());
+			if (type.as<std::string>() == "images")
+			{
+				sdl::texture& tex = _beaver._assets.get_vec<sdl::texture>().at(index);
+				std::cout << "name " << tex._name << " ptr " << tex._t << " null " << std::boolalpha << (tex._t == nullptr) << " id " << index << '\n';
+			};
+		};
+	};
+
 	sol::protected_function load = _lua["LOAD"];
 	auto load_result = load();
 	if (!load_result.valid()) 

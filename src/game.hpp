@@ -8,6 +8,7 @@
 #include <beaver/scripting/scripting_tile.hpp>
 #include <beaver/scripting/scripting_camera.hpp>
 #include "binding.hpp"
+#include "asset_loader.hpp"
 namespace rfr
 {
 	// Things need to be done
@@ -20,6 +21,7 @@ namespace rfr
 		game();
 		beaver::sdlgame _beaver;
 		sol::state _lua;
+		asset_loader _asset_loader;
 		std::vector<beaver::tile::tilemap> _maps;
 		beaver::ecs_core<dialogue, interaction, location, event_listener, zindex> _entities;
 		event_manager _events;
