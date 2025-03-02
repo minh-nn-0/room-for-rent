@@ -23,7 +23,7 @@ CS_PROLOGUE_ROOM = rfr.add_cutscene({
 		rfr.set_state(OWNER, "idle")
 		rfr.set_properties(OWNER,"facing_direction", "left")
 
-		confirm_owner = interaction.add(interaction_name["owner"],
+		confirm_owner = interaction.add({290, 108},
 			function()
 				local px,_ = util.player_center()
 				return px >= 280 and px <= 300 and rfr.get_location(PLAYER) == "Map.Mainroom"

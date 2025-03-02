@@ -110,7 +110,7 @@ local cs_shower = rfr.add_cutscene({
 	end
 })
 
-interaction.add(interaction_names["shower"],
+interaction.add({196, 224},
 	function()
 		local px,_ = util.player_center()
 		return px >= 176 and px <= 200 and rfr.get_location(PLAYER) == "Map.Bathroom"

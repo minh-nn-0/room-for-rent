@@ -96,9 +96,8 @@ local cs_prologue_talk_at_gate = rfr.add_cutscene({
 
 local cs_prologue_owner_pickup = rfr.add_cutscene({
 	init = function()
-		local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 		rfr.set_timer(timer, 5)
-		owner_interaction = interaction.add(interaction_name["owner"],
+		owner_interaction = interaction.add({424, 142},
 			function()
 				local px,_ = util.player_center()
 				return px >= gate_posx - 10 and px <= gate_posx + 10 and rfr.get_location(PLAYER) == "Map.Outside"

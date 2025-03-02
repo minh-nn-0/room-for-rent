@@ -78,7 +78,7 @@ CS_PROLOGUE_CLEAN_ROOM = rfr.add_cutscene({
 		function(dt)
 			if rfr.has_active_dialogue(PLAYER) then return false end
 			rfr.set_dialogue(PLAYER, {content = dialogues["player_should_clean"]})
-			broom = interaction.add(interaction_names["broom"],
+			broom = interaction.add({216,112},
 				function()
 					local px,_ = util.player_center()
 					return px >= 210 and px <= 220 and rfr.get_location(PLAYER) == "Map.Mainroom"

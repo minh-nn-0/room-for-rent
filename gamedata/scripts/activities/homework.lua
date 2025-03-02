@@ -37,7 +37,7 @@ function homework.draw()
 	end
 end
 
-interaction.add(interaction_name["desk"],
+interaction.add({184, 112},
 	function()
 		local px,_ = util.player_center()
 		return px >= 176 and px <= 190 and not rfr.get_flag("prologue") and rfr.get_location(PLAYER) == "Map.Mainroom"

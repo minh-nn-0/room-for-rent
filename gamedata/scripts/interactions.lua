@@ -1,6 +1,5 @@
 local util = require "luamodules.utilities"
 local interaction = require "luamodules.interaction"
-local interaction_names = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
 
 --local power_box = rfr.add_entity()
@@ -15,7 +14,7 @@ local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/d
 --		rfr.set_dialogue(PLAYER, {content = interaction_details["power_box"]})
 --	end)
 local cs_work = require "activities.work"
-interaction.add(interaction_names["house_number"],
+interaction.add({386, 144},
 	function()
 		local px, py = util.player_center()
 		return px >= 380 and px <= 392 and rfr.get_location(PLAYER) == "Map.Outside"
@@ -26,7 +25,7 @@ interaction.add(interaction_names["house_number"],
 	end)
 
 local cs_bus_work, cs_bus_nonwork = table.unpack((require "cutscenes.busstop"))
-interaction.add(interaction_names["bus_stop"],
+interaction.add({256, 126},
 	function()
 		local px,_ = util.player_center()
 		return px >= 246 and px <= 266 and rfr.get_location(PLAYER) == "Map.Mainroom"

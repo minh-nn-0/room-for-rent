@@ -5,16 +5,16 @@ local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/name
 local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
 local map = require "luamodules.map"
 local door_label_position = {
-	room_bathroom = {pos = {256,100}, location = "Map.Mainroom"},
-	bathroom_room = {pos = {256,230}, location = "Map.Bathroom"},
-	room_hall = {pos = {305,100}, location = "Map.Mainroom"},
-	hall_room = {pos = {458, 70}, location = "Map.Hall"},
-	room_balcony = {pos = {80,100}, location = "Map.Mainroom"},
-	balcony_room = {pos = {144,84}, location = "Map.Balcony"},
-	hallstair_1 = {pos = {660, 134}, location = "Map.Hall"},
-	hallstair_2 = {pos = {660, 80}, location = "Map.Hall"},
-	gate_in = {pos = {424,134}, location = "Map.Hall"},
-	gate_out = {pos = {424,134}, location = "Map.Outside"},
+	room_bathroom = {pos = {256,110}, location = "Map.Mainroom"},
+	bathroom_room = {pos = {256,240}, location = "Map.Bathroom"},
+	room_hall = {pos = {308,110}, location = "Map.Mainroom"},
+	hall_room = {pos = {458, 96}, location = "Map.Hall"},
+	room_balcony = {pos = {74,110}, location = "Map.Mainroom"},
+	balcony_room = {pos = {144,90}, location = "Map.Balcony"},
+	hallstair_1 = {pos = {660, 144}, location = "Map.Hall"},
+	hallstair_2 = {pos = {660, 100}, location = "Map.Hall"},
+	gate_in = {pos = {424,144}, location = "Map.Hall"},
+	gate_out = {pos = {424,144}, location = "Map.Outside"},
 }
 
 local door_destination = {
@@ -61,7 +61,7 @@ end
 --DOOR_HALL_STAIR_SECOND = make_door("hallstair_2")
 --METAL_GATE_OUTSIDE = make_door("gate_out")
 --METAL_GATE_INSIDE = make_door("gate_in")
-DOOR_ROOM_BATHROOM = interaction.add(interaction_name["door_room_to_bathroom"],
+DOOR_ROOM_BATHROOM = interaction.add(door_label_position.room_bathroom.pos,
 	function()
 		return player_in_range("room_bathroom", 10) and rfr.get_location(PLAYER) == "Map.Mainroom"
 	end,
@@ -71,7 +71,7 @@ DOOR_ROOM_BATHROOM = interaction.add(interaction_name["door_room_to_bathroom"],
 		move_player_to_destination("room_bathroom", true)
 	end)
 
-DOOR_BATHROOM_ROOM = interaction.add(interaction_name["door_bathroom_to_room"],
+DOOR_BATHROOM_ROOM = interaction.add(door_label_position.bathroom_room.pos,
 	function()
 		return player_in_range("bathroom_room", 10) and rfr.get_location(PLAYER) == "Map.Bathroom"
 	end,
@@ -85,7 +85,7 @@ DOOR_BATHROOM_ROOM = interaction.add(interaction_name["door_bathroom_to_room"],
 		end
 	end)
 
-DOOR_ROOM_HALL = interaction.add(interaction_name["door_room_to_hall"],
+DOOR_ROOM_HALL = interaction.add(door_label_position.room_hall.pos,
 	function()
 		return player_in_range("room_hall", 10) and rfr.get_location(PLAYER) == "Map.Mainroom"
 	end,
@@ -100,7 +100,7 @@ DOOR_ROOM_HALL = interaction.add(interaction_name["door_room_to_hall"],
 			move_player_to_destination("room_hall", true)
 		end
 	end)
-DOOR_ROOM_BALCONY = interaction.add(interaction_name["door_room_to_balcony"],
+DOOR_ROOM_BALCONY = interaction.add(door_label_position.room_balcony.pos,
 	function()
 		return player_in_range("room_balcony", 10) and rfr.get_location(PLAYER) == "Map.Mainroom"
 	end,
@@ -114,7 +114,7 @@ DOOR_ROOM_BALCONY = interaction.add(interaction_name["door_room_to_balcony"],
 		end
 	end)
 
-DOOR_BALCONY_ROOM = interaction.add(interaction_name["door_balcony_to_room"],
+DOOR_BALCONY_ROOM = interaction.add(door_label_position.balcony_room.pos,
 	function()
 		return player_in_range("balcony_room", 10) and rfr.get_location(PLAYER) == "Map.Balcony"
 	end,
@@ -124,7 +124,7 @@ DOOR_BALCONY_ROOM = interaction.add(interaction_name["door_balcony_to_room"],
 		move_player_to_destination("balcony_room", true)
 	end)
 
-DOOR_HALL_ROOM = interaction.add(interaction_name["door_hall_to_room"],
+DOOR_HALL_ROOM = interaction.add(door_label_position.hall_room.pos,
 	function()
 		return player_in_range("hall_room", 10) and rfr.get_location(PLAYER) == "Map.Hall"
 	end,
@@ -136,7 +136,7 @@ DOOR_HALL_ROOM = interaction.add(interaction_name["door_hall_to_room"],
 		move_player_to_destination("hall_room", true)
 	end)
 
-DOOR_HALL_STAIR_FIRST = interaction.add(interaction_name["door_hall_stair_first"],
+DOOR_HALL_STAIR_FIRST = interaction.add(door_label_position.hallstair_1.pos,
 	function()
 		local pposy = rfr.get_position(PLAYER).y
 		return player_in_range("hallstair_1", 10) and pposy == 144 and rfr.get_location(PLAYER) == "Map.Hall"
@@ -146,7 +146,7 @@ DOOR_HALL_STAIR_FIRST = interaction.add(interaction_name["door_hall_stair_first"
 		camera.set_target(PLAYER, 16, 0)
 		move_player_to_destination("hallstair_1")
 	end)
-DOOR_HALL_STAIR_SECOND = interaction.add(interaction_name["door_hall_stair_second"],
+DOOR_HALL_STAIR_SECOND = interaction.add(door_label_position.hallstair_2.pos,
 	function()
 		local pposy = rfr.get_position(PLAYER).y
 		return player_in_range("hallstair_2", 10) and pposy == 96 and rfr.get_location(PLAYER) == "Map.Hall"
@@ -156,7 +156,7 @@ DOOR_HALL_STAIR_SECOND = interaction.add(interaction_name["door_hall_stair_secon
 		move_player_to_destination("hallstair_2")
 	end)
 
-METAL_GATE_OUTSIDE = interaction.add(interaction_name["metal_gate"],
+METAL_GATE_OUTSIDE = interaction.add(door_label_position.gate_out.pos,
 	function()
 		return player_in_range("gate_out", 15) and rfr.get_location(PLAYER) == "Map.Outside"
 	end,
@@ -170,7 +170,7 @@ METAL_GATE_OUTSIDE = interaction.add(interaction_name["metal_gate"],
 			move_player_to_destination("gate_out", true)
 		end
 	end)
-METAL_GATE_INSIDE = interaction.add(interaction_name["metal_gate"],
+METAL_GATE_INSIDE = interaction.add(door_label_position.gate_in.pos,
 	function()
 		local pposy = rfr.get_position(PLAYER).y
 		return player_in_range("gate_in", 15) and pposy == 144 and rfr.get_location(PLAYER) == "Map.Hall"

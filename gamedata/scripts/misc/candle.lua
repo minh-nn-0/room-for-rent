@@ -28,7 +28,7 @@ local lighting = require "lighting"
 local util = require "luamodules.utilities"
 
 candle.can_be_pickup = false
-interaction.add("NEN",
+interaction.add({168, 112},
 	function()
 		local px, _ = util.player_center()
 		return px >= 160 and px <= 172 and candle.can_be_pickup and rfr.get_location(PLAYER) == "Map.Dream"

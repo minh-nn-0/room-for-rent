@@ -70,7 +70,7 @@ local cs_eat = rfr.add_cutscene({
 	update = function(dt) end
 })
 
-interaction.add(interaction_names["eat"],
+interaction.add({214, 96},
 	function()
 		local px,_ = util.player_center()
 		return px >= 204 and px <= 220 and rfr.get_location(PLAYER) == "Map.Mainroom"

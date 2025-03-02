@@ -205,7 +205,7 @@ rfr.set_image_source(light_switch, 64, 368, 16, 16)
 rfr.set_zindex(light_switch, 0)
 rfr.set_position(light_switch, 128,112)
 rfr.set_location(light_switch, "Map.Void")
-interaction.add(interaction_names["light_switch"],
+interaction.add({136, 112},
 	function()
 		local px, _ = util.player_center()
 		return px >= 130 and px <= 140 and rfr.get_location(PLAYER) == "Map.Void"

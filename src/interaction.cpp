@@ -12,7 +12,6 @@ void rfr::interaction_helper::draw(const std::string& Xcontent, const std::strin
 	static auto draw_icon_and_text = [&](const std::string& content, 
 			const mmath::irect& icon_dst, const mmath::irect& icon_src)
 	{
-		mmath::ivec2 outline;
 		if (content.empty())
 			SDL_SetTextureAlphaMod(*ddata._tex, 150);
 		else

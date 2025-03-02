@@ -1,7 +1,6 @@
 local camera = require "luamodules.camera"
 local util = require "luamodules.utilities"
 local interaction = require "luamodules.interaction"
-local interaction_name = util.load_json(rfr.gamepath() .. "data/interaction/names_" .. config.language .. ".json")
 local interaction_details = util.load_json(rfr.gamepath() .. "data/interaction/details_" .. config.language .. ".json")
 local UI_names = util.load_json(rfr.gamepath() .. "data/ui/" .. config.language .. ".json")
 local bed = {}
@@ -99,7 +98,7 @@ local cs_sleep = rfr.add_cutscene({
 })
 
 rfr.set_properties(BED, "normal", true)
-local bed_interaction = interaction.add(interaction_name["bed"],
+local bed_interaction = interaction.add({104, 112},
 	function()
 		local px,_ = util.player_center()
 		return px >= 90 and px <= 120 and not rfr.get_flag("prologue") and rfr.get_location(PLAYER) == "Map.Mainroom"

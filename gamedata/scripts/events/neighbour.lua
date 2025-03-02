@@ -209,11 +209,7 @@ function meet_neighbour_scenes.setup_neighbour()
 	rfr.set_flag("neighbour_chilling")
 end
 
-local neighbour_interaction = rfr.add_entity()
-rfr.set_position(neighbour_interaction, neighbour_posx + 16,140)
-rfr.set_location(neighbour_interaction, "Map.Hall")
-
-interaction.add(interaction_names["neighbour"],
+interaction.add({neighbour_posx + 16, 140},
 	function()
 		local px,py = util.player_center()
 		return px >= neighbour_posx + 6 and px <= neighbour_posx + 26 and py == 160 and rfr.get_flag("neighbour_chilling") and not rfr.is_cutscene_playing()

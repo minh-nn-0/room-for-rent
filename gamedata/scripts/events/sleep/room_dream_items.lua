@@ -6,7 +6,7 @@ local items = {}
 local diary = require "misc.diary"
 local candle = require "misc.candle"
 items.can_interact = false
-items.books = interaction.add(interaction_names["books"],
+items.books = interaction.add({202, 112},
 	function()
 		local px,_ = util.player_center()
 		return px >= 194 and px <= 208 and rfr.get_location(PLAYER) == "Map.Dream" and items.can_interact
@@ -44,7 +44,7 @@ local should_read_diary = rfr.add_cutscene({
 	update = function(dt) end,
 
 })
-items.bookshelf = interaction.add(interaction_names["bookshelf"],
+items.bookshelf = interaction.add({288, 112},
 	function()
 		local px,_ = util.player_center()
 		return px >= 278 and px <= 296 and rfr.get_location(PLAYER) == "Map.Dream" and not rfr.has_active_dialogue(PLAYER) and items.can_interact

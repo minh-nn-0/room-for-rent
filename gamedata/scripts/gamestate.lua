@@ -102,7 +102,7 @@ state["ingame"] = {
 		if plocation == "Map.Bathroom" then bloods_drip.draw() end
 
 		lighting.draw()
-
+		interaction.draw()
 		for _, eid in ipairs(rfr.get_active_entities()) do
 			if rfr.get_location(eid) == plocation then
 				if rfr.has_active_dialogue(eid) then
@@ -116,20 +116,9 @@ state["ingame"] = {
 		local player_near_right_edge = ppos.x >= cx + (cw / config.cam_zoom) - 70
 		rfr.draw_dialogue_options(ASSETS.images.UI, ASSETS.fonts[config.ui_font], player_near_right_edge and ppos.x or ppos.x + 30, ppos.y + 5, not player_near_right_edge)
 		beaver.set_draw_color(10,10,10,255)
-
 		beaver.set_using_cam(false)
 
 		beaver.set_draw_color(255,255,255,255)
-		if rfr.get_flag("draw_helper") then
-			local current_interaction = ""
-			local current_back = ""
-			if rfr.get_flag("player_can_interact") and not rfr.having_dialogue_options() then
-				current_interaction = interaction.get_current_interaction() and interaction.get_current_interaction().name or ""
-			end
-			current_back = interaction.get_current_back() and interaction.get_current_back().name or ""
-			rfr.draw_interaction_helper(current_interaction, current_back)
-		end
-
 		if rfr.get_flag("screen_fill") then
 			local fill_color = rfr.get_properties(GAME, "screen_fill_color") or {0,0,0,255}
 			beaver.set_draw_color(fill_color[1], fill_color[2], fill_color[3], fill_color[4])

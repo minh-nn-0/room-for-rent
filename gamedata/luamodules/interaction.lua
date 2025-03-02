@@ -17,8 +17,8 @@ local current_back = nil
 local last_interaction
 
 rfr.set_flag("draw_helper")
-function interaction.add(name, condition, action)
-	list[#list + 1] = {name = name, condition = condition, action = action}
+function interaction.add(pos, condition, action)
+	list[#list + 1] = {pos = pos, condition = condition, action = action}
 	return #list
 end
 
@@ -62,6 +62,21 @@ function interaction.update()
 	end
 	if current_back and beaver.get_input(config.button.back) == 1 then
 		current_back.action()
+	end
+end
+
+function interaction.draw()
+	beaver.set_draw_color(255,255,255,255)
+	local itr = interaction.get_current_interaction()
+	if itr then
+		beaver.draw_texture(ASSETS.images.UI, {dst = {x = itr.pos[1] - 4, y = math.sin(beaver.get_elapsed_time() * 3) * 0.5 + itr.pos[2] - 8, w = 8, h = 8},
+												src = {x = 24, y = 48, w = 8, h = 8}})
+	end
+	if current_back then
+		beaver.draw_texture(ASSETS.images.UI, {dst = {x = 20, y = 340, w = 8, h = 8},
+												src = {x = 32, y = 32, w = 8, h = 8}})
+		beaver.draw_text(30, 340, ASSETS.fonts.unifont, 1, current_back.name)
+
 	end
 end
 
